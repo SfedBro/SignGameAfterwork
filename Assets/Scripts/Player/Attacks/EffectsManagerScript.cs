@@ -3,7 +3,7 @@ using UnityEngine;
 public class EffectsManager : MonoBehaviour
 {
     public static EffectsManager Instance;
-    public AttackEffect effect;
+    public SpellEffect effect;
 
     private void Awake()
     {
@@ -15,6 +15,6 @@ public class EffectsManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        effect = GetComponent<AttackEffect>();
+        effect = GetComponent<SpellEffect>();
     }   
 }

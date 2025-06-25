@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class SpellCast : MonoBehaviour
 {
@@ -9,74 +10,36 @@ public class SpellCast : MonoBehaviour
 
     private bool lookRight;
 
+    private Dictionary<string, Action> spellsDict;
+
+    void Start()
+    {
+        spellsDict = new Dictionary<string, Action>
+    {
+        {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
+        {"Fire2", () => SelfSpell(3, "SpeedBoost")},
+        {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
+        {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
+        {"Fire1+Fire3", () => CoilSpell(1, "Burn")},
+        {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
+        {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
+    };
+    }
+
     void Update()
     {
         lookRight = gameObject.GetComponent<PlayerAttack>().lookRight;
     }
 
-    public void HandleSpell(List<string> combo)
+    public void HandleSpell(string combo)
     {
-        if (combo.Count == 1)
+        if (spellsDict.TryGetValue(combo, out Action spell))
         {
-            if (combo[0] == "Fire1")
-            {
-                ShootingSpell(new Color(1f, 0.6f, 0f));
-                // Шутспелл с уроном без эффекта
-            }
-            else if (combo[0] == "Fire2")
-            {
-                SelfSpell(3, "SpeedBoost");
-                // Ускорение
-            }
-            else if (combo[0] == "Fire3")
-            {
-                ShootingSpell(new Color(1f, 0.6f, 0f), "Burn");
-                // Шутспелл с поджогом врага
-            }
-            else if (combo[0] == "Earth1")
-            {
-                ShootingSpell(new Color(0.25f, 0.25f, 0.25f), "Knockback");
-                // Шутспелл с отталкиванием (тестирование)
-            }
-            else if (combo[0] == "Venom1")
-            {
-                ShootingSpell(new Color(0f, 1f, 0f), "Poison");
-                // Шутспелл с отравлением (тестирование)
-            }
-            else
-            {
-                Debug.Log("Spell not learned.");
-            }
+            spell();  // Каст заклинания, если существует такое комбо
         }
-        else if (combo.Count == 2)
+        else
         {
-            if (combo[0] == "Fire1" && combo[1] == "Fire2")
-            {
-                SelfSpell(3, "ExtraDamage");
-                // Следующее заклинание дополнительно внесёт 3 урона
-            }
-            else if (combo[0] == "Fire1" && combo[1] == "Fire3")
-            {
-                CoilSpell(1, "Burn");
-                // Ожог в области
-            }
-            else if (combo[0] == "Fire2" && combo[1] == "Fire3")
-            {
-                ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong");
-                // Шутспелл с долгим поджогом врага
-            }
-            else
-            {
-                Debug.Log("Spell not learned.");
-            }
-        }
-        else if (combo.Count == 3)
-        {
-            if (combo[0] == "Fire1" && combo[1] == "Fire2" && combo[2] == "Fire3")
-            {
-                ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage");
-                // Шутспелл с процентным уроном от хп врага
-            }
+            Debug.Log("Заклинание не изучено!");
         }
 }
 

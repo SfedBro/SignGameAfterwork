@@ -104,7 +104,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void MakeAttack(List<string> combo)
     {
-        spell.HandleSpell(combo);
+        spell.HandleSpell(string.Join("+", combo));
         Debug.Log($"Использована комбинация: {string.Join("+", combo)}");
     }
 }

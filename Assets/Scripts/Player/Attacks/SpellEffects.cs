@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class AttackEffect : MonoBehaviour
+public class SpellEffect : MonoBehaviour
 {
     public float burnDuration = 3f;
     public float poisonDuration = 5f;
