@@ -125,7 +125,10 @@ public class SpellEffect : MonoBehaviour
         }
 
         // Возвращаем в исходное состояние
-        ReturnToOriginal(obj);
+        if (obj != null)
+        {
+            ReturnToOriginal(obj);
+        }
     }
 
     private IEnumerator Poison(GameObject obj, float extraDuration)
@@ -144,7 +147,10 @@ public class SpellEffect : MonoBehaviour
         }
 
         // Возвращаем в исходное состояние
-        ReturnToOriginal(obj);
+        if (obj != null)
+        {
+            ReturnToOriginal(obj);
+        }
     }
 
     private void ReturnToOriginal(GameObject obj)

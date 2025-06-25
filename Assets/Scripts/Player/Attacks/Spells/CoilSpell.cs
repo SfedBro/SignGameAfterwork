@@ -48,13 +48,13 @@ public class CoilSpell : MonoBehaviour
         }
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Collision!");
-            EffectsManager.Instance.effect.ApplyEffect(gameObject, collision.gameObject, effectType);
-            Destroy(gameObject);
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (collision.gameObject.tag == "Enemy")
+    //     {
+    //         Debug.Log("Collision!");
+    //         EffectsManager.Instance.effect.ApplyEffect(gameObject, collision.gameObject, effectType);
+    //         Destroy(gameObject);
+    //     }
+    // }
 }
