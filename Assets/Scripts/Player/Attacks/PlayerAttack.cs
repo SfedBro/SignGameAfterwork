@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
             HandleInput("Venom1");
         }
 
-        if (gameObject.GetComponent<SpriteRenderer>().flipX == false)
+        if (gameObject.GetComponent<SpriteRenderer>().flipX == true)
         {
             shootPos.transform.position = gameObject.transform.position + new Vector3(0.3f, -0.3f, 0f);
             lookRight = true;

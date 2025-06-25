@@ -18,29 +18,39 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     CapsuleCollider2D col;
 
-    void Awake() {
+    void Awake()
+    {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CapsuleCollider2D>();
     }
 
-    void Update() {
+    void Update()
+    {
         CheckOnGround();
         HandleJump();
         HandleMovement();
     }
 
-    void CheckOnGround() {
+    void CheckOnGround()
+    {
         onGround = Physics2D.CapsuleCast(col.bounds.center, col.size, col.direction, 0, Vector2.down, groundDetectionOffset, groundLayerMask);
     }
 
-    void HandleJump() {
+    void HandleJump()
+    {
         if (onGround && Input.GetButtonDown("Jump")) rb.linearVelocityY = jumpVelocity;
     }
 
-    void HandleMovement() {
+    void HandleMovement()
+    {
         float targetVelocity = Input.GetAxisRaw("Horizontal") * horizontalVelocity;
         float currentVelocity = rb.linearVelocityX;
         float newVelocity = Mathf.MoveTowards(currentVelocity, targetVelocity, horizontalAcceleration * Time.deltaTime);
         rb.linearVelocityX = newVelocity;
+    }
+
+    public void SpeedChange(float amount)
+    {
+        horizontalVelocity += amount;
     }
 }

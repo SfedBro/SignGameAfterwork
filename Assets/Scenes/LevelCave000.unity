@@ -12678,6 +12678,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 15
   hp: 15
+--- !u!114 &580930085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188753979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {fileID: 1736234291}
+  shootSprite: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
+  coilSprite: {fileID: 1355593592257874325, guid: e777bb5642dcbeb429df116e731c0953, type: 3}
+--- !u!114 &580930086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188753979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyTag: Enemy
+  timeAvailableForCombo: 1
+  lookRight: 0
 --- !u!1 &585280033
 GameObject:
   m_ObjectHideFlags: 0
@@ -39806,6 +39836,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1736234291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4155156812212076975, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
+  m_PrefabInstance: {fileID: 5924522061158721568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1751600182
 GameObject:
   m_ObjectHideFlags: 0
@@ -49331,6 +49366,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4466998318849624972, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6756031849493778654, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
       propertyPath: m_Name
       value: mage
@@ -49348,6 +49387,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6756031849493778654, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 580930084}
+    - targetCorrespondingSourceObject: {fileID: 6756031849493778654, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 580930086}
+    - targetCorrespondingSourceObject: {fileID: 6756031849493778654, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 580930085}
   m_SourcePrefab: {fileID: 100100000, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
 --- !u!1001 &8700290527813696546
 PrefabInstance:

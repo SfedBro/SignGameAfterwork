@@ -8,7 +8,6 @@ public class AttackEffect : MonoBehaviour
     public float poisonDuration = 5f;
     public float knockbackForce = 200f;
     public float hpPercentDamage = 0.1f;
-
     public float speedBoostDuration = 5f;
 
     private bool extraDamageApplied = false;
@@ -161,6 +160,7 @@ public class AttackEffect : MonoBehaviour
         {
             Debug.Log($"{obj.name} получил ускорение на {change} на {speedBoostDuration} секунд");
             obj.GetComponent<PlayerController>().SpeedChange(change);
+            obj.GetComponent<PlayerMovement>().SpeedChange(change);
         }
 
         float timer = 0f;
@@ -175,6 +175,7 @@ public class AttackEffect : MonoBehaviour
         if (obj != null && obj.CompareTag("Player"))
         {
             obj.GetComponent<PlayerController>().SpeedChange(-change);
+            obj.GetComponent<PlayerMovement>().SpeedChange(-change);
         }
     }
 
