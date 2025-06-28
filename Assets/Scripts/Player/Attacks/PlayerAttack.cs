@@ -6,9 +6,7 @@ public class PlayerAttack : MonoBehaviour
 {
     public string enemyTag = "Enemy";
     public float timeAvailableForCombo = 1f;
-    public bool lookRight;
 
-    private GameObject shootPos;
     private SpellCast spell; // реализация разных видов заклинаний
     private List<string> actualCombo = new List<string>();
     private float timer;
@@ -19,7 +17,6 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         spell = GetComponent<SpellCast>();
-        shootPos = transform.Find("ShootPos").gameObject;
     }
 
     private void Update()
@@ -52,17 +49,6 @@ public class PlayerAttack : MonoBehaviour
         {
             Debug.Log("5 was pressed");
             HandleInput("Venom1");
-        }
-
-        if (gameObject.GetComponent<SpriteRenderer>().flipX == true)
-        {
-            shootPos.transform.position = gameObject.transform.position + new Vector3(0.3f, -0.3f, 0f);
-            lookRight = true;
-        }
-        else
-        {
-            shootPos.transform.position = gameObject.transform.position + new Vector3(-0.3f, -0.3f, 0f);
-            lookRight = false;
         }
     }
 

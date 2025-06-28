@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 public class ShootSpell : MonoBehaviour
 {
-    public float force = 200f;
+    public float force;
     public float lifeDistance = 20f;
     public bool lookRight;
     public string effectType;
+    public Vector3 cursorPos;
 
     private Rigidbody2D physic;
     private Vector3 origPos;
@@ -14,46 +16,27 @@ public class ShootSpell : MonoBehaviour
     {
         origPos = transform.position;
         physic = GetComponent<Rigidbody2D>();
-        if (lookRight)
-        {
-            physic.AddForce(new Vector2(force, 0));
-        }
-        else
-        {
-            physic.AddForce(new Vector2(-force, 0));
-        }
+        physic.AddForce(force * (cursorPos - origPos).normalized);
     }
+
     void Update()
     {
         CheckIfAlive();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-       if (other.tag == "Enemy")
-       {
-           Debug.Log("Collision!");
-           EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType);
-           Destroy(gameObject);
-       }
+        if (collider.tag == "Enemy")
+        {
+            Debug.Log("Collision!");
+            EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType);
+            Destroy(gameObject);
+        }
     }
-    // private void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     if (collision.gameObject.tag == "Enemy")
-    //     {
-    //         Debug.Log("Collision!");
-    //         EffectsManager.Instance.effect.ApplyEffect(gameObject, collision.gameObject, effectType);
-    //         Destroy(gameObject);
-    //     }
-    // }
 
     private void CheckIfAlive()
     {
-        if (lookRight && transform.position.x - origPos.x >= lifeDistance)
-        {
-            Destroy(gameObject);
-        }
-        else if (lookRight == false && origPos.x - transform.position.x >= lifeDistance)
+        if (Math.Abs((transform.position - origPos).magnitude) >= lifeDistance)
         {
             Destroy(gameObject);
         }

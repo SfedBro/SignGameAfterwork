@@ -4,37 +4,35 @@ using System;
 
 public class SpellCast : MonoBehaviour
 {
-    public Transform startPos;
-    public GameObject shootSprite;
-    public GameObject coilSprite;
-
-    private bool lookRight;
+    public GameObject shootingSpellPrefab;
+    public GameObject areaSpellPrefab;
+    public float shootingSpellForce = 100f;
 
     private Dictionary<string, Action> spellsDict;
+    private Camera mainCamera;
+    private Vector3 cursorWorldPos;
 
     void Start()
     {
+        mainCamera = Camera.main;
         spellsDict = new Dictionary<string, Action>
-    {
-        {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
-        {"Fire2", () => SelfSpell(3, "SpeedBoost")},
-        {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
-        {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
-        {"Fire1+Fire3", () => CoilSpell(1, "Burn")},
-        {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
-        {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
-    };
-    }
-
-    void Update()
-    {
-        lookRight = gameObject.GetComponent<PlayerAttack>().lookRight;
+        {
+            {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
+            {"Fire2", () => SelfSpell(3, "SpeedBoost")},
+            {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
+            {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
+            {"Fire1+Fire3", () => AreaSpell(1, "Burn")},
+            {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
+            {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
+        };
     }
 
     public void HandleSpell(string combo)
     {
         if (spellsDict.TryGetValue(combo, out Action spell))
         {
+            cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            cursorWorldPos.z = 0;
             spell();  // Каст заклинания, если существует такое комбо
         }
         else
@@ -45,18 +43,19 @@ public class SpellCast : MonoBehaviour
 
     private void ShootingSpell(Color colorOfShoot, string effectType="No effect")
     {
-        GameObject obj = Instantiate(shootSprite, startPos.position, Quaternion.identity);
-        obj.GetComponent<ShootSpell>().lookRight = lookRight;
+        GameObject obj = Instantiate(shootingSpellPrefab, transform.position, Quaternion.identity);
+        obj.AddComponent<ShootSpell>();
+        obj.GetComponent<ShootSpell>().cursorPos = cursorWorldPos;
+        obj.GetComponent<ShootSpell>().force = shootingSpellForce;
         obj.GetComponent<ShootSpell>().effectType = effectType;
         obj.GetComponent<SpriteRenderer>().color = colorOfShoot;
     }
 
-    private void CoilSpell(int range, string effectType="No effect")
+    private void AreaSpell(int range, string effectType="No effect")
     {
-        GameObject obj = Instantiate(coilSprite, startPos.position, Quaternion.identity);
-        obj.GetComponent<CoilSpell>().lookRight = lookRight;
-        obj.GetComponent<CoilSpell>().range = range;
-        obj.GetComponent<CoilSpell>().effectType = effectType;
+        GameObject obj = Instantiate(areaSpellPrefab, cursorWorldPos, Quaternion.identity);
+        obj.AddComponent<AreaSpell>();
+        obj.GetComponent<AreaSpell>().effectType = effectType;
     }
 
     private void SelfSpell(float amount, string effectType)
