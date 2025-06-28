@@ -58,6 +58,22 @@ jobs:
         targetPlatform:
           - WebGL
     steps:
+
+      - name: Check if WebGL build exists
+        if: matrix.targetPlatform == 'WebGL'
+        run: |
+          if [ ! -d "build/WebGL" ]; then
+            echo "❌ WebGL build not found"
+            exit 1
+          fi
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildName: WebGL
+          buildPath: build
+
+
       - uses: actions/checkout@v4
         with:
 
