@@ -1,0 +1,107 @@
+name: Check Project Structure and Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs: 
+  code-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install CSharpier tool
+        run: dotnet tool install -g csharpier
+
+      - name: Run code style check with CSharpier
+        run: |
+          export PATH="$PATH:$HOME/.dotnet/tools"
+
+          echo "🔍 Searching for .cs files..."
+          cs_files=$(find . -type f -name "*.cs")
+          echo "📂 Files to be checked:"
+          echo "$cs_files"
+          echo "$cs_files" > cs_file_list.txt
+
+          issue_count=0
+          while IFS= read -r file; do
+            output=$(csharpier --check "$file" 2>&1 || true)
+            echo "$output"
+            if echo "$output" | grep -q "formatted"; then
+              issue_count=$((issue_count + 1))
+            fi
+          done < cs_file_list.txt
+
+          echo "⚠️ Total formatting issues: $issue_count"
+
+          if (( $(echo "$issue_count > 100" | bc -l) )); then
+            echo "❌ Code style too poor"
+            exit 1
+          fi
+
+  buildForAllSupportedPlatforms:
+    name: Build for ${{ matrix.targetPlatform }}
+    needs: code-lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - WebGL
+    steps:
+      - uses: actions/checkout@v4
+        with:
+
+          fetch-depth: 0
+          lfs: true
+
+      - uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+
+      - if: matrix.targetPlatform == 'Android'
+        uses: jlumbroso/free-disk-space@v1.3.1
+
+      - name: Enable WebGL Decompression Fallback (temporary)
+        if: matrix.targetPlatform == 'WebGL'
+        run: |
+          echo "🔧 Enabling webGLDecompressionFallback..."
+          if grep -q "webGLDecompressionFallback: 0" ProjectSettings/ProjectSettings.asset; then
+            sed -i 's/webGLDecompressionFallback: 0/webGLDecompressionFallback: 1/' ProjectSettings/ProjectSettings.asset
+            echo "✅ Changed fallback setting to 1"
+          else
+            echo "⚠️ No change needed or already set"
+          fi
+
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+      - uses: actions/upload-artifact@v4
+
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
+      # gh pages
+      - name: Deploy WebGL build to GitHub Pages
+        if: matrix.targetPlatform == 'WebGL'
+        uses: peaceiris/actions-gh-pages@v3
+
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/WebGL
