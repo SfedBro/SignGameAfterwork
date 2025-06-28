@@ -73,17 +73,6 @@ jobs:
       - if: matrix.targetPlatform == 'Android'
         uses: jlumbroso/free-disk-space@v1.3.1
 
-      - name: Enable WebGL Decompression Fallback (temporary)
-        if: matrix.targetPlatform == 'WebGL'
-        run: |
-          echo "🔧 Enabling webGLDecompressionFallback..."
-          if grep -q "webGLDecompressionFallback: 0" ProjectSettings/ProjectSettings.asset; then
-            sed -i 's/webGLDecompressionFallback: 0/webGLDecompressionFallback: 1/' ProjectSettings/ProjectSettings.asset
-            echo "✅ Changed fallback setting to 1"
-          else
-            echo "⚠️ No change needed or already set"
-          fi
-
       - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
