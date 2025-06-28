@@ -67,7 +67,9 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
-          buildPath: build
+          buildName: WebGL
+          buildsPath: build
+
 
       - name: Verify WebGL output exists
         run: |
