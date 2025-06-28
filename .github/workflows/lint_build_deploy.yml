@@ -1,37 +1,32 @@
-name: Check Project Structure and Lint
+name: Lint and Build WebGL
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
-jobs: 
-  code-lint:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Code Linting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install CSharpier tool
+      - name: Install CSharpier
         run: dotnet tool install -g csharpier
 
       - name: Run code style check with CSharpier
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
-
-          echo "🔍 Searching for .cs files..."
           cs_files=$(find . -type f -name "*.cs")
-          echo "📂 Files to be checked:"
-          echo "$cs_files"
           echo "$cs_files" > cs_file_list.txt
-
           issue_count=0
           while IFS= read -r file; do
             output=$(csharpier --check "$file" 2>&1 || true)
@@ -40,73 +35,56 @@ jobs:
               issue_count=$((issue_count + 1))
             fi
           done < cs_file_list.txt
-
           echo "⚠️ Total formatting issues: $issue_count"
-
-          if (( $(echo "$issue_count > 100" | bc -l) )); then
-            echo "❌ Code style too poor"
+          if (( issue_count > 100 )); then
+            echo "❌ Too many formatting issues"
             exit 1
           fi
 
-  buildForAllSupportedPlatforms:
-    name: Build for ${{ matrix.targetPlatform }}
-    needs: code-lint
+  build-webgl:
+    name: Build & Deploy WebGL
+    needs: lint
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - WebGL
     steps:
-
-      - name: Check if WebGL build exists
-        if: matrix.targetPlatform == 'WebGL'
-        run: |
-          if [ ! -d "build/WebGL" ]; then
-            echo "❌ WebGL build not found"
-            exit 1
-          fi
-
-      - uses: game-ci/unity-builder@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildName: WebGL
-          buildPath: build
-
-
-      - uses: actions/checkout@v4
-        with:
-
-          fetch-depth: 0
           lfs: true
+          fetch-depth: 0
 
-      - uses: actions/cache@v3
+      - name: Cache Unity Library
+        uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
+          key: Library-WebGL
           restore-keys: Library-
 
-      - if: matrix.targetPlatform == 'Android'
-        uses: jlumbroso/free-disk-space@v1.3.1
-
-      - uses: game-ci/unity-builder@v4
+      - name: Build WebGL with Unity
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-      - uses: actions/upload-artifact@v4
+          targetPlatform: WebGL
+          buildPath: build
 
+      - name: Verify WebGL output exists
+        run: |
+          if [ ! -d "build/WebGL" ]; then
+            echo "❌ WebGL build folder not found"
+            exit 1
+          fi
+
+      - name: Upload WebGL build artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
+          name: Build-WebGL
+          path: build/WebGL
 
-      # gh pages
-      - name: Deploy WebGL build to GitHub Pages
-        if: matrix.targetPlatform == 'WebGL'
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-
+        if: success()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build/WebGL
