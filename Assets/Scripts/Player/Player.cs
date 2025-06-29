@@ -45,10 +45,7 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) {
         if (hp <= 0 || iSecondsCount > 0) return;
-
-        // hp = Mathf.Max(hp - damage, 0);
-        hp--;
-
+        hp = Mathf.Max(hp - damage, 0);
         iSecondsCount = iSeconds;
         Debug.Log($"HP {hp}");
         if (hp <= 0) GameManager.I.PlayerDied();
