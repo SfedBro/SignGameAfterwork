@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccadf28913bab44b89040f420408b32, type: 3}
   m_Name: FlyingEnemy1
   m_EditorClassIdentifier: 
-  health: 50
+  health: 10
   damage: 1
   visionRange: 25
   speed: 10
