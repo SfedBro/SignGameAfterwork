@@ -42,9 +42,33 @@ jobs:
           fi
 
   build:
-    name: Build WebGL, Windows, macOS
+    name: Build ${{ matrix.buildName }}
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - targetPlatform: StandaloneOSX
+            buildName: macOS
+            runner: macos-latest
+
+          - targetPlatform: StandaloneWindows
+            buildName: Windows32
+            runner: windows-latest
+
+          - targetPlatform: StandaloneWindows64
+            buildName: Windows64
+            runner: windows-latest
+
+          - targetPlatform: StandaloneLinux64
+            buildName: Linux
+            runner: ubuntu-latest
+
+          - targetPlatform: WebGL
+            buildName: WebGL
+            runner: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -70,21 +94,19 @@ jobs:
           buildName: ${{ matrix.buildName }}
           buildsPath: build
 
+      - name: Verify build output exists
+        run: |
+          if [ ! -d "build/${{ matrix.buildName }}" ]; then
+            echo "❌ Build folder build/${{ matrix.buildName }} not found"
+            exit 1
+          fi
+        shell: bash
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.buildName }}
           path: build/${{ matrix.buildName }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
-          - StandaloneWindows # Build a Windows standalone.
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - WebGL # WebGL.
 
   deploy:
     name: Deploy WebGL to GitHub Pages
