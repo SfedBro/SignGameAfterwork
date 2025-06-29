@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObeliskInteraction : MonoBehaviour
 {
-    [SerializeField] private GameObject letterE;
+    // [SerializeField] private GameObject letterE;
     [SerializeField] private GameObject blackPentagram;
     [SerializeField] private GameObject whitePentagram; 
     [SerializeField] private ParticleSystem spiralParticles;
@@ -20,13 +20,10 @@ public class ObeliskInteraction : MonoBehaviour
         blackPentagramRenderer = blackPentagram.GetComponent<SpriteRenderer>();
         whitePentagramRenderer = whitePentagram.GetComponent<SpriteRenderer>();
 
-        // белая пентаграмма изначально не видна
         SetAlpha(whitePentagramRenderer, 0f);
 
-        // буква E не показывается, пока игрок не подойдет
-        letterE.SetActive(false); 
+        // letterE.SetActive(false); 
 
-        // частицы на паузе
         spiralParticles.Stop(); 
     }
 
@@ -41,10 +38,10 @@ public class ObeliskInteraction : MonoBehaviour
         float distance = Vector2.Distance(transform.position, player.transform.position);
         isPlayerNearby = distance <= detectionRadius;
         
-        // показываем E, если чел рядом
-        letterE.SetActive(isPlayerNearby); 
+        // letterE.SetActive(isPlayerNearby); 
 
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && !isActivated) 
+        // if (isPlayerNearby && Input.GetKeyDown(KeyCode.E) && !isActivated)
+        if (isPlayerNearby && !isActivated)
         {
             isActivated = true;
             StartCoroutine(FadePentagrams());
@@ -61,28 +58,23 @@ public class ObeliskInteraction : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / fadeDuration;
             
-            // плавно убираем черную пентаграмму
             SetAlpha(blackPentagramRenderer, Mathf.Lerp(1f, 0f, t));
             
-            // плавно показываем белую
             SetAlpha(whitePentagramRenderer, Mathf.Lerp(0f, 1f, t)); 
             yield return null;
         }
 
-        // на всякий случай
         SetAlpha(blackPentagramRenderer, 0f);
         SetAlpha(whitePentagramRenderer, 1f);
     }
 
     private void SetAlpha(SpriteRenderer renderer, float alpha)
     {
-        // меняем прозрачность
         Color color = renderer.color;
         color.a = alpha;
         renderer.color = color;
     }
 
-    // показывает радиус в редакторе, чтобы было удобно настраивать
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

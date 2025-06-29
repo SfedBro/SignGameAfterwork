@@ -55813,6 +55813,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 604712644104637828, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1929706527586578748, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       propertyPath: m_Name
       value: Checkpoint
@@ -55857,16 +55861,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7961081998083397650, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1929706527586578748, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 120661685}
+      insertIndex: 2
+      addedObject: {fileID: 120661686}
     - targetCorrespondingSourceObject: {fileID: 1929706527586578748, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 120661686}
+      addedObject: {fileID: 120661685}
   m_SourcePrefab: {fileID: 100100000, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
 --- !u!114 &5437794826708776646 stripped
 MonoBehaviour:
