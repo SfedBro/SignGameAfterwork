@@ -70,13 +70,6 @@ jobs:
           buildName: ${{ matrix.buildName }}
           buildsPath: build
 
-      - name: Verify build output exists
-        run: |
-          if [ ! -d "build/${{ matrix.buildName }}" ]; then
-            echo "❌ Build folder build/${{ matrix.buildName }} not found"
-            exit 1
-          fi
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -84,14 +77,14 @@ jobs:
           path: build/${{ matrix.buildName }}
 
     strategy:
+      fail-fast: false
       matrix:
-        include:
-          - targetPlatform: WebGL
-            buildName: WebGL
-          - targetPlatform: StandaloneWindows64
-            buildName: Windows
-          - targetPlatform: StandaloneOSX
-            buildName: macOS
+        targetPlatform:
+          - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+          - StandaloneWindows # Build a Windows standalone.
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - StandaloneLinux64 # Build a Linux 64-bit standalone.
+          - WebGL # WebGL.
 
   deploy:
     name: Deploy WebGL to GitHub Pages
