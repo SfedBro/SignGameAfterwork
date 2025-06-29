@@ -4,17 +4,14 @@ using System;
 
 public class SpellEffect : MonoBehaviour
 {
-    public float burnDuration = 3f;
-    public float poisonDuration = 5f;
     public float knockbackForce = 200f;
-    public float hpPercentDamage = 0.1f;
 
     public float speedBoostDuration = 5f;
 
     private bool extraDamageApplied = false;
     private float extraDamageAmount = 0f;
 
-    public void ApplyEffect(GameObject self, GameObject target, string type = "No effect", float amount = 3)
+    public void ApplyEffect(GameObject self, GameObject target, string type = "No effect", float duration = 0f, float amount = 0f)
     {
         if (extraDamageApplied && type != "SpeedBoost" && type != "ExtraDamage")
         {
@@ -25,23 +22,19 @@ public class SpellEffect : MonoBehaviour
 
         if (type == "No effect")
         {
-            MakeDamage(target, amount);
+            
         }
         else if (type == "PercentDamage")
         {
-            MakePercentDamage(target);
+            MakePercentDamage(target, amount);
         }
         else if (type == "Poison")
         {
-            StartPoisoning(target);
+            StartPoisoning(target, duration);
         }
         else if (type == "Burn")
         {
-            StartBurning(target);
-        }
-        else if (type == "BurnLong")
-        {
-            StartBurning(target, 3f);
+            StartBurning(target, duration);
         }
         else if (type == "Knockback")
         {
@@ -49,11 +42,11 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "SpeedBoost")
         {
-            StartCoroutine(SpeedBoost(self, amount));
+            StartCoroutine(SpeedBoost(self, 3));
         }
         else if (type == "ExtraDamage")
         {
-            ExtraDamage(self, amount);
+            ExtraDamage(self, 3);
         }
     }
 
@@ -70,11 +63,11 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
-    private void MakePercentDamage(GameObject obj)
+    private void MakePercentDamage(GameObject obj, float percent)
     {
         if (obj.CompareTag("Enemy"))
         {
-            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * hpPercentDamage));
+            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent/100));
         }
         else if (obj.CompareTag("Player"))
         {
@@ -82,16 +75,16 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
-    private void StartBurning(GameObject obj, float extraDuration = 0f)
+    private Coroutine StartBurning(GameObject obj, float duration)
     {
         Debug.Log($"{obj.name} был подожжен!");
-        StartCoroutine(Burn(obj, extraDuration));
+        return StartCoroutine(Burn(obj, duration));
     }
 
-    private void StartPoisoning(GameObject obj, float extraDuration = 0f)
+    private Coroutine StartPoisoning(GameObject obj, float duration)
     {
         Debug.Log($"{obj.name} был отравлен!");
-        StartCoroutine(Poison(obj, extraDuration));
+        return StartCoroutine(Poison(obj, duration));
     }
 
     private void ApplyKnockback(GameObject self, GameObject obj)
@@ -107,11 +100,11 @@ public class SpellEffect : MonoBehaviour
         Debug.Log($"Объект {obj.name} отброшен с силой {knockbackForce}");
     }
 
-    private IEnumerator Burn(GameObject obj, float extraDuration)
+    private IEnumerator Burn(GameObject obj, float duration)
     {
         float timer = 0f;
 
-        while (timer < burnDuration + extraDuration)
+        while (timer < duration)
         {
             if (obj != null)
             {
@@ -131,11 +124,11 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
-    private IEnumerator Poison(GameObject obj, float extraDuration)
+    private IEnumerator Poison(GameObject obj, float duration)
     {
         float timer = 0f;
 
-        while (timer < poisonDuration + extraDuration)
+        while (timer < duration)
         {
             int damage = UnityEngine.Random.Range(1, 4);
             obj.GetComponent<SpriteRenderer>().color = new Color(0f, 0.5f, 0f);

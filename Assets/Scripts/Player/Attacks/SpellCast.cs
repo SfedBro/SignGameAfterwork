@@ -9,49 +9,75 @@ public class SpellCast : MonoBehaviour
     public float shootingSpellForce = 100f;
 
     private Dictionary<string, Action> spellsDict;
+    private Dictionary<string, Spell> allSpells;
     private Camera mainCamera;
     private Vector3 cursorWorldPos;
 
     void Start()
     {
         mainCamera = Camera.main;
-        spellsDict = new Dictionary<string, Action>
-        {
-            {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
-            {"Fire2", () => SelfSpell(3, "SpeedBoost")},
-            {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
-            {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
-            {"Fire1+Fire3", () => AreaSpell(1, "Burn")},
-            {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
-            {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
-        };
+        // spellsDict = new Dictionary<string, Action>
+        // {
+        //     {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
+        //     {"Fire2", () => SelfSpell(3, "SpeedBoost")},
+        //     {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
+        //     {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
+        //     {"Fire1+Fire3", () => AreaSpell("Burn")},
+        //     {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
+        //     {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
+        // };
     }
 
-    public void HandleSpell(string combo)
+    public void castSpell(Spell someSpell)
     {
-        if (spellsDict.TryGetValue(combo, out Action spell))
+        // Получаем позицию курсора и разворачиваем игрока в его сторону
+        cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        cursorWorldPos.z = 0;
+        FixPlayersLook();
+        // Кастуем заклинание
+        if (someSpell.Type == "Shoot")
         {
-            cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            cursorWorldPos.z = 0;
-            spell();  // Каст заклинания, если существует такое комбо
+            ShootingSpell(someSpell);
         }
-        else
+        else if (someSpell.Type == "Area")
         {
-            Debug.Log("Заклинание не изучено!");
-        }
-}
 
-    private void ShootingSpell(Color colorOfShoot, string effectType="No effect")
+        }
+        else if (someSpell.Type == "Self")
+        {
+            
+        }
+
+
+    }
+
+    // public void HandleSpell(string combo)
+    // {
+    //     if (spellsDict.TryGetValue(combo, out Action spell))
+    //     {
+    //         cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+    //         cursorWorldPos.z = 0;
+    //         FixPlayersLook();
+    //         spell();  // Каст заклинания, если существует такое комбо
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("Заклинание не изучено!");
+    //     }
+    // }
+
+    private void ShootingSpell(Spell someSpell)
     {
-        GameObject obj = Instantiate(shootingSpellPrefab, transform.position, Quaternion.identity);
+        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
         obj.AddComponent<ShootSpell>();
         obj.GetComponent<ShootSpell>().cursorPos = cursorWorldPos;
         obj.GetComponent<ShootSpell>().force = shootingSpellForce;
-        obj.GetComponent<ShootSpell>().effectType = effectType;
-        obj.GetComponent<SpriteRenderer>().color = colorOfShoot;
+        obj.GetComponent<ShootSpell>().damage = someSpell.Damage;
+        obj.GetComponent<ShootSpell>().effectType = someSpell.Effect;
+        obj.GetComponent<ShootSpell>().effectDuration = someSpell.EffectDuration;
     }
 
-    private void AreaSpell(int range, string effectType="No effect")
+    private void AreaSpell(string effectType = "No effect")
     {
         GameObject obj = Instantiate(areaSpellPrefab, cursorWorldPos, Quaternion.identity);
         obj.AddComponent<AreaSpell>();
@@ -61,5 +87,10 @@ public class SpellCast : MonoBehaviour
     private void SelfSpell(float amount, string effectType)
     {
         EffectsManager.Instance.effect.ApplyEffect(gameObject, gameObject, effectType, amount);
+    }
+
+    private void FixPlayersLook()
+    {
+        gameObject.GetComponent<SpriteRenderer>().flipX = cursorWorldPos.x > transform.position.x;
     }
 }

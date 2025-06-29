@@ -7,16 +7,28 @@ public class PlayerAttack : MonoBehaviour
     public string enemyTag = "Enemy";
     public float timeAvailableForCombo = 1f;
 
-    private SpellCast spell; // реализация разных видов заклинаний
+    private SpellCast spellCaster; // реализация разных видов заклинаний
+    private Spell newSpell;
+    private SpellsManager allSpells;
     private List<string> actualCombo = new List<string>();
     private float timer;
     private bool inputForTimer = false;
     private bool timerIsOn = false;
 
-    
+
     private void Start()
     {
-        spell = GetComponent<SpellCast>();
+        if (!GetComponent<SpellCast>())
+        {
+            gameObject.AddComponent<SpellCast>();
+        }
+        if (!GetComponent<SpellsManager>())
+        {
+            gameObject.AddComponent<SpellsManager>();
+        }
+        spellCaster = GetComponent<SpellCast>();
+        allSpells = GetComponent<SpellsManager>();
+
     }
 
     private void Update()
@@ -90,7 +102,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void MakeAttack(List<string> combo)
     {
-        spell.HandleSpell(string.Join("+", combo));
-        Debug.Log($"Использована комбинация: {string.Join("+", combo)}");
+        //spell.HandleSpell(string.Join("+", combo));
+        newSpell = allSpells.getSpellByCombo(string.Join("+", combo));
+        spellCaster.castSpell(newSpell);
+        Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.Name}");
     }
 }

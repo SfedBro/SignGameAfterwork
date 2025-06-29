@@ -5,8 +5,9 @@ public class ShootSpell : MonoBehaviour
 {
     public float force;
     public float lifeDistance = 20f;
-    public bool lookRight;
+    public float damage;
     public string effectType;
+    public float effectDuration;
     public Vector3 cursorPos;
 
     private Rigidbody2D physic;
@@ -15,6 +16,11 @@ public class ShootSpell : MonoBehaviour
     private void Start()
     {
         origPos = transform.position;
+        if (!GetComponent<Rigidbody2D>())
+        {
+            gameObject.AddComponent<Rigidbody2D>();
+        }
+
         physic = GetComponent<Rigidbody2D>();
         physic.AddForce(force * (cursorPos - origPos).normalized);
     }
@@ -29,7 +35,9 @@ public class ShootSpell : MonoBehaviour
         if (collider.tag == "Enemy")
         {
             Debug.Log("Collision!");
-            EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType);
+            collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            // Здесь будем на врага накладывать эффект, если он есть. Для этого добавляем врагу новый EffectsManager, если его нет.
+            EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
             Destroy(gameObject);
         }
     }
