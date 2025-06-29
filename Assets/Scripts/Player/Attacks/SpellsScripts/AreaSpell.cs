@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class AreaSpell : MonoBehaviour
+public class AreaSpellActions : MonoBehaviour
 {
     public float duration = 0.1f;
     public bool lookRight;
     public string effectType;
+    public float effectDuration;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class AreaSpell : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType);
+            EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType, effectDuration);
         }
     }
 }

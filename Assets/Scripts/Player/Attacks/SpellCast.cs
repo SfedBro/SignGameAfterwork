@@ -8,24 +8,12 @@ public class SpellCast : MonoBehaviour
     public GameObject areaSpellPrefab;
     public float shootingSpellForce = 100f;
 
-    private Dictionary<string, Action> spellsDict;
-    private Dictionary<string, Spell> allSpells;
     private Camera mainCamera;
     private Vector3 cursorWorldPos;
 
     void Start()
     {
         mainCamera = Camera.main;
-        // spellsDict = new Dictionary<string, Action>
-        // {
-        //     {"Fire1", () => ShootingSpell(new Color(1f, 0.6f, 0f))},
-        //     {"Fire2", () => SelfSpell(3, "SpeedBoost")},
-        //     {"Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "Burn")},
-        //     {"Fire1+Fire2", () => SelfSpell(3, "ExtraDamage")},
-        //     {"Fire1+Fire3", () => AreaSpell("Burn")},
-        //     {"Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "BurnLong")},
-        //     {"Fire1+Fire2+Fire3", () => ShootingSpell(new Color(1f, 0.6f, 0f), "PercentDamage")}
-        // };
     }
 
     public void castSpell(Spell someSpell)
@@ -37,56 +25,45 @@ public class SpellCast : MonoBehaviour
         // Кастуем заклинание
         if (someSpell.Type == "Shoot")
         {
-            ShootingSpell(someSpell);
+            ShootingSpell((ShootSpell)someSpell);
         }
-        else if (someSpell.Type == "Area")
+        else if (someSpell.Type == "AoE")
         {
-
+            AreaSpell((AoeSpell)someSpell);
         }
-        else if (someSpell.Type == "Self")
+        else if (someSpell.Type == "Buff")
         {
-            
+            SelfSpell((BuffSpell)someSpell);
         }
-
-
+        else
+        {
+            Debug.Log($"{someSpell.Type} - неизвестный тип заклинания");
+        }
     }
 
-    // public void HandleSpell(string combo)
-    // {
-    //     if (spellsDict.TryGetValue(combo, out Action spell))
-    //     {
-    //         cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-    //         cursorWorldPos.z = 0;
-    //         FixPlayersLook();
-    //         spell();  // Каст заклинания, если существует такое комбо
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("Заклинание не изучено!");
-    //     }
-    // }
-
-    private void ShootingSpell(Spell someSpell)
+    private void ShootingSpell(ShootSpell someSpell)
     {
         GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
-        obj.AddComponent<ShootSpell>();
-        obj.GetComponent<ShootSpell>().cursorPos = cursorWorldPos;
-        obj.GetComponent<ShootSpell>().force = shootingSpellForce;
-        obj.GetComponent<ShootSpell>().damage = someSpell.Damage;
-        obj.GetComponent<ShootSpell>().effectType = someSpell.Effect;
-        obj.GetComponent<ShootSpell>().effectDuration = someSpell.EffectDuration;
+        obj.AddComponent<ShootSpellActions>();
+        obj.GetComponent<ShootSpellActions>().cursorPos = cursorWorldPos;
+        obj.GetComponent<ShootSpellActions>().force = shootingSpellForce;
+        obj.GetComponent<ShootSpellActions>().damage = someSpell.Damage;
+        obj.GetComponent<ShootSpellActions>().effectType = someSpell.Effect;
+        obj.GetComponent<ShootSpellActions>().effectDuration = someSpell.EffectDuration;
     }
 
-    private void AreaSpell(string effectType = "No effect")
+    private void AreaSpell(AoeSpell someSpell)
     {
-        GameObject obj = Instantiate(areaSpellPrefab, cursorWorldPos, Quaternion.identity);
-        obj.AddComponent<AreaSpell>();
-        obj.GetComponent<AreaSpell>().effectType = effectType;
+        GameObject obj = Instantiate(someSpell.Prefab, cursorWorldPos, Quaternion.identity);
+        obj.AddComponent<AreaSpellActions>();
+        obj.GetComponent<AreaSpellActions>().effectType = someSpell.Effect;
+        obj.GetComponent<AreaSpellActions>().effectDuration = someSpell.EffectDuration;
+        obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius*2, someSpell.Radius*2, 0);
     }
 
-    private void SelfSpell(float amount, string effectType)
+    private void SelfSpell(BuffSpell someSpell)
     {
-        EffectsManager.Instance.effect.ApplyEffect(gameObject, gameObject, effectType, amount);
+        EffectsManager.Instance.effect.ApplyEffect(gameObject, gameObject, someSpell.Effect, someSpell.EffectDuration);
     }
 
     private void FixPlayersLook()

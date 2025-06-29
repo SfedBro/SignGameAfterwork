@@ -17,6 +17,13 @@ public class SpellsManager : MonoBehaviour
 
     public Spell getSpellByCombo(string combo)
     {
-        return allSpells[combo];
+        if (allSpells.ContainsKey(combo))
+        {
+            return allSpells[combo];
+        }
+        else
+        {
+            return null;
+        }
     }
 }

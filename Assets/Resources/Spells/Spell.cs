@@ -1,17 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Spell", menuName = "Spell", order = 51)]
+[CreateAssetMenu(fileName = "New Spell", menuName = "Spells/Base Spell")]
 public class Spell : ScriptableObject
 {
     [Header("Основные настройки")]
     [SerializeField] private string spellName;
     [SerializeField] private string mainElement;
     [SerializeField] private string combo;
-    private string spellType = "Shoot";
-    [SerializeField] private GameObject spellPrefab;
+    protected string spellType;
 
     [Header("Специальные настройки")]
-    [SerializeField] private float damage;
+
     [SerializeField] private string effect;
     [SerializeField] private float effectDuration;
 
@@ -31,26 +30,11 @@ public class Spell : ScriptableObject
         }
     }
 
-    public GameObject Prefab
-    {
-        get
-        {
-            return spellPrefab;
-        }
-    }
     public string MainElement
     {
         get
         {
             return mainElement;
-        }
-    }
-
-    public float Damage
-    {
-        get
-        {
-            return damage;
         }
     }
 

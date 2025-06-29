@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ShootSpell : MonoBehaviour
+public class ShootSpellActions : MonoBehaviour
 {
     public float force;
     public float lifeDistance = 20f;
@@ -35,9 +35,20 @@ public class ShootSpell : MonoBehaviour
         if (collider.tag == "Enemy")
         {
             Debug.Log("Collision!");
-            collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
-            // Здесь будем на врага накладывать эффект, если он есть. Для этого добавляем врагу новый EffectsManager, если его нет.
-            EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
+            if (effectType != "PercentDamage")
+            {
+                if (damage != 0)
+                {
+                    collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+                }
+                // Здесь будем на врага накладывать эффект, если он есть. Для этого добавляем врагу новый EffectsManager, если его нет.
+                EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
+            }
+            else
+            {
+                EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, 0, damage);
+            }
+            
             Destroy(gameObject);
         }
     }

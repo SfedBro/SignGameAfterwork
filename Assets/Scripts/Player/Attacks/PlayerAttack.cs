@@ -7,9 +7,9 @@ public class PlayerAttack : MonoBehaviour
     public string enemyTag = "Enemy";
     public float timeAvailableForCombo = 1f;
 
-    private SpellCast spellCaster; // реализация разных видов заклинаний
-    private Spell newSpell;
-    private SpellsManager allSpells;
+    private SpellCast spellCaster; // Реализация заклинаний
+    private Spell newSpell; // Объект заклинания
+    private SpellsManager allSpells; // Все заклинания
     private List<string> actualCombo = new List<string>();
     private float timer;
     private bool inputForTimer = false;
@@ -83,18 +83,15 @@ public class PlayerAttack : MonoBehaviour
             {
                 timer = 0f;
                 inputForTimer = false;
-                Debug.Log("Timer started!");
             }
             else
             {
-                Debug.Log($"timer: {timer}");
                 timer += 0.1f;
             }
             yield return new WaitForSeconds(0.1f);
         }
 
         MakeAttack(actualCombo);
-        Debug.Log("Timer is out!");
         actualCombo.Clear();
         timer = 0f;
         timerIsOn = false;
@@ -102,9 +99,16 @@ public class PlayerAttack : MonoBehaviour
 
     private void MakeAttack(List<string> combo)
     {
-        //spell.HandleSpell(string.Join("+", combo));
-        newSpell = allSpells.getSpellByCombo(string.Join("+", combo));
-        spellCaster.castSpell(newSpell);
-        Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.Name}");
+        if (allSpells.getSpellByCombo(string.Join("+", combo)) == null)
+        {
+            Debug.Log("Заклинание не изучено!");
+        }
+        else
+        {
+            newSpell = allSpells.getSpellByCombo(string.Join("+", combo));
+            Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.Name}");
+            spellCaster.castSpell(newSpell);
+        }
+        
     }
 }

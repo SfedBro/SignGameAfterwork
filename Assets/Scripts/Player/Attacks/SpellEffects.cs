@@ -22,7 +22,7 @@ public class SpellEffect : MonoBehaviour
 
         if (type == "No effect")
         {
-            
+            Debug.Log("Заклинание не имело никаких эффектов");
         }
         else if (type == "PercentDamage")
         {
@@ -48,6 +48,10 @@ public class SpellEffect : MonoBehaviour
         {
             ExtraDamage(self, 3);
         }
+        else
+        {
+            Debug.Log("Неизвестный тип эффекта!");
+        }
     }
 
     private void MakeDamage(GameObject obj, float damage)
@@ -67,7 +71,7 @@ public class SpellEffect : MonoBehaviour
     {
         if (obj.CompareTag("Enemy"))
         {
-            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent/100));
+            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent/100f));
         }
         else if (obj.CompareTag("Player"))
         {
