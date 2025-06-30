@@ -76,61 +76,6 @@ jobs:
           name: Build-WebGL
           path: build/WebGL
 
-  build-others:
-    name: Build Other Platforms
-    needs: lint
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - targetPlatform: StandaloneOSX
-            buildName: macOS
-            runner: macos-latest
-
-          - targetPlatform: StandaloneWindows
-            buildName: Windows32
-            runner: windows-latest
-
-          - targetPlatform: StandaloneWindows64
-            buildName: Windows64
-            runner: windows-latest
-
-          - targetPlatform: StandaloneLinux64
-            buildName: Linux
-            runner: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-          fetch-depth: 0
-
-      - name: Cache Unity Library
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
-
-      - name: Build with Unity
-        uses: game-ci/unity-builder@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-          buildName: ${{ matrix.buildName }}
-          buildsPath: build
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build-${{ matrix.buildName }}
-          path: build/${{ matrix.buildName }}
-
   deploy:
     name: Deploy WebGL to GitHub Pages
     needs: build-webgl
