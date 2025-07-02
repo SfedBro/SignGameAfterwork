@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 1224501500013118392}
-  mapPointer: {fileID: 0}
+  mapPointer: {fileID: 8992076165480728575}
   mapPointerOffest: {x: 0, y: -150}
   mapLevelInfos:
   - sceneName: LevelCave000
