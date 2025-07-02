@@ -335,6 +335,11 @@ MonoBehaviour:
   acceleration: 5
   stoppingDistance: 1.5
   visionRange: 25
+  untilPatrolTime: 3
+  untilChangeTime: 3
+  patrolRange: 5
+  isPatrolRunning: 0
+  isWaitingForPlayer: 0
 --- !u!114 &4719359554338171692
 MonoBehaviour:
   m_ObjectHideFlags: 0

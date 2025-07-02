@@ -2,32 +2,27 @@
 
 **Sign game** project is a 🖱️ *2D Unity platformer* about *a mysterious wizard*, seeking to defeat evil in its world by his power \- *magical runes*. ✍️ Use spells, combining different signs to crush all enemies in your path! Plunge into the world of 🪄 dark magic, where everyone who knows your peculiarity will try to take your strength at 💀 all costs...
 
-## How to install our game
+## 🖥️ How to install our game
 
 1. Come to game **[releases](https://github.com/IU-Capstone-Project-2025/SignGame/releases)**
 
-2. Download the *latest one*
+2. Download the **latest one**
+   
+- Available OS/platforms list:
 
+  * **Windows x64**
+  * **Windows x86**
+  * **Linux**
+  * **Web version**
+  * *Android (planned)*
+  * *IOS (planned)*
+  
 3. Extract **all files** from archive to any folder on your PC
 
-4. Start *.exe* file
+4. Open **setup** file
 
-5. Enjoy our game!
+5. **Enjoy** our game!
 
-
-# 🖥️ System Requirements
-
-## 🚀 Recommended System Requirements
-
-- **Operating System:** Windows 10 / 11 (64-bit)
-- **Processor:** Intel Core i3 or AMD Ryzen 3
-- **Memory:** 2 GB RAM
-- **Graphics:** NVIDIA GTX 750 / AMD Radeon HD 7770 or better
-- **DirectX:** Version 11
-- **Storage:** 500 MB available space
-- **Sound Card:** Modern DirectX-compatible sound device
-
----
 
 ## 🧩 Additional Information
 
