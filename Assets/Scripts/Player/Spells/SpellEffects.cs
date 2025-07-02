@@ -11,7 +11,7 @@ public class SpellEffect : MonoBehaviour
     private bool extraDamageApplied = false;
     private float extraDamageAmount = 0f;
 
-    public void ApplyEffect(GameObject self, GameObject target, string type = "No effect", float duration = 0f, float amount = 0f)
+    public Coroutine ApplyEffect(GameObject self, GameObject target, string type = "No effect", float duration = 0f, float amount = 0f, Action onComplete = null)
     {
         if (extraDamageApplied && type != "SpeedBoost" && type != "ExtraDamage")
         {
@@ -26,15 +26,15 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "PercentDamage")
         {
-            MakePercentDamage(target, amount);
+            MakePercentDamage(target, duration);
         }
         else if (type == "Poison")
         {
-            StartPoisoning(target, duration);
+            return StartCoroutine(Poison(target, duration, onComplete));
         }
         else if (type == "Burn")
         {
-            StartBurning(target, duration);
+            return StartCoroutine(Burn(target, duration, onComplete));
         }
         else if (type == "Knockback")
         {
@@ -42,16 +42,17 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "SpeedBoost")
         {
-            StartCoroutine(SpeedBoost(self, 3));
+            return StartCoroutine(SpeedBoost(self, amount, onComplete));
         }
         else if (type == "ExtraDamage")
         {
-            ExtraDamage(self, 3);
+            ExtraDamage(self, amount);
         }
         else
         {
             Debug.Log("Неизвестный тип эффекта!");
         }
+        return null;
     }
 
     private void MakeDamage(GameObject obj, float damage)
@@ -61,9 +62,9 @@ public class SpellEffect : MonoBehaviour
         {
             obj.GetComponent<Enemy>().TakeDamage(damage);
         }
-        else if (obj.CompareTag("Player"))
+        else if (obj.CompareTag("Boss"))
         {
-            //obj.GetComponent<Player>().takeDamage(damage);
+
         }
     }
 
@@ -71,24 +72,12 @@ public class SpellEffect : MonoBehaviour
     {
         if (obj.CompareTag("Enemy"))
         {
-            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent/100f));
+            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent / 100f));
         }
-        else if (obj.CompareTag("Player"))
+        else if (obj.CompareTag("Boss"))
         {
-            //obj.GetComponent<Player>().takeDamage(damage);
+            
         }
-    }
-
-    private Coroutine StartBurning(GameObject obj, float duration)
-    {
-        Debug.Log($"{obj.name} был подожжен!");
-        return StartCoroutine(Burn(obj, duration));
-    }
-
-    private Coroutine StartPoisoning(GameObject obj, float duration)
-    {
-        Debug.Log($"{obj.name} был отравлен!");
-        return StartCoroutine(Poison(obj, duration));
     }
 
     private void ApplyKnockback(GameObject self, GameObject obj)
@@ -104,7 +93,7 @@ public class SpellEffect : MonoBehaviour
         Debug.Log($"Объект {obj.name} отброшен с силой {knockbackForce}");
     }
 
-    private IEnumerator Burn(GameObject obj, float duration)
+    private IEnumerator Burn(GameObject obj, float duration, Action onComplete)
     {
         float timer = 0f;
 
@@ -126,9 +115,10 @@ public class SpellEffect : MonoBehaviour
         {
             ReturnToOriginal(obj);
         }
+        onComplete?.Invoke();
     }
 
-    private IEnumerator Poison(GameObject obj, float duration)
+    private IEnumerator Poison(GameObject obj, float duration, Action onComplete)
     {
         float timer = 0f;
 
@@ -148,6 +138,7 @@ public class SpellEffect : MonoBehaviour
         {
             ReturnToOriginal(obj);
         }
+        onComplete?.Invoke();
     }
 
     private void ReturnToOriginal(GameObject obj)
@@ -158,9 +149,9 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
-    private IEnumerator SpeedBoost(GameObject obj, float change)
+    private IEnumerator SpeedBoost(GameObject obj, float change, Action onComplete)
     {
-        if (obj != null && obj.CompareTag("Player"))
+        if (obj.CompareTag("Player"))
         {
             Debug.Log($"{obj.name} получил ускорение на {change} на {speedBoostDuration} секунд");
             obj.GetComponent<PlayerController>().SpeedChange(change);
@@ -175,15 +166,16 @@ public class SpellEffect : MonoBehaviour
         }
 
         // Возвращаем в исходное состояние
-        if (obj != null && obj.CompareTag("Player"))
+        if (obj.CompareTag("Player"))
         {
             obj.GetComponent<PlayerController>().SpeedChange(-change);
         }
+        onComplete?.Invoke();
     }
 
     private void ExtraDamage(GameObject obj, float amount)
     {
-        // Да, это не совсем то. В будущем изменю на + % урон следующего заклинаиня
+        // Да, это не совсем то. В будущем изменю на + % урон следующего заклинания мб
         Debug.Log($"Следующее заклинание {obj.name} дополнительно нанесет {amount} урона");
         extraDamageApplied = true;
         extraDamageAmount += amount;

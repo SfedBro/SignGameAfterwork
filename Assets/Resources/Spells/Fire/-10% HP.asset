@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f454488273a2074eb08a0ef1ee88df2, type: 3}
-  m_Name: 10% HP shoot
+  m_Script: {fileID: 11500000, guid: 419f8c208e0266d4f8b2caabe3903328, type: 3}
+  m_Name: -10% HP
   m_EditorClassIdentifier: 
-  spellName: 10% HP shoot
+  spellName: 10% HP damage
   mainElement: Fire
   combo: Fire1+Fire2+Fire3
   effect: PercentDamage
-  effectDuration: 0
-  spellPrefab: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
-  damage: 10
+  effectDuration: 10
+  spellPrefab: {fileID: 4762664593250855657, guid: 2f2975a0954f0eb408e367d6b3373717, type: 3}
+  radius: 0.1

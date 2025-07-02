@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AreaSpellActions : MonoBehaviour
 {
+    public GameObject effectCaster;
     public float duration = 0.1f;
     public bool lookRight;
     public string effectType;
@@ -29,7 +30,12 @@ public class AreaSpellActions : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType, effectDuration);
+            if (!other.gameObject.GetComponent<EffectsHandler>())
+            {
+                other.gameObject.AddComponent<EffectsHandler>();
+            }
+            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, 0);
+            //EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType, effectDuration);
         }
     }
 }

@@ -45,6 +45,7 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
         obj.AddComponent<ShootSpellActions>();
+        obj.GetComponent<ShootSpellActions>().effectCaster = gameObject;
         obj.GetComponent<ShootSpellActions>().cursorPos = cursorWorldPos;
         obj.GetComponent<ShootSpellActions>().force = shootingSpellForce;
         obj.GetComponent<ShootSpellActions>().damage = someSpell.Damage;
@@ -56,6 +57,7 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, cursorWorldPos, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
+        obj.GetComponent<AreaSpellActions>().effectCaster = gameObject;
         obj.GetComponent<AreaSpellActions>().effectType = someSpell.Effect;
         obj.GetComponent<AreaSpellActions>().effectDuration = someSpell.EffectDuration;
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius*2, someSpell.Radius*2, 0);
@@ -63,7 +65,11 @@ public class SpellCast : MonoBehaviour
 
     private void SelfSpell(BuffSpell someSpell)
     {
-        EffectsManager.Instance.effect.ApplyEffect(gameObject, gameObject, someSpell.Effect, someSpell.EffectDuration);
+        if (!GetComponent<EffectsHandler>())
+        {
+            gameObject.AddComponent<EffectsHandler>();
+        }
+        GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.Effect, someSpell.EffectDuration, someSpell.Amount);
     }
 
     private void FixPlayersLook()

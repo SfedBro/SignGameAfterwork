@@ -3,7 +3,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Spell", menuName = "Spells/Buff Spell")]
 public class BuffSpell : Spell
 {
-    private void Awake() {
+    [SerializeField] private float amount;
+    private void Awake()
+    {
         spellType = "Buff";
+    }
+
+    public float Amount
+    {
+        get
+        {
+            return amount;
+        }
     }
 }

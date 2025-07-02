@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class ShootSpellActions : MonoBehaviour
 {
+    public GameObject effectCaster;
     public float force;
     public float lifeDistance = 20f;
     public float damage;
     public string effectType;
     public float effectDuration;
+    public float amount;
     public Vector3 cursorPos;
 
     private Rigidbody2D physic;
@@ -35,19 +37,16 @@ public class ShootSpellActions : MonoBehaviour
         if (collider.tag == "Enemy")
         {
             Debug.Log("Collision!");
-            if (effectType != "PercentDamage")
+            if (!collider.gameObject.GetComponent<EffectsHandler>())
             {
-                if (damage != 0)
-                {
-                    collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
-                }
-                // Здесь будем на врага накладывать эффект, если он есть. Для этого добавляем врагу новый EffectsManager, если его нет.
-                EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
+                collider.gameObject.AddComponent<EffectsHandler>();
             }
-            else
+            if (damage != 0)
             {
-                EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, 0, damage);
+                collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             }
+            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, 0);
+            //EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
             
             Destroy(gameObject);
         }
