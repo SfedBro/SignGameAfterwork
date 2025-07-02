@@ -54,6 +54,43 @@ In this week we should update our project to ensure quality through testing, aut
 
 ## CI/CD
 
+### Description
+
+CI/CD s a technology for testing and delivery of new features/modules of the project being developed. We use this technology and build special *.yml* files, which can:
+
+- Lint all C# code
+
+- Build game for any existing operationg system
+
+- Deploy web version as a website
+
+### Tools used
+
+- **GitHub Pages** - GitHub module which can deploy project as a [website](https://iu-capstone-project-2025.github.io/SignGame/WebGL/)
+
+- **csharpier** - C# linter library
+
+- [Game.ci](https://game.ci) builder module - Feature to build Unity project in any OS
+
+### Challenges faced
+
+1. Too hard to manage C# code issues
+
+  * Since C# is a OOP-structured language with syntax structure.
+  
+  * Even if the code is written bad, but in compliance with the syntax rules, that won't count as an issue.
+
+2. Project delivery (CI)
+
+  * Since project total size is too big to *game.ci builder*, there is need to minimize it with *archiving*
+
+  * Without *Decompression fallback* setting, there is no possibility to unpack our project
+
+3. Project deployment (CD)
+
+  * Due to the fact that we badly worked out the window parameters, depending on the browser, the game UI can change 
+
+
 ### CI/CD configuration files
 
 #### Web lint & build & deploy
