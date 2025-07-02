@@ -38,19 +38,21 @@ In this week we should update our project to ensure quality through testing, aut
  
   2. Dataset is **divided** into teaching, validation and test
 
+  *Here you can see [ML tests](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/static_ml/model.py)*
+
 ### Evidence of test execution
 
 #### C# Linter log and result 
 
-![linter](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/checkpoint.gif)
+![linter](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/lint.png)
 
 #### WebGL Lint & Build & Deploy result
 
-![webgl](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/checkpoint.gif)
+![webgl](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/web.png)
 
 #### OS build 
 
-![os](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/checkpoint.gif)
+![os](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/OS.png)
 
 ## CI/CD
 
@@ -90,7 +92,6 @@ CI/CD s a technology for testing and delivery of new features/modules of the pro
 
   * Due to the fact that we badly worked out the window parameters, depending on the browser, the game UI can change 
 
-
 ### CI/CD configuration files
 
 #### Web lint & build & deploy
@@ -102,6 +103,80 @@ CI/CD s a technology for testing and delivery of new features/modules of the pro
 [OS autobuild](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/.github/workflows/platform_builds.yml)
 
 
+### Deployment 
+
+#### Staging deployment
+
+1. **Build WebGL Version in Unity:**
+   - Open `File → Build Settings` and switch the platform to **WebGL**.
+   - Disable unused or incompatible plugins/features for WebGL.
+   - Export the build as a pre-release archive.
+
+2. **Deploy to GitHub Pages (*gh-pages* branch):**
+   - We use a separate Git branch to host the staging version.
+   - We use GitHub Actions to automate the upload build to this branch.
+
+3. **Access Staging Build:**
+   - The staging version is accessible at:
+     ```
+     https://iu-capstone-project-2025.github.io/SignGame/WebGL/
+     ```
+
+## Vibe check
+
+Our members is steadily progressing with the Unity project ans work as a team. The core gameplay loop is in place, and WebGL builds are successfully generated and deployed to GitHub Pages for both staging and production environments. 
+
+- We usually meet (3 times in a week) and discuss our successes and problems
+
+- Everyone is contributing consistently
+
+- Tasks are well-distributed across game development, ML, DevOps and Design areas.
+
+## Weekly commitments
+
+### Individual contribution of each participant
+
+#### Danil Valiev
+
+- **All CI/CD content**
+
+- [Pull Request template](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/.github/pull_request_template.md)
+
+- [Week 4 report](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/week4.md)
+
+- Main branch rulesets
+
+- Repository cleaning
+
+#### Valeriia Kolesnikova
+
+- Restoting HP nearly checkpoint, removing const HP saving 
+
+- Obtaining damage [vizualize](https://github.com/IU-Capstone-Project-2025/SignGame/commit/f564732d90c28fa11ca3f15b4aee64e51195a227)  
+
+- Storekeeper [vanishing animations](https://github.com/IU-Capstone-Project-2025/SignGame/commit/7e2a7f97ab1783836fdf0a449682b1ac5cf53f4c)
+
+- Interaction mechanic change:
+
+  1. [Checkpoint](design of the new enemy): option to activate checkpoint replaced from *bind E nearly* to *stay nearly checkpoint a few seconds*
+
+  2. [Storekeeper](https://github.com/IU-Capstone-Project-2025/SignGame/commit/7e2a7f97ab1783836fdf0a449682b1ac5cf53f4c): option to open shop replaced from *bind F nearly* to *stay nearly checkpoint a few seconds*
+
+#### Sviatoslav Fediaev
+
+- [Patrolling enemies](https://github.com/IU-Capstone-Project-2025/SignGame/pull/41) in a small radius
+
+- Design of the new enemy
+
+- Assisting in the new player spell attacks 
+
+#### Egor Savchenko
+
+- [Map](https://github.com/IU-Capstone-Project-2025/SignGame/pull/43) logic and first action
+
+- [Moving platform](https://github.com/IU-Capstone-Project-2025/SignGame/pull/45) logic
+
+- Merging all members work into a main branch
 
 ## Confirmation of the code's operability
 
