@@ -94,6 +94,10 @@ public class LandEnemyMovement : MonoBehaviour
         {
             enemyCollider = GetComponent<CapsuleCollider2D>();
         }
+        if (target == null)
+        {
+            target = FindFirstObjectByType<Player>().transform;
+        }
     }
     void Start()
     {
