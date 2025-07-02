@@ -78,19 +78,19 @@ CI/CD s a technology for testing and delivery of new features/modules of the pro
 
 1. Too hard to manage C# code issues
 
-  * Since C# is a OOP-structured language with syntax structure.
+    * Since C# is a OOP-structured language with syntax structure.
   
-  * Even if the code is written bad, but in compliance with the syntax rules, that won't count as an issue.
+    * Even if the code is written bad, but in compliance with the syntax rules, that won't count as an issue.
 
 2. Project delivery (CI)
 
-  * Since project total size is too big to *game.ci builder*, there is need to minimize it with *archiving*
+    * Since project total size is too big to *game.ci builder*, there is need to minimize it with *archiving*
 
-  * Without *Decompression fallback* setting, there is no possibility to unpack our project
+    * Without *Decompression fallback* setting, there is no possibility to unpack our project
 
 3. Project deployment (CD)
 
-  * Due to the fact that we badly worked out the window parameters, depending on the browser, the game UI can change 
+    * Due to the fact that we badly worked out the window parameters, depending on the browser, the game UI can change 
 
 ### CI/CD configuration files
 
@@ -158,9 +158,9 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 - Interaction mechanic change:
 
-  1. [Checkpoint](https://github.com/IU-Capstone-Project-2025/SignGame/commit/63d73d4335faa8d5ed9a74010252589bc6c5db4c): option to activate checkpoint replaced from *bind E nearly* to *stay nearly checkpoint a few seconds*
+  1. [Checkpoint](https://github.com/IU-Capstone-Project-2025/SignGame/commit/63d73d4335faa8d5ed9a74010252589bc6c5db4c): option to activate checkpoint replaced from **bind E nearly** to **stay nearly checkpoint a few seconds**
 
-  2. [Storekeeper](https://github.com/IU-Capstone-Project-2025/SignGame/commit/7e2a7f97ab1783836fdf0a449682b1ac5cf53f4c): option to open shop replaced from *bind F nearly* to *stay nearly checkpoint a few seconds*
+  2. [Storekeeper](https://github.com/IU-Capstone-Project-2025/SignGame/commit/7e2a7f97ab1783836fdf0a449682b1ac5cf53f4c): option to open shop replaced from **bind F nearly** to **stay nearly storekeeper a few seconds**
 
 #### Sviatoslav Fediaev
 
@@ -194,17 +194,19 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 - Spell code optimization
 
+- New [water spell](https://github.com/IU-Capstone-Project-2025/SignGame/commit/2d52e97ef4020c768fc20cf60a37b322036cb7a8)
+
 - Changed enemies status realizing 
 
   * Now the effects are in an enemy state. It allows to interact with them (elemental reaction)
 
 - Reworked spell logic
 
-  * Now spells works as *ScriptableObject* 
+  * Now spells works as **ScriptableObject**
 
 ### Plan for the next week
 
-In Week 5, we plan to:
+*In Week 5, we plan to:*
 
 - Release Week 4 bugfix 
 
