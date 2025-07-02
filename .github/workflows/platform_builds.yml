@@ -1,6 +1,10 @@
-name: Build project
+name: Build project for all platforms
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   buildForAllSupportedPlatforms:
