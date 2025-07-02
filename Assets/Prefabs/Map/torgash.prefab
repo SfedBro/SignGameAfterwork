@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6376400539623540540}
   - component: {fileID: 6408117870039307019}
   - component: {fileID: 332179138874039825}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: torgash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
