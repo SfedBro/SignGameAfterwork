@@ -196,11 +196,11 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 - New [water spell](https://github.com/IU-Capstone-Project-2025/SignGame/commit/2d52e97ef4020c768fc20cf60a37b322036cb7a8)
 
-- Changed enemies status realizing 
+- Changed [enemy status](https://github.com/IU-Capstone-Project-2025/SignGame/commit/d93ea70ed3618959918f500f15c6e3bea487dbec) realizing 
 
   * Now the effects are in an enemy state. It allows to interact with them (elemental reaction)
 
-- Reworked spell logic
+- Reworked [spell logic](https://github.com/IU-Capstone-Project-2025/SignGame/tree/946b9798749c98363d11b427beaa91030758e84b)
 
   * Now spells works as **ScriptableObject**
 
