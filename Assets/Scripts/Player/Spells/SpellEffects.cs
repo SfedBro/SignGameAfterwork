@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using Unity.VisualScripting;
 
 public class SpellEffect : MonoBehaviour
 {
@@ -20,17 +19,9 @@ public class SpellEffect : MonoBehaviour
         {
             MakePercentDamage(target, duration);
         }
-        else if (type == "Poison")
-        {
-            toBeReturned = StartCoroutine(Poison(target, duration, damageMultiplier, onComplete));
-        }
         else if (type == "Burn")
         {
             toBeReturned = StartCoroutine(Burn(target, duration, damageMultiplier, onComplete));
-        }
-        else if (type == "Knockback")
-        {
-            ApplyKnockback(self, target);
         }
         else if (type == "SpeedBoost")
         {
@@ -40,6 +31,14 @@ public class SpellEffect : MonoBehaviour
         {
             DamageBoost(self, amount);
             return null;
+        }
+        else if (type == "ThroughShot")
+        {
+            ThroughShot(target, amount);
+        }
+        else if (type == "Knockback")
+        {
+            ApplyKnockback(self, target);
         }
         else
         {
@@ -92,7 +91,6 @@ public class SpellEffect : MonoBehaviour
             {
                 int damage = UnityEngine.Random.Range(1, 4);
                 obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
-                Debug.Log($"Объект {obj.name} горит. Нанесен урон {damage * dmgMultiplier}.");
                 obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
             }
             timer += 1f;
@@ -105,38 +103,6 @@ public class SpellEffect : MonoBehaviour
             ReturnToOriginal(obj);
         }
         onComplete?.Invoke();
-    }
-
-    private IEnumerator Poison(GameObject obj, float duration, float dmgMultiplier, Action onComplete)
-    {
-        float timer = 0f;
-        damageMultiplier = 1f;
-
-        while (timer < duration)
-        {
-            int damage = UnityEngine.Random.Range(1, 4);
-            obj.GetComponent<SpriteRenderer>().color = new Color(0f, 0.5f, 0f);
-            Debug.Log($"Объект {obj.name} отравлен. Нанесен урон {damage * dmgMultiplier}.");
-            obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
-
-            timer += 1f;
-            yield return new WaitForSeconds(1f);
-        }
-
-        // Возвращаем в исходное состояние
-        if (obj != null)
-        {
-            ReturnToOriginal(obj);
-        }
-        onComplete?.Invoke();
-    }
-
-    private void ReturnToOriginal(GameObject obj)
-    {
-        if (obj.CompareTag("Enemy"))
-        {
-            obj.GetComponent<Enemy>().ReturnToOrig();
-        }
     }
 
     private IEnumerator SpeedBoost(GameObject obj, float duration, float change, Action onComplete)
@@ -165,7 +131,20 @@ public class SpellEffect : MonoBehaviour
 
     private void DamageBoost(GameObject obj, float multiplier)
     {
-        Debug.Log($"Следующее заклинание {obj.name} нанесет на {100*multiplier-100}% больше урона");
+        Debug.Log($"Следующее заклинание {obj.name} нанесет на {100 * multiplier - 100}% больше урона");
         damageMultiplier = multiplier;
+    }
+
+    private void ThroughShot(GameObject obj, float damage)
+    {
+        MakeDamage(obj, damage);
+    }
+    
+    private void ReturnToOriginal(GameObject obj)
+    {
+        if (obj.CompareTag("Enemy"))
+        {
+            obj.GetComponent<Enemy>().ReturnToOrig();
+        }
     }
 }

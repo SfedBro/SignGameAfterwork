@@ -14,7 +14,7 @@ public class EffectsHandler : MonoBehaviour
             {"Water", "Burn"}
         };
     }
-    public void HandleEffect(GameObject effectCaster, string effectName, float effectDuration, float amount)
+    public void HandleEffect(GameObject effectCaster, string element, string effectName, float effectDuration, float amount)
     {
         // Обращаемся всегда к спелл эффектам кастера, т.к. там хранятся данные об изменениях для следующих заклинаний
         if (!effectCaster.GetComponent<SpellEffect>())
@@ -30,12 +30,12 @@ public class EffectsHandler : MonoBehaviour
         }
 
         // Если наложенный эффект должен снять существующий, это произойдёт
-        // Пока недореализовано
-        if (counterElements.ContainsKey(effectName))
+        if (counterElements.ContainsKey(element))
         {
-            if (activeEffects.ContainsKey(counterElements[effectName]))
+            if (activeEffects.ContainsKey(counterElements[element]))
             {
-                RemoveEffect(counterElements[effectName]);
+                RemoveEffect(counterElements[element]);
+                Debug.Log($"Эффект {counterElements[element]} был снят");
             }
         }
 
@@ -55,6 +55,9 @@ public class EffectsHandler : MonoBehaviour
     void RemoveEffect(string effectName)
     {
         StopCoroutine(activeEffects[effectName]);
+        if (gameObject.CompareTag("Enemy")) {
+            gameObject.GetComponent<Enemy>().ReturnToOrig();
+        }
         activeEffects.Remove(effectName);
     }
 

@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 
-public class ShootSpellActions : MonoBehaviour
+public class ThroughShootSpellActions : MonoBehaviour
 {
     public GameObject effectCaster;
     public float force;
-    public float lifeDistance = 20f;
+    public float lifeDistance = 10f;
     public float damage;
+    public string element;
     public string effectType;
     public float effectDuration;
     public float amount;
@@ -40,9 +41,7 @@ public class ShootSpellActions : MonoBehaviour
             {
                 collider.gameObject.AddComponent<EffectsHandler>();
             }
-            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, damage);
-
-            Destroy(gameObject);
+            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, damage);
         }
     }
 

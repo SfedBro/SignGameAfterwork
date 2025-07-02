@@ -4,8 +4,9 @@ using System.Collections;
 public class AreaSpellActions : MonoBehaviour
 {
     public GameObject effectCaster;
-    public float duration = 0.1f;
+    public float duration;
     public bool lookRight;
+    public string element;
     public string effectType;
     public float effectDuration;
 
@@ -34,7 +35,7 @@ public class AreaSpellActions : MonoBehaviour
             {
                 other.gameObject.AddComponent<EffectsHandler>();
             }
-            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, 0);
+            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, 0);
         }
     }
 }

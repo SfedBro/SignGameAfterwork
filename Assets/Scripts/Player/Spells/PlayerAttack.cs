@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     private SpellCast spellCaster; // Реализация заклинаний
     private Spell newSpell; // Объект заклинания
     private SpellsManager allSpells; // Все заклинания
-    private List<string> actualCombo = new List<string>();
+    private List<string> actualCombo = new();
     private float timer;
     private bool inputForTimer = false;
     private bool timerIsOn = false;
@@ -35,32 +35,32 @@ public class PlayerAttack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("1 was pressed");
             HandleInput("Fire1");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Debug.Log("2 was pressed");
             HandleInput("Fire2");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Debug.Log("3 was pressed");
             HandleInput("Fire3");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Debug.Log("4 was pressed");
-            HandleInput("Earth1");
+            HandleInput("Water1");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            Debug.Log("5 was pressed");
-            HandleInput("Venom1");
+            HandleInput("Water2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            HandleInput("Water3");
         }
     }
 
