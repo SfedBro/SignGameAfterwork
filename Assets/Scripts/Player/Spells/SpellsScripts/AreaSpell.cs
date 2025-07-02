@@ -35,7 +35,6 @@ public class AreaSpellActions : MonoBehaviour
                 other.gameObject.AddComponent<EffectsHandler>();
             }
             other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, 0);
-            //EffectsManager.Instance.effect.ApplyEffect(gameObject, other.gameObject, effectType, effectDuration);
         }
     }
 }

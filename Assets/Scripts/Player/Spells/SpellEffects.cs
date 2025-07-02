@@ -1,28 +1,20 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class SpellEffect : MonoBehaviour
 {
     public float knockbackForce = 200f;
 
-    public float speedBoostDuration = 5f;
-
-    private bool extraDamageApplied = false;
-    private float extraDamageAmount = 0f;
+    private float damageMultiplier = 1f;
 
     public Coroutine ApplyEffect(GameObject self, GameObject target, string type = "No effect", float duration = 0f, float amount = 0f, Action onComplete = null)
     {
-        if (extraDamageApplied && type != "SpeedBoost" && type != "ExtraDamage")
-        {
-            MakeDamage(target, extraDamageAmount);
-            extraDamageApplied = false;
-            extraDamageAmount = 0f;
-        }
-
+        Coroutine toBeReturned = null;
         if (type == "No effect")
         {
-            Debug.Log("Заклинание не имело никаких эффектов");
+            MakeDamage(target, amount);
         }
         else if (type == "PercentDamage")
         {
@@ -30,11 +22,11 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "Poison")
         {
-            return StartCoroutine(Poison(target, duration, onComplete));
+            toBeReturned = StartCoroutine(Poison(target, duration, damageMultiplier, onComplete));
         }
         else if (type == "Burn")
         {
-            return StartCoroutine(Burn(target, duration, onComplete));
+            toBeReturned = StartCoroutine(Burn(target, duration, damageMultiplier, onComplete));
         }
         else if (type == "Knockback")
         {
@@ -42,42 +34,38 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "SpeedBoost")
         {
-            return StartCoroutine(SpeedBoost(self, amount, onComplete));
+            return StartCoroutine(SpeedBoost(self, duration, amount, onComplete));
         }
-        else if (type == "ExtraDamage")
+        else if (type == "NextSpellDamageBoost")
         {
-            ExtraDamage(self, amount);
+            DamageBoost(self, amount);
+            return null;
         }
         else
         {
             Debug.Log("Неизвестный тип эффекта!");
         }
-        return null;
+
+        damageMultiplier = 1f;
+        return toBeReturned;
     }
 
     private void MakeDamage(GameObject obj, float damage)
     {
-        // Сделать общий класс персонажа, а энеми и плеер от него? Звучит как необходимость
         if (obj.CompareTag("Enemy"))
         {
-            obj.GetComponent<Enemy>().TakeDamage(damage);
+            obj.GetComponent<Enemy>().TakeDamage(damage * damageMultiplier);
         }
         else if (obj.CompareTag("Boss"))
         {
 
         }
+        damageMultiplier = 1f;
     }
 
     private void MakePercentDamage(GameObject obj, float percent)
     {
-        if (obj.CompareTag("Enemy"))
-        {
-            obj.GetComponent<Enemy>().TakeDamage((float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent / 100f));
-        }
-        else if (obj.CompareTag("Boss"))
-        {
-            
-        }
+        MakeDamage(obj, (float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent / 100f));
     }
 
     private void ApplyKnockback(GameObject self, GameObject obj)
@@ -93,9 +81,10 @@ public class SpellEffect : MonoBehaviour
         Debug.Log($"Объект {obj.name} отброшен с силой {knockbackForce}");
     }
 
-    private IEnumerator Burn(GameObject obj, float duration, Action onComplete)
+    private IEnumerator Burn(GameObject obj, float duration, float dmgMultiplier, Action onComplete)
     {
         float timer = 0f;
+        damageMultiplier = 1f;
 
         while (timer < duration)
         {
@@ -103,8 +92,8 @@ public class SpellEffect : MonoBehaviour
             {
                 int damage = UnityEngine.Random.Range(1, 4);
                 obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
-                Debug.Log($"Объект {obj.name} горит. Нанесен урон {damage}.");
-                MakeDamage(obj, damage);
+                Debug.Log($"Объект {obj.name} горит. Нанесен урон {damage * dmgMultiplier}.");
+                obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
             }
             timer += 1f;
             yield return new WaitForSeconds(1f);
@@ -118,16 +107,17 @@ public class SpellEffect : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    private IEnumerator Poison(GameObject obj, float duration, Action onComplete)
+    private IEnumerator Poison(GameObject obj, float duration, float dmgMultiplier, Action onComplete)
     {
         float timer = 0f;
+        damageMultiplier = 1f;
 
         while (timer < duration)
         {
             int damage = UnityEngine.Random.Range(1, 4);
             obj.GetComponent<SpriteRenderer>().color = new Color(0f, 0.5f, 0f);
-            Debug.Log($"Объект {obj.name} отравлен. Нанесен урон {damage}.");
-            MakeDamage(obj, damage);
+            Debug.Log($"Объект {obj.name} отравлен. Нанесен урон {damage * dmgMultiplier}.");
+            obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
 
             timer += 1f;
             yield return new WaitForSeconds(1f);
@@ -149,17 +139,17 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
-    private IEnumerator SpeedBoost(GameObject obj, float change, Action onComplete)
+    private IEnumerator SpeedBoost(GameObject obj, float duration, float change, Action onComplete)
     {
         if (obj.CompareTag("Player"))
         {
-            Debug.Log($"{obj.name} получил ускорение на {change} на {speedBoostDuration} секунд");
+            Debug.Log($"{obj.name} получил ускорение на {change} на {duration} секунд");
             obj.GetComponent<PlayerController>().SpeedChange(change);
         }
 
         float timer = 0f;
 
-        while (timer < speedBoostDuration)
+        while (timer < duration)
         {
             timer += 1f;
             yield return new WaitForSeconds(1f);
@@ -173,11 +163,9 @@ public class SpellEffect : MonoBehaviour
         onComplete?.Invoke();
     }
 
-    private void ExtraDamage(GameObject obj, float amount)
+    private void DamageBoost(GameObject obj, float multiplier)
     {
-        // Да, это не совсем то. В будущем изменю на + % урон следующего заклинания мб
-        Debug.Log($"Следующее заклинание {obj.name} дополнительно нанесет {amount} урона");
-        extraDamageApplied = true;
-        extraDamageAmount += amount;
+        Debug.Log($"Следующее заклинание {obj.name} нанесет на {100*multiplier-100}% больше урона");
+        damageMultiplier = multiplier;
     }
 }

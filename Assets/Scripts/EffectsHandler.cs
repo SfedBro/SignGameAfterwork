@@ -9,11 +9,6 @@ public class EffectsHandler : MonoBehaviour
 
     private void Awake()
     {
-        if (!gameObject.GetComponent<SpellEffect>())
-        {
-            gameObject.AddComponent<SpellEffect>();
-        }
-        spells = gameObject.GetComponent<SpellEffect>();
         counterElements = new Dictionary<string, string>
         {
             {"Water", "Burn"}
@@ -21,11 +16,21 @@ public class EffectsHandler : MonoBehaviour
     }
     public void HandleEffect(GameObject effectCaster, string effectName, float effectDuration, float amount)
     {
+        // Обращаемся всегда к спелл эффектам кастера, т.к. там хранятся данные об изменениях для следующих заклинаний
+        if (!effectCaster.GetComponent<SpellEffect>())
+        {
+            effectCaster.AddComponent<SpellEffect>();
+        }
+        spells = effectCaster.GetComponent<SpellEffect>();
+
+        // Если эффект уже висит, мы его обновим
         if (activeEffects.ContainsKey(effectName))
         {
             RemoveEffect(effectName);
         }
 
+        // Если наложенный эффект должен снять существующий, это произойдёт
+        // Пока недореализовано
         if (counterElements.ContainsKey(effectName))
         {
             if (activeEffects.ContainsKey(counterElements[effectName]))

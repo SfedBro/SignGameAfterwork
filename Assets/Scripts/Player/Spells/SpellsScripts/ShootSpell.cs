@@ -36,18 +36,12 @@ public class ShootSpellActions : MonoBehaviour
     {
         if (collider.tag == "Enemy")
         {
-            Debug.Log("Collision!");
             if (!collider.gameObject.GetComponent<EffectsHandler>())
             {
                 collider.gameObject.AddComponent<EffectsHandler>();
             }
-            if (damage != 0)
-            {
-                collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
-            }
-            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, 0);
-            //EffectsManager.Instance.effect.ApplyEffect(gameObject, collider.gameObject, effectType, effectDuration);
-            
+            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, effectType, effectDuration, damage);
+
             Destroy(gameObject);
         }
     }
