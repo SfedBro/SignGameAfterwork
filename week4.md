@@ -158,7 +158,7 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 - Interaction mechanic change:
 
-  1. [Checkpoint](design of the new enemy): option to activate checkpoint replaced from *bind E nearly* to *stay nearly checkpoint a few seconds*
+  1. [Checkpoint](https://github.com/IU-Capstone-Project-2025/SignGame/commit/63d73d4335faa8d5ed9a74010252589bc6c5db4c): option to activate checkpoint replaced from *bind E nearly* to *stay nearly checkpoint a few seconds*
 
   2. [Storekeeper](https://github.com/IU-Capstone-Project-2025/SignGame/commit/7e2a7f97ab1783836fdf0a449682b1ac5cf53f4c): option to open shop replaced from *bind F nearly* to *stay nearly checkpoint a few seconds*
 
@@ -166,7 +166,7 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 - [Patrolling enemies](https://github.com/IU-Capstone-Project-2025/SignGame/pull/41) in a small radius
 
-- Design of the new enemy
+- Design of the new enemy with Stanislav
 
 - Assisting in the new player spell attacks 
 
@@ -177,6 +177,42 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 - [Moving platform](https://github.com/IU-Capstone-Project-2025/SignGame/pull/45) logic
 
 - Merging all members work into a main branch
+
+#### Stanislav Delyukov
+
+- Main menu music OST applied
+
+- Design of the new enemy with Sviatoslav
+
+#### Nikita Stepankov
+
+- Finalize [ML model](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/static_ml/model.py) work
+
+- Start work in integration model into C# code
+
+#### Fanis Zinnurov
+
+- Spell code optimization
+
+- Changed enemies status realizing 
+
+  * Now the effects are in an enemy state. It allows to interact with them (elemental reaction)
+
+- Reworked spell logic
+
+  * Now spells works as *ScriptableObject* 
+
+### Plan for the next week
+
+In Week 5, we plan to:
+
+- Release Week 4 bugfix 
+
+- Start work with music assets
+
+- Start work with boss location and boss himself
+
+- Realize total game progress saving  
 
 ## Confirmation of the code's operability
 
