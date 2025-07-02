@@ -7,7 +7,7 @@ public class FlyingEnemyMovement : MonoBehaviour
 {
     [SerializeField]
     private EnemyInteractionCharacteristics stats;
-    [SerializeField] 
+    [SerializeField]
     private Transform target;
     [SerializeField]
     private LayerMask consideredMasks;
@@ -21,6 +21,20 @@ public class FlyingEnemyMovement : MonoBehaviour
     private float stoppingDistance;
     [SerializeField]
     private float visionRange;
+    //Patrolling
+    [SerializeField]
+    private float untilPatrolTime;
+    [SerializeField]
+    private float untilChangeTime;
+    [SerializeField]
+    private float patrolRange;
+    [SerializeField]
+    private bool isPatrolRunning;
+    [SerializeField]
+    private bool isWaitingForPlayer;
+    private Coroutine waitForPlayerCoroutine;
+    private Coroutine patrolCoroutine;
+    private Vector2 initPatrolPosition;
     public Transform Target
     {
         set
@@ -66,15 +80,6 @@ public class FlyingEnemyMovement : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(InitAgent());
-    }
-    IEnumerator InitAgent()
-    {
-        yield return new WaitForEndOfFrame(); // Подождать 1 кадр
-
-        if (!agent.isOnNavMesh) {
-            Debug.LogWarning("NavMeshAgent не на NavMesh!");
-        }
         playerTag = target.gameObject.tag;
         SetAgentParameters();
     }
@@ -91,18 +96,64 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, playerTag))
         {
-            agent.SetDestination(target.position);
+            if (isPatrolRunning)
+            {
+                isPatrolRunning = false;
+                if (patrolCoroutine != null)
+                {
+                    StopCoroutine(patrolCoroutine);
+                }
+            }
+            if (isWaitingForPlayer)
+            {
+                isWaitingForPlayer = false;
+                if (waitForPlayerCoroutine != null)
+                {
+                    StopCoroutine(waitForPlayerCoroutine);
+                }
+            }
+
             agent.stoppingDistance = stoppingDistance;
+            agent.SetDestination(target.position);
         }
         else
         {
             agent.stoppingDistance = 0;
+            if (!isPatrolRunning && !isWaitingForPlayer)
+            {
+                waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol());
+            }
+        }
+    }
+    private IEnumerator WaitBeforePatrol()
+    {
+        isWaitingForPlayer = true;
+        yield return new WaitForSeconds(untilPatrolTime);
+        initPatrolPosition = agent.transform.position;
+        isWaitingForPlayer = false;
+        isPatrolRunning = true;
+        patrolCoroutine = StartCoroutine(Patrol());
+    }
+
+    private IEnumerator Patrol()
+    {
+        while (isPatrolRunning)
+        {
+            Vector2 newPos = initPatrolPosition + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * patrolRange;
+
+            agent.SetDestination(newPos);
+
+            while (!agent.pathPending && agent.remainingDistance > agent.stoppingDistance)
+            {
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(untilChangeTime);
         }
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-
+        Gizmos.color = Color.white;
         float circleSegments = 36;
         float radius = visionRange;
         Vector2 center = transform.position;
@@ -116,6 +167,22 @@ public class FlyingEnemyMovement : MonoBehaviour
             Vector2 nextPoint = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
             Gizmos.DrawLine(prevPoint, nextPoint);
             prevPoint = nextPoint;
+        }
+
+        if (isPatrolRunning)
+        {
+            Gizmos.color = Color.red;
+            float radius2 = patrolRange;
+            Vector2 center2 = initPatrolPosition;
+            prevPoint = center2 + new Vector2(Mathf.Cos(0), Mathf.Sin(0)) * radius2;
+
+            for (int i = 1; i <= circleSegments; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector2 nextPoint = center2 + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius2;
+                Gizmos.DrawLine(prevPoint, nextPoint);
+                prevPoint = nextPoint;
+            }
         }
     }
 }

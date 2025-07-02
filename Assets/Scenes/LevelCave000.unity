@@ -21231,6 +21231,11 @@ MonoBehaviour:
   acceleration: 5
   stoppingDistance: 1.5
   visionRange: 25
+  untilPatrolTime: 0
+  untilChangeTime: 0
+  patrolRange: 0
+  isPatrolRunning: 0
+  isWaitingForPlayer: 0
 --- !u!195 &905102690
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -39047,6 +39052,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: torgash
       objectReference: {fileID: 0}
+    - target: {fileID: 2816233087825006353, guid: e1bd47e993237174990b02e7adf604b3, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6376400539623540540, guid: e1bd47e993237174990b02e7adf604b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34.12
@@ -45619,7 +45628,7 @@ GameObject:
   - component: {fileID: 1786293128}
   - component: {fileID: 1786293130}
   - component: {fileID: 1786293129}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: F
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55910,9 +55919,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 16449698188398214, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 604712644104637828, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1929706527586578748, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       propertyPath: m_Name
       value: Checkpoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929706527586578748, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3079904539522322594, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55953,6 +55974,14 @@ PrefabInstance:
     - target: {fileID: 3079904539522322594, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235579624186226882, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669978533290549583, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
