@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -30,7 +29,7 @@ public class MovingPlatform : MonoBehaviour
     }
 
     void OnDrawGizmosSelected() {
-        Vector2 start = EditorApplication.isPlaying ? originalPosition : (Vector2)transform.position, end = start + targetOffset;
+        Vector2 start = Application.isPlaying ? originalPosition : (Vector2)transform.position, end = start + targetOffset;
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(start, end);
         Gizmos.DrawWireSphere(start, 0.25f);
