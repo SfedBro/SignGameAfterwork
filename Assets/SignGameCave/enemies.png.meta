@@ -605,7 +605,7 @@ TextureImporter:
         width: 153
         height: 218
       alignment: 9
-      pivot: {x: 0.5120866, y: 0.7120787}
+      pivot: {x: 0.41586244, y: 0.15251622}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -671,7 +671,7 @@ TextureImporter:
         width: 139
         height: 216
       alignment: 9
-      pivot: {x: 0.5465659, y: 0.7482899}
+      pivot: {x: 0.5717844, y: 0.11214193}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -993,7 +993,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_30
+      name: sun_30
       rect:
         serializedVersion: 2
         x: 1067
@@ -1015,7 +1015,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_31
+      name: sun_31
       rect:
         serializedVersion: 2
         x: 1353
@@ -1037,7 +1037,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_32
+      name: sun_32
       rect:
         serializedVersion: 2
         x: 1402
@@ -1059,11 +1059,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_33
+      name: sun_33
       rect:
         serializedVersion: 2
-        x: 1534
-        y: 1491
+        x: 1533
+        y: 1492
         width: 63
         height: 197
       alignment: 9
@@ -1103,7 +1103,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_35
+      name: sun_35
       rect:
         serializedVersion: 2
         x: 1344
@@ -1213,7 +1213,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_40
+      name: sun_40
       rect:
         serializedVersion: 2
         x: 1340
@@ -1235,7 +1235,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_41
+      name: sun_41
       rect:
         serializedVersion: 2
         x: 1727
@@ -1257,7 +1257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_42
+      name: sun_42
       rect:
         serializedVersion: 2
         x: 1333
@@ -1279,7 +1279,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_43
+      name: sun_43
       rect:
         serializedVersion: 2
         x: 1578
@@ -1301,7 +1301,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_44
+      name: sun_44
       rect:
         serializedVersion: 2
         x: 1332
@@ -1411,7 +1411,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_49
+      name: y_49
       rect:
         serializedVersion: 2
         x: 2172
@@ -1433,7 +1433,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_50
+      name: z_50
       rect:
         serializedVersion: 2
         x: 2519
@@ -1455,7 +1455,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_51
+      name: y_51
       rect:
         serializedVersion: 2
         x: 1996
@@ -1477,7 +1477,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_52
+      name: y_52
       rect:
         serializedVersion: 2
         x: 2486
@@ -1499,7 +1499,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_53
+      name: y_53
       rect:
         serializedVersion: 2
         x: 1876
@@ -1521,7 +1521,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_54
+      name: x_54
       rect:
         serializedVersion: 2
         x: 2198
@@ -1543,7 +1543,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_55
+      name: x_55
       rect:
         serializedVersion: 2
         x: 2290
@@ -1565,7 +1565,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_56
+      name: x_56
       rect:
         serializedVersion: 2
         x: 2360
@@ -1587,7 +1587,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_57
+      name: z_57
       rect:
         serializedVersion: 2
         x: 2480
@@ -1675,7 +1675,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_61
+      name: z_61
       rect:
         serializedVersion: 2
         x: 2474
@@ -1697,11 +1697,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_62
+      name: y_62
       rect:
         serializedVersion: 2
-        x: 1857
-        y: 493
+        x: 1855
+        y: 495
         width: 261
         height: 124
       alignment: 9
@@ -1719,7 +1719,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_63
+      name: x_63
       rect:
         serializedVersion: 2
         x: 2273
@@ -1741,11 +1741,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_64
+      name: z_64
       rect:
         serializedVersion: 2
         x: 2457
-        y: 498
+        y: 500
         width: 279
         height: 141
       alignment: 9
@@ -1763,7 +1763,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_65
+      name: y_65
       rect:
         serializedVersion: 2
         x: 1845
@@ -1785,7 +1785,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_66
+      name: x_66
       rect:
         serializedVersion: 2
         x: 2524
@@ -1807,7 +1807,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_68
+      name: x_68
       rect:
         serializedVersion: 2
         x: 2648
@@ -1829,7 +1829,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: enemies_69
+      name: x_69
       rect:
         serializedVersion: 2
         x: 2302
@@ -1888,52 +1888,54 @@ TextureImporter:
       enemies_28: 8237017158513173956
       enemies_29: 3788001193901675320
       enemies_3: 1961183383047197949
-      enemies_30: 1017871411792229582
-      enemies_31: -7143632009852538275
-      enemies_32: -6949527019116515464
-      enemies_33: -7373728255155398809
       enemies_34: -4535217547422562818
-      enemies_35: 7842233440562819812
       enemies_36: 8203917247392330234
       enemies_37: -1646162936135731460
       enemies_38: 262253260368052137
       enemies_39: -5661289293352146724
       enemies_4: -3351989875833439213
-      enemies_40: -574701310493481389
-      enemies_41: 3043105842737735301
-      enemies_42: -8137250916114564832
-      enemies_43: 6778329007797468826
-      enemies_44: -5571332060652782084
       enemies_45: -6401660212284299933
       enemies_46: -5635799371484771798
       enemies_47: -8260159705139820125
       enemies_48: -5813155369267699591
-      enemies_49: -611867289277441295
       enemies_5: -3029504926045522119
-      enemies_50: -7216406059174729102
-      enemies_51: -5204866754122809574
-      enemies_52: -3690128099936111282
-      enemies_53: 5956736000263300668
-      enemies_54: 5260237918008780845
-      enemies_55: 639755353174571365
-      enemies_56: -5316398796247020869
-      enemies_57: 5071658169964249115
       enemies_58: 6969128963623422457
       enemies_59: -2392329122036793305
       enemies_6: -2782341204894616949
       enemies_60: -5032397523261126367
-      enemies_61: 7919937908647015373
-      enemies_62: -8033440846659449436
-      enemies_63: -3007867907188248330
-      enemies_64: -194386637390385213
-      enemies_65: 1051372748379046019
-      enemies_66: -8741287374936158881
       enemies_67: 133206962293129866
-      enemies_68: 8163972999559841902
-      enemies_69: 5677686872196009033
       enemies_7: 6230911579049521198
       enemies_8: -8108438390446734492
       enemies_9: -3231492579343523708
+      sun_30: 1017871411792229582
+      sun_31: -7143632009852538275
+      sun_32: -6949527019116515464
+      sun_33: -7373728255155398809
+      sun_35: 7842233440562819812
+      sun_40: -574701310493481389
+      sun_41: 3043105842737735301
+      sun_42: -8137250916114564832
+      sun_43: 6778329007797468826
+      sun_44: -5571332060652782084
+      x_54: 5260237918008780845
+      x_55: 639755353174571365
+      x_56: -5316398796247020869
+      x_63: -3007867907188248330
+      x_66: -8741287374936158881
+      x_68: 8163972999559841902
+      x_69: 5677686872196009033
+      y_49: -611867289277441295
+      y_51: -5204866754122809574
+      y_52: -3690128099936111282
+      y_53: 5956736000263300668
+      y_62: -8033440846659449436
+      y_65: 1051372748379046019
+      z: 1051372748379046019
+      z_50: -7216406059174729102
+      z_57: 5071658169964249115
+      z_61: 7919937908647015373
+      z_64: -194386637390385213
+      z_65: 1051372748379046019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
