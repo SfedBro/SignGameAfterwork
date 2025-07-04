@@ -180,7 +180,7 @@ Our members is steadily progressing with the Unity project ans work as a team. T
 
 #### Stanislav Delyukov
 
-- Main menu music OST applied
+- Main menu [music OST](https://github.com/IU-Capstone-Project-2025/SignGame/commit/9acf32e8fc887f338b5ed6ae89f875a1fac79069) applied
 
 - Design of the new enemy with Sviatoslav
 
