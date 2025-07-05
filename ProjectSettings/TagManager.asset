@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 1612474431
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -70,9 +73,6 @@ TagManager:
     locked: 0
   - name: Fore2
     uniqueID: 114955391
-    locked: 0
-  - name: background
-    uniqueID: 1612474431
     locked: 0
   m_RenderingLayers:
   - Default
