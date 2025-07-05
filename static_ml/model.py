@@ -134,7 +134,7 @@ def load_dataset(data_dir):
     print(class_names)
         
     with open('static_ml\CNNModelC#\classes.json', 'w') as f:
-        json.dump(f,class_names)
+        json.dump(class_names, f)
         
     for filename in listdir(data_dir):
         if filename.endswith('.png'):
@@ -174,10 +174,10 @@ def plot_history(history):
 if __name__ == "__main__":
     dataset_dir = "static_ml\images"
     X, y = load_dataset(dataset_dir)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
+    X_pre_train, X_test, y_pre_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X_pre_train,y_pre_train, test_size = 0.2, random_state= 42)
     hc_model = CNNModel(input_shape=X_train[0].shape, num_classes=len(np.unique(y)))
-    history, model_path = hc_model.train(X_train, y_train, X_test, y_test, epochs=50)
+    history, model_path = hc_model.train(X_train, y_train, X_val, y_val, epochs=50)
     
     hc_model.save_as_onnx(model_path, "static_ml\CNNModelC#\CNN_model.onnx")
     
