@@ -8,8 +8,8 @@ public class LineDrawer : MonoBehaviour
     public Camera cam;
     public float minDistanceForNewPoint = 0.1f;
     public float secondsForLineToLive = 3f;
-    public string savePath = "SavedLines";
-
+    
+    private int numOfCast = 0;
     LineRenderer currentLine;
     
     void Update() {
@@ -28,29 +28,27 @@ public class LineDrawer : MonoBehaviour
             currentLine.SetPosition(posIndex, GetMouseLocalPos());
         } else if (Input.GetMouseButtonUp(0)) {
             StartCoroutine(RemoveLineAfter(currentLine, secondsForLineToLive));
+            numOfCast+=1;
             SaveLineToPNG(currentLine);
+            if (numOfCast == 3) { numOfCast = 0;}
             currentLine = null;
         }
     }
 
-    void SaveLineToPNG(LineRenderer line)
+    void SaveLineToPNG(LineRenderer line )
     {
-        // Get the bounds of the line
         Bounds bounds = new Bounds(line.GetPosition(0), Vector3.zero);
         for (int i = 1; i < line.positionCount; i++)
         {
             bounds.Encapsulate(line.GetPosition(i));
         }
 
-        // Add some padding
         float padding = 0.5f;
         bounds.Expand(padding);
 
-        // Calculate texture dimensions based on line bounds
         int width = Mathf.CeilToInt(bounds.size.x * 100);
         int height = Mathf.CeilToInt(bounds.size.y * 100);
 
-        // Create a texture with white background
         Texture2D texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
         Color[] pixels = new Color[width * height];
         for (int i = 0; i < pixels.Length; i++)
@@ -60,13 +58,11 @@ public class LineDrawer : MonoBehaviour
         texture.SetPixels(pixels);
         texture.Apply();
 
-        // Draw the line onto the texture
         for (int i = 0; i < line.positionCount - 1; i++)
         {
             Vector3 start = line.GetPosition(i);
             Vector3 end = line.GetPosition(i + 1);
 
-            // Convert world positions to texture coordinates
             Vector2 startTexCoord = new Vector2(
                 (start.x - bounds.min.x) / bounds.size.x * width,
                 (start.y - bounds.min.y) / bounds.size.y * height
@@ -76,28 +72,27 @@ public class LineDrawer : MonoBehaviour
                 (end.y - bounds.min.y) / bounds.size.y * height
             );
 
-            // Draw line segment on texture
             DrawLineOnTexture(texture, startTexCoord, endTexCoord, line.startColor, line.startWidth * 100);
         }
 
-        // Apply the changes
         texture.Apply();
 
-        // Encode texture to PNG
         byte[] bytes = texture.EncodeToPNG();
         Destroy(texture);
         
-        // Ensure directory exists
-        if (!Directory.Exists(savePath))
+        string directoryPath = Path.Combine(Application.dataPath, "Casts");
+        
+        if (!Directory.Exists(directoryPath))
         {
-            Directory.CreateDirectory(savePath);
+            Directory.CreateDirectory(directoryPath);
         }
         
-        // Save file
-        string fileName = System.DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
-        File.WriteAllBytes(Path.Combine(savePath, fileName), bytes);
+        string fileName = "cast" + numOfCast + ".png";
+        string filePath = Path.Combine(directoryPath, fileName);
         
-        Debug.Log("Line saved to " + Path.Combine(savePath, fileName));
+        File.WriteAllBytes(filePath, bytes);
+        
+        Debug.Log("Line saved to " + filePath);
     }
 
     void DrawLineOnTexture(Texture2D tex, Vector2 start, Vector2 end, Color color, float width)
@@ -115,7 +110,6 @@ public class LineDrawer : MonoBehaviour
 
         while (true)
         {
-            // Draw a circle at each point with the line width
             DrawCircle(tex, x0, y0, Mathf.RoundToInt(width / 2), color);
 
             if (x0 == x1 && y0 == y1) break;
