@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bab3ae61a50f34792e069c80cf69e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsX: 2
-  roomsY: 2
+  roomsX: 4
+  roomsY: 4
   roomOffsetX: 40
   roomOffsetY: 40
 --- !u!4 &41179595
