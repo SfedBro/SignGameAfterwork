@@ -434,10 +434,13 @@ MonoBehaviour:
   airControl: 0.8
   jumpForce: 12
   maxJumps: 1
-  jumpCutMultiplier: 0.5
+  jumpCutMultiplier: 1
   coyoteTime: 0.1
+  coyoteTimeForPlatform: 0.1
   jumpBufferTime: 0.1
+  fallingGravityFactor: 2
   dashSpeed: 20
+  maxDashesInAir: 1
   dashTime: 0.2
   dashCooldown: 0.5
   canDashInAir: 1

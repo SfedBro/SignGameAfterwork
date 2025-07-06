@@ -21,9 +21,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.1f;
     [SerializeField] private float coyoteTimeForPlatform = 0.1f;
     [SerializeField] private float jumpBufferTime = 0.1f;
+    [SerializeField] private float fallingGravityFactor = 2f;
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
+    [SerializeField] private int maxDashesInAir = 1;
     [SerializeField] private float dashTime = 0.2f;
     [SerializeField] private float dashCooldown = 0.5f;
     [SerializeField] private bool canDashInAir = true;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private bool isCrossingPlatform;
     private bool isGrounded;
     private int jumpsLeft;
+    private int dashesLeft;
     private float coyoteTimer;
     private float coyoteTimerForPlatform;
     private float jumpBufferTimer;
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<Collider2D>();
         jumpsLeft = maxJumps;
+        dashesLeft = maxDashesInAir;
         baseGravity = rb.gravityScale;
         blurTimer = blurSpawnRate;
     }
@@ -82,6 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimer = coyoteTime;
             jumpsLeft = maxJumps;
+            dashesLeft = maxDashesInAir;
         }
         else if (!isGrounded && jumpsLeft == maxJumps)
         {
@@ -122,7 +127,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f && (!isDashing && (canDashInAir || isGrounded)))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f && dashesLeft > 0 && (!isDashing && (canDashInAir || isGrounded)))
         {
             StartDash();
         }
@@ -196,6 +201,7 @@ public class PlayerController : MonoBehaviour
 
     private void StartDash()
     {
+        dashesLeft--;
         isDashing = true;
         dashTimer = dashTime;
         dashCooldownTimer = dashCooldown;
@@ -252,7 +258,14 @@ public class PlayerController : MonoBehaviour
         // ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (!isDashing)
         {
-            rb.gravityScale = baseGravity;
+            if (rb.linearVelocityY < 0f)
+            {
+                rb.gravityScale = baseGravity * fallingGravityFactor;
+            } 
+            else
+            {
+                rb.gravityScale = baseGravity;
+            }
         }
     }
 
