@@ -159,8 +159,8 @@ MonoBehaviour:
   lookAheadDistance: 2
   lookAheadSpeed: 0.1
   useBounds: 0
-  minBounds: {x: 0, y: 0}
-  maxBounds: {x: 0, y: 0}
+  minBoundsPoint: {fileID: 0}
+  maxBoundsPoint: {fileID: 0}
 --- !u!114 &7519207001559043901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Bits: 1024
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
