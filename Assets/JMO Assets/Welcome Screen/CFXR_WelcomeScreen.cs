@@ -22,6 +22,7 @@ namespace CartoonFX
                 {
                     return;
                 }
+                return;
 
                 Open();
             };

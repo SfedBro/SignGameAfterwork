@@ -18,6 +18,7 @@ public class UIHPController : MonoBehaviour
     [SerializeField] private AnimationCurve disappearCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 
     private List<GameObject> heartSlots = new List<GameObject>();
+    private DamageVignette damageVignette;
     private int currentHP;
     private int previousHP;
     private bool isAnimating = false;
@@ -34,6 +35,7 @@ public class UIHPController : MonoBehaviour
             GameObject childObject = heartContainer.GetChild(i).gameObject;
             Destroy(childObject);
         }
+        damageVignette = GetComponent<DamageVignette>();
         UpdateHearts();
     }
 
@@ -45,6 +47,11 @@ public class UIHPController : MonoBehaviour
 
             if (currentHP != previousHP)
             {
+                if (currentHP < previousHP && damageVignette != null)
+                {
+                    damageVignette.TriggerDamageVignette();
+                    ScreenShake.Instance.ShakeVeryLight();
+                }
                 UpdateHearts();
                 previousHP = currentHP;
             }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2197915983882515703}
   - component: {fileID: 2668894604446659065}
   - component: {fileID: 7519207001559043901}
+  - component: {fileID: 8754365141063020917}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -161,6 +162,9 @@ MonoBehaviour:
   useBounds: 0
   minBoundsPoint: {fileID: 0}
   maxBoundsPoint: {fileID: 0}
+  mouseRadius: 10
+  mouseOffsetSpeed: 5
+  returnToOffsetSpeed: 2
 --- !u!114 &7519207001559043901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +225,45 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &8754365141063020917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772994537628674339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508b06585a4e9ec4fb34499697abfec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isScreenShakeEnabled: 1
+  shakeDuration: 0.3
+  shakeIntensity: 1
+  shakeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3826588424710546158
 GameObject:
   m_ObjectHideFlags: 0

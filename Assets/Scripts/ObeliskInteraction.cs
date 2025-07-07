@@ -36,8 +36,7 @@ public class ObeliskInteraction : MonoBehaviour
 
         // letterE.SetActive(false); 
 
-        spiralParticles.Stop();
-
+        spiralParticles.Pause();
 
         if (spotLight != null)
         {

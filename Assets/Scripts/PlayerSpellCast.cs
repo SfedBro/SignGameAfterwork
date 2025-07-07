@@ -23,6 +23,7 @@ public class PlayerSpellCast : MonoBehaviour
     [SerializeField] private float aimRotationSpeed = 30f;
     [SerializeField] private float timeSlowFactor = 0.5f;
     [SerializeField] private int spellsPerSecond = 3;
+    [SerializeField] private float spellSpread = 5f;
 
     private float currentSpellTime;
     private bool isCasting;
@@ -35,7 +36,9 @@ public class PlayerSpellCast : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        redWandParticles.Stop();
+        redWandParticles.Pause();
+        redWandParticles.Clear();
+
         if (aim) aim.SetActive(false);
         lastHorizontalInput = 0f;
         UpdateIdleStaff();
@@ -46,6 +49,7 @@ public class PlayerSpellCast : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !isCasting)
         {
             StartCasting();
+            lastSpellCastTimer = 1f / spellsPerSecond;
         }
         if ((Input.GetMouseButtonUp(1)))
         {
@@ -64,6 +68,8 @@ public class PlayerSpellCast : MonoBehaviour
         else
         {
             UpdateIdleStaff();
+            redWandParticles.Pause();
+            redWandParticles.Clear();
         }
         lastSpellCastTimer -= Time.deltaTime;
 
@@ -136,11 +142,12 @@ public class PlayerSpellCast : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        redWandParticles.Stop();
-
         Vector3 direction = (targetPosition - wandTip.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GameObject fireball = Instantiate(fireballPrefab, wandTip.position, Quaternion.Euler(0, 0, angle - 90f));
+        Vector2 perpendicular = new Vector2(-direction.y, direction.x);
+        perpendicular *= Random.Range(-spellSpread, spellSpread);
+        Vector3 spellCastPosition = new Vector3(wandTip.position.x + perpendicular.x, wandTip.position.y + perpendicular.y, 0);
+        GameObject fireball = Instantiate(fireballPrefab, spellCastPosition, Quaternion.Euler(0, 0, angle - 90f));
         fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
 
         wandSpriteRenderer.color = Color.black;
@@ -152,7 +159,8 @@ public class PlayerSpellCast : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        redWandParticles.Stop();
+        redWandParticles.Pause();
+        redWandParticles.Clear();
         Destroy(activeAim);
         wandSpriteRenderer.color = Color.black;
     }

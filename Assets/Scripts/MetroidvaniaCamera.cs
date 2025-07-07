@@ -14,9 +14,15 @@ public class MetroidvaniaCamera : MonoBehaviour
     [SerializeField] private Transform minBoundsPoint;
     [SerializeField] private Transform maxBoundsPoint;
 
+    [Header("Mouse Control")]
+    [SerializeField] private float mouseRadius = 10f;
+    [SerializeField] private float mouseOffsetSpeed = 50f;
+    [SerializeField] private float returnToOffsetSpeed = 2f; // Скорость возвращения к обычному offset
+
     private Camera cam;
     private Vector3 lookAheadOffset;
     private Vector3 targetPosition;
+    private bool isUsingMouseControl = false;
 
     void Start()
     {
@@ -34,6 +40,24 @@ public class MetroidvaniaCamera : MonoBehaviour
     void FixedUpdate()
     {
         if (player == null) return;
+
+        // Проверяем состояние правой кнопки мыши
+        if (Input.GetMouseButton(1))
+        {
+            isUsingMouseControl = true;
+            Vector3 mousePos = GetMouseWorldPosition();
+            Vector3 direction = (mousePos - transform.position).normalized * mouseRadius;
+            lookAheadOffset = Vector3.Lerp(lookAheadOffset, direction, mouseOffsetSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            if (isUsingMouseControl)
+            {
+                // Быстро возвращаемся к стандартному look ahead
+                isUsingMouseControl = false;
+            }
+            UpdateLookAhead();
+        }
 
         targetPosition = player.position + offset + lookAheadOffset;
 
@@ -53,8 +77,15 @@ public class MetroidvaniaCamera : MonoBehaviour
             clampedPosition.y = Mathf.Clamp(clampedPosition.y, minBoundsPoint.position.y + camHeight, maxBoundsPoint.position.y - camHeight);
             transform.position = clampedPosition;
         }
+    }
 
-        UpdateLookAhead();
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = -cam.transform.position.z;
+        Vector3 worldPos = cam.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0;
+        return worldPos;
     }
 
     private void UpdateLookAhead()
@@ -67,9 +98,10 @@ public class MetroidvaniaCamera : MonoBehaviour
             targetLookAhead = new Vector3(playerVelocity.x, playerVelocity.y, 0).normalized * lookAheadDistance;
         }
 
-        lookAheadOffset = Vector3.Lerp(lookAheadOffset, targetLookAhead, lookAheadSpeed * Time.fixedDeltaTime);
+        // Используем более быструю скорость возвращения если мы только что отпустили мышь
+        float currentSpeed = isUsingMouseControl ? lookAheadSpeed : returnToOffsetSpeed;
+        lookAheadOffset = Vector3.Lerp(lookAheadOffset, targetLookAhead, currentSpeed * Time.fixedDeltaTime);
     }
-
 
     public void SetCameraBounds(Vector2 newMinBounds, Vector2 newMaxBounds)
     {
