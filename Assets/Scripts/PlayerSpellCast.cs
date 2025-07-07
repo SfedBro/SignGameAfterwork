@@ -22,6 +22,7 @@ public class PlayerSpellCast : MonoBehaviour
     [SerializeField] private float spellDuration = 3f;
     [SerializeField] private float aimRotationSpeed = 30f;
     [SerializeField] private float timeSlowFactor = 0.5f;
+    [SerializeField] private int spellsPerSecond = 3;
 
     private float currentSpellTime;
     private bool isCasting;
@@ -29,6 +30,7 @@ public class PlayerSpellCast : MonoBehaviour
     private Vector3 targetPosition;
     private Camera mainCamera;
     private float lastHorizontalInput;
+    private float lastSpellCastTimer = 0f;
 
     private void Start()
     {
@@ -41,24 +43,29 @@ public class PlayerSpellCast : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetMouseButtonDown(1) && !isCasting) || (Input.GetKeyDown(KeyCode.LeftControl) && !isCasting))
+        if (Input.GetMouseButtonDown(1) && !isCasting)
         {
             StartCasting();
+        }
+        if ((Input.GetMouseButtonUp(1)))
+        {
+            isCasting = false;
+            Destroy(activeAim);
         }
 
         if (isCasting)
         {
             UpdateCasting();
+            if (lastSpellCastTimer <= 0f) {
+                CastFireball();
+                lastSpellCastTimer = 1f / spellsPerSecond;
+            }
         }
         else
         {
             UpdateIdleStaff();
         }
-
-        if ((Input.GetMouseButtonUp(1) && isCasting) || (Input.GetKeyUp(KeyCode.LeftControl) && isCasting))
-        {
-            CastFireball();
-        }
+        lastSpellCastTimer -= Time.deltaTime;
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput != 0f)
@@ -78,7 +85,6 @@ public class PlayerSpellCast : MonoBehaviour
         targetPosition = GetMouseWorldPosition();
         activeAim = Instantiate(aim, targetPosition, Quaternion.identity);
         activeAim.SetActive(true);
-
         redWandParticles.Play();
     }
 
@@ -86,8 +92,11 @@ public class PlayerSpellCast : MonoBehaviour
     {
         // прицел к курсору
         targetPosition = GetMouseWorldPosition();
-        activeAim.transform.position = targetPosition;
-        activeAim.transform.Rotate(0, 0, aimRotationSpeed * Time.unscaledDeltaTime);
+        if (activeAim != null)
+        {
+            activeAim.transform.position = targetPosition;
+            activeAim.transform.Rotate(0, 0, aimRotationSpeed * Time.unscaledDeltaTime);
+        }
 
         Vector3 direction = (targetPosition - transform.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -100,10 +109,6 @@ public class PlayerSpellCast : MonoBehaviour
 
         currentSpellTime -= Time.unscaledDeltaTime;
 
-        if (currentSpellTime <= 0)
-        {
-            CancelSpell();
-        }
     }
 
     private void UpdateIdleStaff()
@@ -128,7 +133,6 @@ public class PlayerSpellCast : MonoBehaviour
 
     private void CastFireball()
     {
-        isCasting = false;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
@@ -138,8 +142,6 @@ public class PlayerSpellCast : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         GameObject fireball = Instantiate(fireballPrefab, wandTip.position, Quaternion.Euler(0, 0, angle - 90f));
         fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
-
-        Destroy(activeAim);
 
         wandSpriteRenderer.color = Color.black;
     }
