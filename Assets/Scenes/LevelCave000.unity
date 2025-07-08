@@ -7265,6 +7265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnDelay: 3
+  mainMenuSceneName: MainMenu
+  levelCave000: LevelCave000
 --- !u!114 &248995617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25848,6 +25850,7 @@ MonoBehaviour:
   hp: 0
   maxHP: 10
   iSecondsCount: 0
+  deathScreenPrefab: {fileID: 8471688225462204449, guid: d2ce7d32262358043a517d58a4a6a13a, type: 3}
 --- !u!4 &1009538683 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 282918613760511247, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
@@ -58883,7 +58886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7252566099388931718, guid: 1781dabcf5705624887b830f728096a1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7616917461403902336, guid: 1781dabcf5705624887b830f728096a1, type: 3}
       propertyPath: gameManager
