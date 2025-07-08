@@ -14,6 +14,14 @@ public class TorgashInteraction : MonoBehaviour
     private bool isInteractive = false;
     private float playerNearbyTimer = 0f;
 
+    void Awake()
+    {
+        if (PlayerPrefs.GetInt("Torgash" + transform) == 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -111,6 +119,7 @@ public class TorgashInteraction : MonoBehaviour
         animator.SetTrigger("disappear");
         Debug.Log("disappear");
         yield return new WaitForSeconds(1.4f);
+        PlayerPrefs.SetInt("Torgash" + transform, 1);
 
         if (playerController != null)
         {
