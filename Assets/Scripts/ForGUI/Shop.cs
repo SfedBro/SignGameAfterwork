@@ -8,6 +8,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI objectPrice;
     [SerializeField] private TextMeshProUGUI descriptionField;
     [SerializeField] private TextMeshProUGUI coinCounter;
+    [SerializeField] private GameObject sourceImage;
     // [SerializeField] private GameObject block;
     [SerializeField] private int price;
     [SerializeField] public string objectName;
@@ -27,7 +28,8 @@ public class Shop : MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("coins", 100);
         // block.SetActive(false);
-
+        sourceImage.SetActive(false);
+        
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
 
@@ -128,10 +130,9 @@ public class Shop : MonoBehaviour
 
     private IEnumerator AnimateSequence()
     {
-        // Подождать 1 секунду перед поворотом
         yield return new WaitForSeconds(1.5f);
 
-        // 1. Поворот по Z на 90°
+        // поворот
         float t = 0f;
         float duration = 0.6f;
         Quaternion startRot = rectTransform.localRotation;
@@ -146,10 +147,9 @@ public class Shop : MonoBehaviour
 
         rectTransform.localRotation = endRot;
 
-        // Подождать 2 секунды перед масштабом
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.2f);
 
-        // 2. Увеличение по X в 4.5 раз
+        // увеличение по x
         t = 0f;
         duration = 0.4f;
         Vector3 startScale = rectTransform.localScale;
@@ -163,6 +163,7 @@ public class Shop : MonoBehaviour
         }
 
         rectTransform.localScale = endScale;
+        sourceImage.SetActive(true);
     }
 
     public void Select()
@@ -186,6 +187,8 @@ public class Shop : MonoBehaviour
         Vector3 start = rectTransform.localScale;
         Vector3 end = new Vector3(originalScale.x / 4.5f, originalScale.y, originalScale.z);
 
+        sourceImage.SetActive(false);
+
         while (t < duration)
         {
             t += Time.deltaTime;
@@ -203,6 +206,8 @@ public class Shop : MonoBehaviour
         Vector3 start = rectTransform.localScale;
         Vector3 end = new Vector3(originalScale.x * 5f, originalScale.y, originalScale.z);
 
+        sourceImage.SetActive(true);
+        
         while (t < duration)
         {
             t += Time.deltaTime;

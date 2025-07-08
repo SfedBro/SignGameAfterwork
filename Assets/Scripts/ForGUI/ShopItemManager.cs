@@ -27,6 +27,14 @@ public class ShopItemManager : MonoBehaviour
             }
 
             item.Select();
+            int length = description.Length;
+
+            if (length < 30)
+                descriptionField.fontSize = 500;
+            else if (length < 60)
+                descriptionField.fontSize = 400;
+            else
+                descriptionField.fontSize = 350;
             descriptionField.text = description;
         }
     }
