@@ -69,6 +69,12 @@ public class TorgashInteraction : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         guiManager.PanelActivate(true);
+
+        ShopItemManager shopManager = shopCanvas.GetComponentInChildren<ShopItemManager>();
+        foreach (var item in shopManager.GetComponentsInChildren<Shop>())
+        {
+            item.AnimateIn();
+        }
     }
 
     void OnTriggerEnter(Collider other)
