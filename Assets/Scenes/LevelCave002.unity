@@ -43480,11 +43480,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6377138182487133699, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
       propertyPath: hp
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6377138182487133699, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
       propertyPath: maxHP
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6377138182487133699, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
       propertyPath: deathScreenPrefab

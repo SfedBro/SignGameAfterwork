@@ -35,11 +35,11 @@ public class Player : MonoBehaviour
             deathScreenInstance.SetActive(false);
 
             var buttons = deathScreenInstance.GetComponentsInChildren<Button>();
+            Debug.Log(buttons[0]);
             if (buttons.Length >= 2)
             {
                 buttons[0].onClick.RemoveAllListeners();
                 buttons[1].onClick.RemoveAllListeners();
-                
                 buttons[0].onClick.AddListener(GameManager.I.RestartGame);
                 buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
             }
