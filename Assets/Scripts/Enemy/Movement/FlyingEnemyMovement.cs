@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LayerMask), typeof(NavMeshAgent))]
+[RequireComponent(typeof(MorphEnemyAttack))]
 public class FlyingEnemyMovement : MonoBehaviour
 {
     [SerializeField]
@@ -21,6 +22,8 @@ public class FlyingEnemyMovement : MonoBehaviour
     private float stoppingDistance;
     [SerializeField]
     private float visionRange;
+    [SerializeField]
+    private IAttack attackScript;
     //Patrolling
     [SerializeField]
     private float untilPatrolTime;
@@ -96,21 +99,17 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, playerTag))
         {
-            if (isPatrolRunning)
+            if (waitForPlayerCoroutine != null)
             {
-                isPatrolRunning = false;
-                if (patrolCoroutine != null)
-                {
-                    StopCoroutine(patrolCoroutine);
-                }
-            }
-            if (isWaitingForPlayer)
-            {
+                StopCoroutine(waitForPlayerCoroutine);
+                waitForPlayerCoroutine = null;
                 isWaitingForPlayer = false;
-                if (waitForPlayerCoroutine != null)
-                {
-                    StopCoroutine(waitForPlayerCoroutine);
-                }
+            }
+            if (patrolCoroutine != null)
+            {
+                StopCoroutine(patrolCoroutine);
+                patrolCoroutine = null;
+                isPatrolRunning = false;
             }
 
             agent.stoppingDistance = stoppingDistance;
@@ -121,14 +120,14 @@ public class FlyingEnemyMovement : MonoBehaviour
             agent.stoppingDistance = 0;
             if (!isPatrolRunning && !isWaitingForPlayer)
             {
-                waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol());
+                waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol(untilPatrolTime));
             }
         }
     }
-    private IEnumerator WaitBeforePatrol()
+    private IEnumerator WaitBeforePatrol(float time)
     {
         isWaitingForPlayer = true;
-        yield return new WaitForSeconds(untilPatrolTime);
+        yield return new WaitForSeconds(time);
         initPatrolPosition = agent.transform.position;
         isWaitingForPlayer = false;
         isPatrolRunning = true;
@@ -137,18 +136,21 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     private IEnumerator Patrol()
     {
+        bool isAtPlace = false;
+        Vector2 newPos;
         while (isPatrolRunning)
         {
-            Vector2 newPos = initPatrolPosition + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * patrolRange;
-
-            agent.SetDestination(newPos);
-
-            while (!agent.pathPending && agent.remainingDistance > agent.stoppingDistance)
+            isAtPlace = agent.remainingDistance <= agent.stoppingDistance;
+            if (isAtPlace)
+            {
+                newPos = initPatrolPosition + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * patrolRange;
+                agent.SetDestination(newPos);
+                yield return new WaitForSeconds(untilChangeTime);
+            }
+            else
             {
                 yield return null;
             }
-
-            yield return new WaitForSeconds(untilChangeTime);
         }
     }
     private void OnDrawGizmos()
