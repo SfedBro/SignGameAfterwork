@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: ae0ae7b314547284a909c5bed6fdac89
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - brushPrefab: {instanceID: 0}
+  - cam: {instanceID: 0}
+  - modelAsset: {fileID: 5022602860645237092, guid: 9771fab52029fa140bf3b8e1beb5ee3d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

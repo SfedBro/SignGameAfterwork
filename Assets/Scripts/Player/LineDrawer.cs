@@ -1,17 +1,52 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Unity.Barracuda;
+
+[System.Serializable]
+public class ClassMapping
+{
+    public string className;
+    public int classIndex;
+}
 
 public class LineDrawer : MonoBehaviour
 {
+    [Header("Drawing Settings")]
     public LineRenderer brushPrefab;
     public Camera cam;
     public float minDistanceForNewPoint = 0.1f;
     public float secondsForLineToLive = 3f;
     
-    private int numOfCast = 0;
-    LineRenderer currentLine;
+    [Header("Classification Settings")]
+    public NNModel modelAsset;
+    public float confidenceThreshold = 0.5f;
     
+    
+    [SerializeField]
+    private List<ClassMapping> _classMap = new List<ClassMapping>
+    {
+        new ClassMapping{className="air1",classIndex=0},
+        new ClassMapping{className="air2",classIndex=1},
+        // Add all other classes similarly
+    };
+
+    private LineRenderer currentLine;
+    private IWorker _worker;
+    private Model _runtimeModel;
+    int num = 0;
+
+    private void Start()
+    {
+        // Initialize Barracuda model
+        if (modelAsset != null)
+        {
+            _runtimeModel = ModelLoader.Load(modelAsset);
+            _worker = WorkerFactory.CreateWorker(WorkerFactory.Type.CSharpBurst, _runtimeModel);
+        }
+    }
+
     void Update() {
         Draw();
     }
@@ -21,21 +56,33 @@ public class LineDrawer : MonoBehaviour
             currentLine = Instantiate(brushPrefab);
             currentLine.transform.SetParent(transform, false);
             currentLine.SetPosition(0, GetMouseLocalPos());
-        } else if (Input.GetMouseButton(0)) {
-            if (DistanceToLastPoint(GetMouseLocalPos()) < minDistanceForNewPoint) return;
+        } 
+        else if (Input.GetMouseButton(0)) {
+            if (currentLine == null || DistanceToLastPoint(GetMouseLocalPos()) < minDistanceForNewPoint) 
+                return;
+                
             ++currentLine.positionCount;
             int posIndex = currentLine.positionCount - 1;
             currentLine.SetPosition(posIndex, GetMouseLocalPos());
-        } else if (Input.GetMouseButtonUp(0)) {
+        } 
+        else if (Input.GetMouseButtonUp(0)) {
             StartCoroutine(RemoveLineAfter(currentLine, secondsForLineToLive));
-            numOfCast+=1;
-            SaveLineToPNG(currentLine);
-            if (numOfCast == 3) { numOfCast = 0;}
+            
+            // Save and classify the line
+            byte[] pngData = SaveLineToPNG(currentLine);
+            if (modelAsset != null)
+            {
+                ClassifyDrawing(pngData, num++);
+            }
+            else {
+                Debug.Log("Model is not assigned");
+
+            }
             currentLine = null;
         }
     }
 
-    void SaveLineToPNG(LineRenderer line )
+    byte[] SaveLineToPNG(LineRenderer line)
     {
         Bounds bounds = new Bounds(line.GetPosition(0), Vector3.zero);
         for (int i = 1; i < line.positionCount; i++)
@@ -80,19 +127,121 @@ public class LineDrawer : MonoBehaviour
         byte[] bytes = texture.EncodeToPNG();
         Destroy(texture);
         
+        /*
         string directoryPath = Path.Combine(Application.dataPath, "Casts");
-        
         if (!Directory.Exists(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);
         }
-        
-        string fileName = "cast" + numOfCast + ".png";
-        string filePath = Path.Combine(directoryPath, fileName);
-        
+        string filePath = Path.Combine(directoryPath, "cast.png");
         File.WriteAllBytes(filePath, bytes);
-        
         Debug.Log("Line saved to " + filePath);
+        */
+        
+        return bytes;
+    }
+
+    void ClassifyDrawing(byte[] pngData, int num)
+    {
+        Debug.Log("Start classfy " + num + "image");
+        // Convert PNG byte array to Texture2D
+        Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+        texture.LoadImage(pngData);
+        
+        // Preprocess and create input tensor
+        using Tensor inputTensor = PreprocessTexture(texture);
+        
+        // Execute the model
+        _worker.Execute(inputTensor);
+        
+        // Get the output
+        using Tensor outputTensor = _worker.PeekOutput();
+        float[] predictions = outputTensor.ToReadOnlyArray();
+        
+        // Find best prediction
+        int predictedClass = -1;
+        float maxConfidence = 0f;
+        
+        for (int i = 0; i < predictions.Length; i++)
+        {
+            if (predictions[i] > maxConfidence)
+            {
+                maxConfidence = predictions[i];
+                predictedClass = i;
+            }
+        }
+        
+        // Clean up
+        UnityEngine.Object.Destroy(texture);
+        
+        // Display results
+        if (maxConfidence >= confidenceThreshold && predictedClass >= 0)
+        {
+
+            for (int i  =0;i  < _classMap.Count; ++i){
+                if (_classMap[i].classIndex == predictedClass ){
+                    var className = _classMap[i].className;
+                    Debug.Log($"Predicted: {className}\nConfidence: {maxConfidence:P0}");
+                } 
+
+            }
+        }
+        else
+        {
+            Debug.Log( "Unknown drawing");
+        }
+        
+        Debug.Log("End classfy " + num + "image" + "Class is " + predictedClass + "with confidence" + maxConfidence );
+    }
+
+    Tensor PreprocessTexture(Texture2D texture)
+    {
+        // Resize and convert to grayscale
+        Texture2D processedTexture = ResizeAndGrayscale(texture, 64, 64);
+        
+        // Create tensor
+        TensorShape shape = new TensorShape(1, 64, 64, 1);
+        float[] tensorData = new float[shape.length];
+        
+        // Fill tensor data (normalized 0-1)
+        Color[] pixels = processedTexture.GetPixels();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            tensorData[i] = pixels[i].grayscale;
+        }
+        
+        UnityEngine.Object.Destroy(processedTexture);
+        return new Tensor(shape, tensorData);
+    }
+
+    Texture2D ResizeAndGrayscale(Texture2D source, int width, int height)
+    {
+        // Create render texture
+        RenderTexture rt = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32);
+        Graphics.Blit(source, rt);
+        
+        // Create texture and read pixels
+        Texture2D result = new Texture2D(width, height, TextureFormat.RGBA32, false);
+        RenderTexture.active = rt;
+        result.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+        result.Apply();
+        
+        // Convert to grayscale
+        Color[] pixels = result.GetPixels();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            float gray = pixels[i].grayscale;
+            pixels[i] = new Color(gray, gray, gray);
+        }
+        result.SetPixels(pixels);
+        result.Apply();
+        
+        // Clean up
+        RenderTexture.active = null;
+        RenderTexture.ReleaseTemporary(rt);
+        
+        return result;
+        
     }
 
     void DrawLineOnTexture(Texture2D tex, Vector2 start, Vector2 end, Color color, float width)
