@@ -19,6 +19,7 @@ public class PlayerSpellCast : MonoBehaviour
     [SerializeField] private GameObject fireballPrefab;
     [SerializeField] private float spellSpeed = 30f;
     [SerializeField] private ParticleSystem redWandParticles;
+    [SerializeField] private ParticleSystem castEffectParticles;
     [SerializeField] private float spellDuration = 3f;
     [SerializeField] private float aimRotationSpeed = 30f;
     [SerializeField] private float timeSlowFactor = 0.5f;
@@ -60,7 +61,10 @@ public class PlayerSpellCast : MonoBehaviour
         if (isCasting)
         {
             UpdateCasting();
-            if (lastSpellCastTimer <= 0f) {
+            if (lastSpellCastTimer <= 0f)
+            {
+                castEffectParticles.Emit(1);
+
                 CastFireball();
                 lastSpellCastTimer = 1f / spellsPerSecond;
             }

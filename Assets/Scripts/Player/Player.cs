@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 [RequireComponent (typeof(SpriteRenderer))]
 public class Player : MonoBehaviour
@@ -12,11 +13,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float flashDuration = 1f;
     private ImpactFlash impactFlash;
     private SpriteRenderer spriteRenderer;
+    private DamageParticles damageParticles;
     void Start()
     {
         hp = maxHP;
         impactFlash = GetComponent<ImpactFlash>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        damageParticles = GetComponent<DamageParticles>();
     }
 
     // for test
@@ -48,7 +51,8 @@ public class Player : MonoBehaviour
         hp = maxHP;
     }
 
-    public void TakeDamage(int damage, Vector3 ? direction = null) {
+    public void TakeDamage(int damage, Vector3 direction = default)
+    {
         if (hp <= 0 || iSecondsCount > 0) return;
         hp = Mathf.Max(hp - damage, 0);
         iSecondsCount = iSeconds;
@@ -58,13 +62,14 @@ public class Player : MonoBehaviour
         {
             impactFlash.Flash(spriteRenderer, flashDuration);
         }
-        if (direction == null)
+        if (direction == default)
         {
-
+            damageParticles.PlayMediumSparkEffect(transform.position);
         }
         else
         {
-
+            Vector2 fixedDirection = new Vector2(direction.x, direction.y);
+            damageParticles.PlayMediumSparkEffect(transform.position, fixedDirection);
         }
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5216078958278152330}
   - component: {fileID: 3005419789388633945}
   - component: {fileID: 2087480039090388560}
-  - component: {fileID: 336950989007504365}
   m_Layer: 8
   m_Name: Fireball
   m_TagString: Untagged
@@ -32,8 +31,6 @@ Transform:
   m_LocalScale: {x: 0.14988095, y: 0.14988095, z: -0.14988095}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3906005221500195519}
-  - {fileID: 7769202348231302464}
   - {fileID: 686251746024046079}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -100,28 +97,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &336950989007504365
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190285968056344791}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f6586683608403c4c919f3486198e1f6, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5189272620700166029
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,12 +123,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5189272620700166029}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
+  m_LocalPosition: {x: 0, y: 0.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5216078958278152330}
+  m_Father: {fileID: 686251746024046079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &706080531671179681
 ParticleSystem:
@@ -4981,12 +4956,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6164752026679344673}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.37, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
+  m_LocalPosition: {x: 0, y: 0.5691495, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.14154376}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5216078958278152330}
+  m_Father: {fileID: 686251746024046079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &6020114961009783951
 ParticleSystem:
@@ -9938,15 +9913,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7539286505454239565, guid: 043176b6a68be2b43b073aaaa4782c7d, type: 3}
       propertyPath: m_Range
-      value: 8.830627
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7539286505454239565, guid: 043176b6a68be2b43b073aaaa4782c7d, type: 3}
       propertyPath: m_Intensity
-      value: 18.686459
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6294508013172393185, guid: 043176b6a68be2b43b073aaaa4782c7d, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 3906005221500195519}
+    - targetCorrespondingSourceObject: {fileID: 6294508013172393185, guid: 043176b6a68be2b43b073aaaa4782c7d, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 7769202348231302464}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3199283261846579216, guid: 043176b6a68be2b43b073aaaa4782c7d, type: 3}
       insertIndex: -1
