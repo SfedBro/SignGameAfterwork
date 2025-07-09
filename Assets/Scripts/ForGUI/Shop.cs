@@ -1,31 +1,46 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    // Variable for specifying a price and inserting it into a TextMeshProUGUI
-    [SerializeField] private int price;
-    [SerializeField] private string objectName;
-    [SerializeField] private GameObject block;
     [SerializeField] private TextMeshProUGUI objectPrice;
+    [SerializeField] private TextMeshProUGUI descriptionField;
     [SerializeField] private TextMeshProUGUI coinCounter;
-    private DropHPController hpDrop;
-    private int access;
-    // for test
-    public bool fl = false;
-    // for test
+    [SerializeField] private GameObject sourceImage;
+    [SerializeField] private GameObject panel;
+    // [SerializeField] private GameObject block;
+    [SerializeField] private int price;
+    [SerializeField] public string objectName;
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
 
-    void Awake()
+    private Vector3 originalScale;
+    private bool isSelected = false;
+
+    private Vector3 dragStartPos;
+    private bool isDragging = false;
+    private int access;
+    private float alpha = 0.1f;
+
+    private void Awake()
     {
         // for test
-        if (fl == false)
-        {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.SetInt("coins", 1000);
-            fl = true;
-        }
+        // PlayerPrefs.DeleteAll();
+        // PlayerPrefs.SetInt("coins", 200);
         // for test
-        hpDrop = GetComponent<DropHPController>();
+        sourceImage.SetActive(false);
+        
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        originalScale = rectTransform.localScale;
+
+        rectTransform.localRotation = Quaternion.identity;
+        canvasGroup.alpha = 1f;
+        rectTransform.localScale = originalScale;
+
         AccessUpdate();
     }
 
@@ -36,17 +51,49 @@ public class Shop : MonoBehaviour
 
         if (access == 1)
         {
-            block.SetActive(true);
+            // block.SetActive(true);
+            SetTransparency(alpha);
             objectPrice.gameObject.SetActive(false);
         }
         else
         {
-            block.SetActive(false);
+            // block.SetActive(false);
+            SetTransparency(1);
             objectPrice.gameObject.SetActive(true);
         }
     }
 
-    public void OnButtonDown()
+    private void Update()
+    {
+        if (isSelected == true && access == 0)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                dragStartPos = Input.mousePosition;
+                isDragging = true;
+            }
+            else if (Input.GetMouseButton(0) && isDragging)
+            {
+                Vector3 currentPos = Input.mousePosition;
+                float dragDistance = Vector3.Distance(currentPos, dragStartPos);
+
+                if (dragDistance > 5f)
+                {
+                    SetTransparency(alpha);
+                    AttemptToBuy();
+                    isDragging = false;
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+                SetTransparency(1f);
+            }
+        }
+    }
+
+    private void AttemptToBuy()
     {
         int coins = PlayerPrefs.GetInt("coins");
 
@@ -57,13 +104,121 @@ public class Shop : MonoBehaviour
                 PlayerPrefs.SetInt(objectName + "Access", 1);
                 PlayerPrefs.SetInt("coins", coins - price);
                 coinCounter.text = PlayerPrefs.GetInt("coins").ToString();
-                hpDrop.DropHP();
+                // block.SetActive(true);
                 AccessUpdate();
+                ItemPurchase purchase = panel.GetComponent<ItemPurchase>();
+                purchase.Purchase(objectName);
+                descriptionField.text = $"Товар \"{objectName}\" куплен";
+                Debug.Log("Куплен товар!");
             }
             else
             {
-                Debug.Log("Нет денег");
+                if (PlayerPrefs.GetInt(objectName + "Access") == 0)
+                {
+                    descriptionField.text = "Недостаточно средств";
+                    Debug.Log("Нет денег");
+                }
             }
         }
+    }
+
+    public void AnimateIn()
+    {
+        StartCoroutine(AnimateSequence());
+    }
+
+    private IEnumerator AnimateSequence()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        // поворот
+        float t = 0f;
+        float duration = 0.6f;
+        Quaternion startRot = rectTransform.localRotation;
+        Quaternion endRot = Quaternion.Euler(0f, 0f, 90f);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            rectTransform.localRotation = Quaternion.Lerp(startRot, endRot, t / duration);
+            yield return null;
+        }
+
+        rectTransform.localRotation = endRot;
+
+        yield return new WaitForSeconds(1.2f);
+
+        // увеличение по x
+        t = 0f;
+        duration = 0.4f;
+        Vector3 startScale = rectTransform.localScale;
+        Vector3 endScale = new Vector3(originalScale.x * 4.5f, originalScale.y, originalScale.z);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            rectTransform.localScale = Vector3.Lerp(startScale, endScale, t / duration);
+            yield return null;
+        }
+
+        rectTransform.localScale = endScale;
+        sourceImage.SetActive(true);
+    }
+
+    public void Select()
+    {
+        isSelected = true;
+        StopAllCoroutines();
+        StartCoroutine(Expand());
+    }
+
+    public void Deselect()
+    {
+        isSelected = false;
+        StopAllCoroutines();
+        StartCoroutine(Shrink());
+    }
+
+    private IEnumerator Shrink()
+    {
+        float t = 0f;
+        float duration = 0.3f;
+        Vector3 start = rectTransform.localScale;
+        Vector3 end = new Vector3(originalScale.x / 4.5f, originalScale.y, originalScale.z);
+
+        sourceImage.SetActive(false);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            rectTransform.localScale = Vector3.Lerp(start, end, t / duration);
+            yield return null;
+        }
+
+        rectTransform.localScale = end;
+    }
+
+    private IEnumerator Expand()
+    {
+        float t = 0f;
+        float duration = 0.3f;
+        Vector3 start = rectTransform.localScale;
+        Vector3 end = new Vector3(originalScale.x * 5f, originalScale.y, originalScale.z);
+
+        sourceImage.SetActive(true);
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            rectTransform.localScale = Vector3.Lerp(start, end, t / duration);
+            yield return null;
+        }
+
+        rectTransform.localScale = end;
+    }
+
+    public void SetTransparency(float alpha)
+    {
+        canvasGroup.alpha = alpha;
     }
 }
