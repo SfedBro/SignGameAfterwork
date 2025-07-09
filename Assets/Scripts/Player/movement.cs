@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.4f, 0.1f);
     [SerializeField] private Transform groundCheck;
 
@@ -129,7 +132,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        dashCooldownTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime; 
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StartCoroutine(DisablePlatformCollision());
+        }
+
         UpdateAnimations();
     }
 
@@ -247,4 +255,23 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed += amount;
     }
+    private IEnumerator DisablePlatformCollision()
+    {
+        Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);
+        foreach (Collider2D col in overlappingPlatforms)
+        {
+            PlatformEffector2D effector = col.GetComponent<PlatformEffector2D>();
+            if (effector != null)
+            {
+                Collider2D platformCollider = col.GetComponent<Collider2D>();
+                if (platformCollider != null)
+                {
+                    platformCollider.enabled = false;
+                    yield return new WaitForSeconds(0.5f);
+                    platformCollider.enabled = true;
+                }
+            }
+        }
+    }
+
 }
