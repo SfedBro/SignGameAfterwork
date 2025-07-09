@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private DamageParticles damageParticles;
     [SerializeField] private GameObject deathScreenPrefab;
     private GameObject deathScreenInstance;
+    private CharacterController characterControl;
     private Player Instance;
     private bool isDead = false;
     private bool isDeathScreenUsing = true;
@@ -28,7 +29,7 @@ public class Player : MonoBehaviour
 
         transform.position = DataContainer.checkpointIndex;
 
-        if (deathScreenPrefab != null)
+        if (deathScreenPrefab != null && false)
         {
             deathScreenInstance = Instantiate(deathScreenPrefab);
             deathScreenInstance.SetActive(false);
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
             {
                 buttons[0].onClick.RemoveAllListeners();
                 buttons[1].onClick.RemoveAllListeners();
-
+                
                 buttons[0].onClick.AddListener(GameManager.I.RestartGame);
                 buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
             }
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
         impactFlash = GetComponent<ImpactFlash>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         damageParticles = GetComponent<DamageParticles>();
+        characterControl = GetComponent<CharacterController>();
         isDeathScreenUsing = true;
     }
 
@@ -123,10 +125,6 @@ public class Player : MonoBehaviour
         isDead = true;
         // GameManager.I.PlayerDied();
 
-        Debug.Log("Die");
-        Time.timeScale = 0;
-
-        var characterControl = GetComponent<CharacterController>();
         if (characterControl != null)
             characterControl.enabled = false;
         if (isDeathScreenUsing)
@@ -134,6 +132,12 @@ public class Player : MonoBehaviour
             if (deathScreenInstance != null)
             {
                 deathScreenInstance.SetActive(true);
+                Time.timeScale = 0;
+            }
+            if (deathScreenPrefab != null)
+            {
+                deathScreenPrefab.SetActive(true);
+                Time.timeScale = 0;
             }
         }
         else
