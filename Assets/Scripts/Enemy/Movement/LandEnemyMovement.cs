@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.UI.Image;
 
 [RequireComponent(typeof(CapsuleCollider2D), typeof(LayerMask), typeof(NavMeshAgent))]
 public class LandEnemyMovement : MonoBehaviour
@@ -20,6 +19,20 @@ public class LandEnemyMovement : MonoBehaviour
     [SerializeField]
     private LayerMask notGroundMasks;
     private string playerTag;
+    //Patrolling
+    [SerializeField]
+    private float untilPatrolTime;
+    [SerializeField]
+    private float untilChangeTime;
+    [SerializeField]
+    private float patrolRange;
+    [SerializeField]
+    private bool isPatrolRunning;
+    [SerializeField]
+    private bool isWaitingForPlayer;
+    private Coroutine waitForPlayerCoroutine;
+    private Coroutine patrolCoroutine;
+    private Vector2 initPatrolPosition;
     //NavMesh parameters
     private NavMeshAgent agent;
     [SerializeField, Range(0f, 100f)]
@@ -50,17 +63,6 @@ public class LandEnemyMovement : MonoBehaviour
     private bool isJumping;
     [SerializeField]
     private Vector3[] corners;
-    public Transform Target
-    {
-        set
-        {
-            target = value;
-        }
-        get
-        {
-            return target;
-        }
-    }
     private void OnValidate()
     {
         if (stats != null)
@@ -99,16 +101,6 @@ public class LandEnemyMovement : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(InitAgent());
-    }
-    IEnumerator InitAgent()
-    {
-        yield return new WaitForEndOfFrame(); // Подождать 1 кадр
-
-        if (!agent.isOnNavMesh)
-        {
-            Debug.LogWarning("NavMeshAgent не на NavMesh!");
-        }
         playerTag = target.gameObject.tag;
         SetAgentParameters();
     }
@@ -139,7 +131,7 @@ public class LandEnemyMovement : MonoBehaviour
         Vector2 startPos = corners[0];
         Vector2 endPos = corners[1];
 
-        float peakY = Mathf.Max(startPos.y, endPos.y);
+        float peakY = Mathf.Max(startPos.y, endPos.y) * 1.1f;
         Vector2 controlPoint = (startPos + endPos) * 0.5f;
         controlPoint.y = peakY;
 
@@ -165,11 +157,11 @@ public class LandEnemyMovement : MonoBehaviour
         if (corners.Length >= 2 && onGround && !isJumping)
         {
             Vector3 pos1 = corners[0];
-            Vector3 pos2 = corners[1];
+            Vector3 pos2 = corners[1] + agent.radius * Vector3.up;
             float heightDifference = Mathf.Abs(pos1.y - pos2.y);
             if (heightDifference <= jumpHeight && heightDifference >= minJumpHeight)
             {
-                Debug.Log("Wanna jump");
+                //Debug.Log("Wanna jump");
                 if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, playerTag)))
                 {
                     return true;
@@ -195,12 +187,30 @@ public class LandEnemyMovement : MonoBehaviour
             agent.transform.position = nextPos;
         }
     }
+    private bool IsPointOnNavMesh(Vector2 point, float maxDistance = 1.0f)
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(point, out hit, maxDistance, NavMesh.AllAreas);
+    }
     private void FollowPlayer()
     {
         Vector2 agentPos = agent.transform.position;
         Vector2 targetPos = target.position;
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, playerTag))
         {
+            if (waitForPlayerCoroutine != null)
+            {
+                StopCoroutine(waitForPlayerCoroutine);
+                waitForPlayerCoroutine = null;
+                isWaitingForPlayer = false;
+            }
+            if (patrolCoroutine != null)
+            {
+                StopCoroutine(patrolCoroutine);
+                patrolCoroutine = null;
+                isPatrolRunning = false;
+            }
+
             agent.stoppingDistance = stoppingDistance;
             Vector2 goalPosition = (Mathf.Abs(targetPos.y - agentPos.y) >= minJumpHeight) ? targetPos : new Vector2(targetPos.x, agentPos.y);
             if ((agentPos - targetPos).magnitude > stoppingDistance)
@@ -212,11 +222,54 @@ public class LandEnemyMovement : MonoBehaviour
                 agent.SetDestination(agentPos);
             }
         }
+        else
+        {
+            if (((Vector2)agent.destination - agentPos).magnitude < stoppingDistance)
+            {
+                if (!isPatrolRunning & !isWaitingForPlayer)
+                {
+                    waitForPlayerCoroutine = StartCoroutine(WaitForPlayer(untilPatrolTime));
+                    isWaitingForPlayer = true;
+                }
+            }
+        }
     }
-    private bool IsPointOnNavMesh(Vector2 point, float maxDistance = 1.0f)
+    private IEnumerator WaitForPlayer(float time)
     {
-        NavMeshHit hit;
-        return NavMesh.SamplePosition(point, out hit, maxDistance, NavMesh.AllAreas);
+        yield return new WaitForSecondsRealtime(time);
+        isWaitingForPlayer = false;
+        waitForPlayerCoroutine = null;
+        isPatrolRunning = true;
+        patrolCoroutine = StartCoroutine(Patrol(untilChangeTime));
+    }
+    private IEnumerator Patrol(float changePosTime = 1f)
+    {
+        Vector2 initPos = agent.transform.position;
+        initPatrolPosition = initPos;
+        while (isPatrolRunning)
+        {
+            yield return new WaitForSecondsRealtime(changePosTime);
+            if ((agent.transform.position - agent.destination).magnitude < stoppingDistance)
+            {
+                changePosition(initPos, patrolRange);
+            }
+        }
+        patrolCoroutine = null;
+    }
+    private void changePosition(Vector2 initialPosition, float patrolRange)
+    {
+        Vector2 offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
+        while (!hit)
+        {
+            offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+            hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
+        }
+        if (hit.collider != null && isPatrolRunning)
+        {
+            Vector2 newPosition = new(offsetPosition.x, hit.point.y + agent.radius);
+            agent.SetDestination(newPosition);
+        }
     }
     private void OnDrawGizmos()
     {
@@ -248,6 +301,22 @@ public class LandEnemyMovement : MonoBehaviour
             Vector2 nextPoint = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
             Gizmos.DrawLine(prevPoint, nextPoint);
             prevPoint = nextPoint;
+        }
+
+        if (isPatrolRunning)
+        {
+            Gizmos.color = Color.red;
+            float radius2 = patrolRange;
+            Vector2 center2 = initPatrolPosition;
+            prevPoint = center2 + new Vector2(Mathf.Cos(0), Mathf.Sin(0)) * radius2;
+
+            for (int i = 1; i <= circleSegments; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector2 nextPoint = center2 + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius2;
+                Gizmos.DrawLine(prevPoint, nextPoint);
+                prevPoint = nextPoint;
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4153616987703337878}
   - component: {fileID: 7961081998083397650}
   - component: {fileID: 6257888548960287844}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,7 +870,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 12.43
+      scalar: 8.3
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3940,7 +3940,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4799,8 +4799,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1864694517
+  m_SortingLayer: 4
   m_SortingOrder: -2
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -4845,7 +4845,7 @@ GameObject:
   - component: {fileID: 7355889899657814465}
   - component: {fileID: 5892295466978091859}
   - component: {fileID: 6949338369274877259}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4945,7 +4945,7 @@ GameObject:
   - component: {fileID: 3079904539522322594}
   - component: {fileID: 8302740668593887471}
   - component: {fileID: 3456576901249019261}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5012,8 +5012,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1864694517
+  m_SortingLayer: 4
   m_SortingOrder: -3
   m_Sprite: {fileID: -3086632462379042449, guid: aa3327cd04f06294b9faf8e21685ebc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -5054,7 +5054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4635132657344512696}
   - component: {fileID: 3178899558525169591}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RebornStone_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5117,9 +5117,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1864694517
+  m_SortingLayer: 4
+  m_SortingOrder: -1
   m_Sprite: {fileID: -1728536447951182706, guid: aa3327cd04f06294b9faf8e21685ebc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -5141,7 +5141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3589012611142076405}
   - component: {fileID: 2503758867301461933}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RebornStone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5204,9 +5204,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1864694517
+  m_SortingLayer: 4
+  m_SortingOrder: -2
   m_Sprite: {fileID: -6253162368147267563, guid: aa3327cd04f06294b9faf8e21685ebc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

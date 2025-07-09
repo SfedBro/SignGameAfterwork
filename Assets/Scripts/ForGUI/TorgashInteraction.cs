@@ -1,89 +1,95 @@
+using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine;
 
 public class TorgashInteraction : MonoBehaviour
 {
-    [SerializeField] private GameObject letterF;
-    [SerializeField] private float detectionRadius = 3f;
     [SerializeField] private GameObject shopCanvas;
-    // [SerializeField] private GameObject cameraObject;
+    [SerializeField] private float detectionRadius = 3f;
+    [SerializeField] private float playerNearbyTimeMax = 2f;
 
     private GameObject player;
     private PlayerController playerController;
     private bool isPlayerNearby = false;
     private bool isInteractive = false;
+    private float playerNearbyTimer = 0f;
+
+    void Awake()
+    {
+        if (PlayerPrefs.GetInt("Torgash" + transform) == 1)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
-        letterF.SetActive(false);
         player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             playerController = player.GetComponent<PlayerController>();
         }
-
     }
 
     private void Update()
     {
+        if (player == null) return;
 
         float distance = Vector2.Distance(transform.position, player.transform.position);
         isPlayerNearby = distance <= detectionRadius;
-        letterF.SetActive(isPlayerNearby);
 
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.F) && !isInteractive)
+        if (isPlayerNearby)
         {
-            StartCoroutine(HandleInteraction());
-        }
-    }
+            playerNearbyTimer += Time.deltaTime;
 
-    private IEnumerator HandleInteraction()
-    {
-        isInteractive = true;
-
-        GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
-
-        if (!guiManager.IsPanelActive)
-        {
-            if (playerController != null)
+            if (playerNearbyTimer >= playerNearbyTimeMax && !isInteractive)
             {
-                playerController.enabled = false;
+                // Debug.Log("open shop");
+                StartCoroutine(OpenShop());
             }
-            // if (cameraObject != null)
-            // {
-            //     cameraObject.GetComponent<LineDrawer>().gameObject.SetActive(false);
-            // }
-            this.GetComponent<Animator>().SetBool("open", true);
-            yield return new WaitForSeconds(0.3f);
-
-            guiManager.PanelActivate(true);
         }
         else
         {
-            guiManager.PanelActivate(false);
-            yield return new WaitForSeconds(1.1f);
-
-            this.GetComponent<Animator>().SetBool("open", false);
-
-            if (playerController != null)
-            {
-                playerController.enabled = true;
-            }
-            // if (cameraObject != null)
-            // {
-            //     cameraObject.GetComponent<LineDrawer>().gameObject.SetActive(true);
-            // }
+            playerNearbyTimer = 0f;
         }
 
-        isInteractive = false;
+        // проверяем ЛКМ вне UI
+        if (isInteractive && Input.GetMouseButtonDown(0))
+        {
+            if (!IsPointerOverUIObject())
+            {
+                StartCoroutine(CloseShop());
+            }
+        }
     }
-    
+
+    private IEnumerator OpenShop()
+    {
+        isInteractive = true;
+        playerNearbyTimer = 0f;
+
+        GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+        }
+        this.GetComponent<Animator>().SetBool("open", true);
+        yield return new WaitForSeconds(0.4f);
+
+        guiManager.PanelActivate(true);
+
+        ShopItemManager shopManager = shopCanvas.GetComponentInChildren<ShopItemManager>();
+        foreach (var item in shopManager.GetComponentsInChildren<Shop>())
+        {
+            item.AnimateIn();
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = true;
-            letterF.SetActive(true);
         }
     }
 
@@ -92,10 +98,41 @@ public class TorgashInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            letterF.SetActive(false);
-            
             shopCanvas.GetComponent<GUIManager>().PanelActivate(false);
             this.GetComponent<Animator>().SetBool("open", false);
+            playerNearbyTimer = 0f;
+            isInteractive = false;
         }
+    }
+    
+    private IEnumerator CloseShop()
+    {
+        GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
+
+        guiManager.PanelActivate(false);
+        yield return new WaitForSeconds(1f);
+
+        Animator animator = this.GetComponent<Animator>();
+        animator.SetBool("open", false);
+        Debug.Log("open=false");
+        yield return new WaitForSeconds(1.3f);
+        animator.SetTrigger("disappear");
+        Debug.Log("disappear");
+        yield return new WaitForSeconds(1.4f);
+        PlayerPrefs.SetInt("Torgash" + transform, 1);
+
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+        }
+        Destroy(gameObject);
+        isInteractive = false;
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        if (EventSystem.current == null) return false;
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }

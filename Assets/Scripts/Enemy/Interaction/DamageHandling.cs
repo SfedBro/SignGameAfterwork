@@ -9,7 +9,10 @@ public class DamageHandling : MonoBehaviour
 
     private void Start()
     {
-        damage = stats.damage;
+        if (stats != null)
+        {
+            damage = stats.damage;
+        }
     }
     void OnCollisionStay2D(Collision2D collision)
     {

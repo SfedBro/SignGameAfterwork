@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 2674057555533959240}
   - component: {fileID: 8942501183954624074}
   - component: {fileID: 2881600546925511329}
-  - component: {fileID: 1674696080001199109}
   m_Layer: 0
   m_Name: crystal-heart
   m_TagString: Heart
@@ -279,16 +278,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdf0ddbdb7af584dbfd7c38004b1500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1674696080001199109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9046816548370757077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd48f47c95ca8094a935c3c78d493b45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bonusName: hp
+  pickupDistance: 1
