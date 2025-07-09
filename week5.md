@@ -1,0 +1,188 @@
+Week \#4
+
+## Feedback changes
+
+### **Deliverables**
+
+* Code repository: [GitHub](https://github.com/IU-Capstone-Project-2025/SignGame)
+
+* Project TaskBoard: [Trello](https://trello.com/b/g98QWgRE/sign-game)
+
+* Interactive board of ideas: [Miro](https://miro.com/welcomeonboard/NjllanVudnhUd2Fhd3RGQUpCMlN0S3d2Nm9SakkrNzI1YVhsK0VKYmZpQkR6Titjc2xycjRyNnpYRTNGRTlvNyt5anpZa3R4TkZVUEdwNjIwdDVTcjdqQksyeUJBbTcreDg3cXNHWllsZFk2VWlhSHRvTTJ2aU5uU3BuR2hvRG5NakdSWkpBejJWRjJhRnhhb1UwcS9BPT0hdjE=?share_link_id=131423753479)
+
+In this week we should update our project, use all feedback sessions with potential users.
+
+## Feedback
+
+### Sessions
+
+*Conduct at least three sessions with potential users, describe detailed user reviews*
+
+In this week we present our current project progress to three groups of people (distributed by age) and collect some information from their feedback to improve our game.
+
+1. **School company**. We presented SignGame during a break between their IU school lessons. *They liked* the concept of the *game and its design*, but they said that *the game is not enough fight content.* 
+
+2. **Innopolis University students**. We asked to play the game our friends who study at the university.
+They also *liked it*, especially they note the *design is great*.
+But they added that in our game there are *no variety of levels, deceptions and traps*, which is very *base feature of the platformer genres games*,
+and that there are more places where code *needs to be optimized*.
+
+4. **Parents**. We also asked some of our own parents (with average 40 y.o.) to play our game to identify problems with the older generation.
+They liked the *playstyle*, as well as *its dynamism*.
+But they replied that due to the *lack of any train content*, they were *hard to understand the game mechanics*.
+
+Full feedback description we post [here](https://docs.google.com/document/d/16ctDdci5QG5hciUa0b_qXY9E2nrB_7QUlsFKHVc8lGw/edit?usp=sharing)
+
+### Analyze
+
+*Describe the important points that you received from the user feedback, what issues and with which priority you created.*
+
+We came to the conclusion that, regardless of age, our game everyone likes, but there are several problems or game misunderstanding. To solve them, we need:
+
+- Add game-learning content to describe players main game mechanics
+
+- Add boss content and a few enemy types
+
+- Remake level logic to room generation  
+
+- Improve level content, adding some traps or other dangerous entities
+
+- Improve and optimize code style
+
+- Resolve bugs due code conflicts
+
+We are completely focused on the performance of these tasks. At the moment, we have not completed some of these issues, but are configured to be resolved to project demo.
+
+## Iteration & Refinement
+
+### Implemented features based on feedback
+
+#### Level light
+
+link
+
+#### Item particles
+
+link
+
+#### Damage receiving
+
+link
+
+#### Traps
+
+link
+
+#### Vertical platform
+
+link
+
+#### New level logic: room generation
+
+link
+
+#### Minimap
+
+link
+
+### Performance & Stability
+
+
+### Documentation
+
+In this moment we have only [README](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/README.md) file which describes
+
+- Main game lore
+
+- Team members: their names and project tracks
+
+- Install instruction
+
+- Some additional technical information
+
+*For futute we will improve this documentation, adding some useful and technical information*
+
+### ML Model Refinement
+
+
+
+## Weekly commitments
+
+### Individual contribution of each participant
+
+#### Danil Valiev
+
+-
+
+-
+
+-
+
+#### Valeriia Kolesnikova
+
+-
+
+-
+
+-
+
+#### Sviatoslav Fediaev
+
+- Fully developed enemies land movement
+
+- New enemy type: Patrolmen 
+
+- Enemy attacks: optimize old and added new for new enemies
+
+#### Egor Savchenko
+
+-
+
+-
+
+-
+
+#### Stanislav Delyukov
+
+- 
+
+-
+
+-
+
+#### Nikita Stepankov
+
+-  
+
+-
+
+-
+
+#### Fanis Zinnurov
+
+-
+
+-
+
+-
+
+### Plan for the next week
+
+*In Week 6, we plan to:*
+
+- Release Week 5 bugfix 
+
+-
+
+-
+
+- 
+
+## Confirmation of the code's operability
+
+We confirm that the code in the main branch:
+
+* [✓] In working condition.
+* [✓] Run via docker-compose (or another alternative described in the README.md).
+
+*Innopolis University    |   Capstone project    |   Summer 2025*
