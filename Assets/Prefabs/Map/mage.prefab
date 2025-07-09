@@ -15381,6 +15381,7 @@ MonoBehaviour:
   maxHP: 20
   iSecondsCount: 0
   flashDuration: 0.25
+  deathScreenPrefab: {fileID: 8471688225462204449, guid: d2ce7d32262358043a517d58a4a6a13a, type: 3}
 --- !u!114 &8140098238340407890
 MonoBehaviour:
   m_ObjectHideFlags: 0
