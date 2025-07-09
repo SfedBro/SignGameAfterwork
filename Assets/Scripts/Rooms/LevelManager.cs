@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour
         //     if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
         // }
         scene.GetRootGameObjects().ToList().ForEach(go => go.transform.SetParent(t, false));
-        t.gameObject.SetActive(false);
+        // t.gameObject.SetActive(false);
         await SceneManager.UnloadSceneAsync(scene);
     }
 
