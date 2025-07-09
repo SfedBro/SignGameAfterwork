@@ -16,11 +16,19 @@ public class SpellCast : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = -mainCamera.transform.position.z;
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0;
+        return worldPos;
+    }
+
     public void castSpell(Spell someSpell)
     {
         // Получаем позицию курсора и разворачиваем игрока в его сторону
-        cursorWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        cursorWorldPos.z = 0;
+        cursorWorldPos = GetMouseWorldPosition();
         FixPlayersLook();
         // Кастуем заклинание
         if (someSpell.Type == "Shoot")
