@@ -10,6 +10,8 @@ Week \#4
 
 * Interactive board of ideas: [Miro](https://miro.com/welcomeonboard/NjllanVudnhUd2Fhd3RGQUpCMlN0S3d2Nm9SakkrNzI1YVhsK0VKYmZpQkR6Titjc2xycjRyNnpYRTNGRTlvNyt5anpZa3R4TkZVUEdwNjIwdDVTcjdqQksyeUJBbTcreDg3cXNHWllsZFk2VWlhSHRvTTJ2aU5uU3BuR2hvRG5NakdSWkpBejJWRjJhRnhhb1UwcS9BPT0hdjE=?share_link_id=131423753479)
 
+* Web deploy: [Build](https://iu-capstone-project-2025.github.io/SignGame/WebGL/)
+
 In this week we should update our project, use all feedback sessions with potential users.
 
 ## Feedback
@@ -76,6 +78,10 @@ We are completely focused on the performance of these tasks. At the moment, we h
 #### Store items
 
 ![shop](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/shop.gif)
+
+#### Death Screen
+
+![death](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/death.png)
 
 #### Settings (BETA)
 
@@ -149,15 +155,15 @@ For this week, we improve model accuarcy by increasing dataset and add variarity
 
 - Fully developed enemies land movement
 
-- New enemy type: Patrolmen 
+- New enemy type: [Patrolmen](https://github.com/IU-Capstone-Project-2025/SignGame/commit/a177749d6e3ce279154d0eaa47ace7c3baf3df7e) 
 
-- Enemy attacks: optimize old and added new for new enemies
+- Enemy attacks: [optimize old and added new](https://github.com/IU-Capstone-Project-2025/SignGame/commit/0fb1ea23b42157afb86c67f48700747685f4fb10) for new enemies
 
 #### Egor Savchenko
 
-- Added new level system
+- Added new [level system](https://github.com/IU-Capstone-Project-2025/SignGame/commit/4ee7d495b1877b0d41e2942ae51921d3a636c2c8)
 
-- Added level minimap
+- Added [level minimap](https://github.com/IU-Capstone-Project-2025/SignGame/commit/d2f635bf33284a9c805ee3488514ffb89068de28)
 
 - Resolving conflicts while merging content into Development and Main branches
 
@@ -165,17 +171,17 @@ For this week, we improve model accuarcy by increasing dataset and add variarity
 
 - New enemies animation: moving
 
-- Remade gameplay, graphics updates
+- Remade gameplay, [graphics updates](https://github.com/IU-Capstone-Project-2025/SignGame/commit/59f464ca905efd3b1bea73a871594b6eab8a453f)
 
-- Attack sprites and particles in coins, damage receive, checkpoint 
+- Attack [sprites and particles](https://github.com/IU-Capstone-Project-2025/SignGame/commit/1bb84bc5ae579f794a648ee9048761160977e9fe) in coins, damage receive, checkpoint 
 
 #### Nikita Stepankov
 
-- Add saving of user drawnings
+- Add [saving](https://github.com/IU-Capstone-Project-2025/SignGame/tree/main/static_ml) of user drawnings
 
 - Partially integrate model to Unity code
 
-- Improve model accuracy
+- Improve [model accuracy](https://github.com/IU-Capstone-Project-2025/SignGame/blob/main/static_ml/model.py)
 
 #### Fanis Zinnurov
 
@@ -191,7 +197,7 @@ For this week, we improve model accuarcy by increasing dataset and add variarity
 
 - Prepare project for **release production**
 
-- Develop bossfight, added new rooms
+- Develop bossfight, add new rooms
 
 - Optimize code and project size
 
