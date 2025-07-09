@@ -185,9 +185,9 @@ For this week, we improve model accuarcy by increasing dataset and add variarity
 
 #### Fanis Zinnurov
 
-- Developed spell book: the history of casted spells
+- Developed [spell book](https://github.com/IU-Capstone-Project-2025/SignGame/commit/b8208c519ca9242407bdca3cf1bc0fa3c6f69228): the history of casted spells
 
-- Corrected the effect of the spell that causes the effect on the cursor
+- [Corrected](https://github.com/IU-Capstone-Project-2025/SignGame/commit/4bf4643c7def6ea7dfa13088158a56109af83d7e) the effect of the spell that causes the effect on the cursor
 
 ### Plan for the next week
 
