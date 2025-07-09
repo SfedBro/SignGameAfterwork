@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private Player player;
-    [SerializeField] private float respawnDelay = 3f;
+    [SerializeField] private float respawnDelay = 1f;
 
     public static GameManager I;
 
@@ -15,10 +15,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        player = FindFirstObjectByType<Player>();
+        player = GameObject.Find("mage").GetComponent<Player>();
     }
 
-    public void PlayerDied() {
+    void Update()
+    {
+        if (player.GetHP() <= 0f)
+        {
+            Invoke(nameof(RespawnPlayer), respawnDelay);
+        }
+    }
+
+    public void PlayerDied()
+    {
         Invoke(nameof(RespawnPlayer), respawnDelay);
     }
 

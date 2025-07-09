@@ -3,7 +3,7 @@ using UnityEngine;
 public class DamageHandling : MonoBehaviour
 {
     [SerializeField]
-    private float damage;
+    private int damage;
     [SerializeField]
     private EnemyInteractionCharacteristics stats;
 

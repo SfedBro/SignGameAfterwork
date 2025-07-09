@@ -4,15 +4,16 @@ using System.Collections.Generic;
 
 public class Checkpoint : MonoBehaviour
 {
-    private Transform player;
+    private GameObject player;
+    private int maxHP;
     public int index;
 
     void Awake()
     {
-        player = GameObject.Find("mage").transform;
+        player = GameObject.Find("mage");
         if (DataContainer.checkpointIndex == index)
         {
-            player.position = transform.position;
+            player.transform.position = transform.position;
         }
     }
 
@@ -21,6 +22,7 @@ public class Checkpoint : MonoBehaviour
         Debug.Log("Trigger entered by: " + other.name);
         if (other.CompareTag("Player"))
         {
+            player.GetComponent<Player>().IncreaseHPToFull();
             if (index > DataContainer.checkpointIndex)
             {
                 DataContainer.checkpointIndex = index;

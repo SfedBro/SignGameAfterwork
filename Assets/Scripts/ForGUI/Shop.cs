@@ -57,7 +57,6 @@ public class Shop : MonoBehaviour
                 PlayerPrefs.SetInt(objectName + "Access", 1);
                 PlayerPrefs.SetInt("coins", coins - price);
                 coinCounter.text = PlayerPrefs.GetInt("coins").ToString();
-                Debug.Log("tut");
                 hpDrop.DropHP();
                 AccessUpdate();
             }

@@ -14459,15 +14459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 1
+  m_OverrideArea: 0
+  m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!4 &580930083 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 282918613760511247, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
-  m_PrefabInstance: {fileID: 5924522061158721568}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &585280033
 GameObject:
   m_ObjectHideFlags: 0
@@ -19106,6 +19101,7 @@ GameObject:
   - component: {fileID: 813609857}
   - component: {fileID: 813609856}
   - component: {fileID: 813609855}
+  - component: {fileID: 813609859}
   m_Layer: 5
   m_Name: HP Canvas
   m_TagString: Untagged
@@ -19196,6 +19192,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &813609859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813609854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706bc711f47a3e84f810e1876763bd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &813751494
 GameObject:
   m_ObjectHideFlags: 0
@@ -21448,7 +21456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 35215d32f5f288245ab45eb473f3d4ac, type: 2}
-  target: {fileID: 580930083}
+  target: {fileID: 0}
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
@@ -24227,6 +24235,7 @@ MonoBehaviour:
   maxHp: 100
   iSeconds: 2
   hp: 0
+  maxHP: 10
   iSecondsCount: 0
 --- !u!114 &1009538683
 MonoBehaviour:
@@ -24244,6 +24253,11 @@ MonoBehaviour:
   scrollRect: {fileID: 1447864294}
   spellEntryPrefab: {fileID: 4561113980355135530, guid: 5a66c7c27e6acde4fb5455515c75df25, type: 3}
   dividerPrefab: {fileID: 7811915248597853964, guid: f1444c7f3f767e24480de51210a45cdc, type: 3}
+--- !u!4 &1009538683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 282918613760511247, guid: 2e211742f13c79f4da49f37851b24bdd, type: 3}
+  m_PrefabInstance: {fileID: 5924522061158721568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1014483518
 GameObject:
   m_ObjectHideFlags: 0
@@ -55714,7 +55728,7 @@ PrefabInstance:
     - target: {fileID: 2668894604446659065, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 580930083}
+      objectReference: {fileID: 1009538683}
     - target: {fileID: 2772994537628674339, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
       propertyPath: m_Name
       value: Main Camera

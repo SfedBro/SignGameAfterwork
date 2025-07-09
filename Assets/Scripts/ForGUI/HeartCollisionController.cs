@@ -26,8 +26,11 @@ public class HeartCollisionController : MonoBehaviour
         float distance = Vector2.Distance(player.transform.position, transform.position);
         if (distance <= pickupDistance)
         {
-            int hp = PlayerPrefs.GetInt("hp");
-            PlayerPrefs.SetInt("hp", hp + 1);
+            int hp = player.GetComponent<Player>().GetHP();
+            if (hp < 10)
+            {
+                player.GetComponent<Player>().IncreaseHP(1);
+            }
             Destroy(gameObject);
         }
     }
