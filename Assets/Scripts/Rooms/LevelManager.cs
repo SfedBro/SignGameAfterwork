@@ -11,25 +11,36 @@ public class LevelManager : MonoBehaviour
 
     RoomInfoInstance[,] rooms;
 
-    void Start() {
+    void Awake() {
         rooms = new RoomInfoInstance[roomsX, roomsY];
-        GenerateMap();
+        GenerateLevel();
     }
 
-    async void GenerateMap() {
+    void Start() {
+        LoadLevel();
+    }
+
+    void GenerateLevel() {
         List<RoomInfo> roomInfos = Resources.LoadAll<RoomInfo>("RoomInfos").ToList();
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
                 RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
-                print($"{x} {y} {possibleRD}");
-                // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
                 List<RoomInfo> possibleRooms = roomInfos.Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
                 RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
+                // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
                 Transform t = new GameObject($"Root {x} {y} {ri.rd}").transform;
                 t.position = new(x * roomOffsetX, -y * roomOffsetY);
                 rooms[x, y] = new RoomInfoInstance{roomInfo = ri, root = t};
-                await LoadSceneObjects(ri.sceneName, t);
+            }
+        }
+    }
+
+    async void LoadLevel() {
+        for (int x = 0; x < roomsX; ++x) {
+            for (int y = 0; y < roomsY; ++y) {
+                RoomInfoInstance rii = rooms[x, y];
+                await LoadSceneObjects(rii.roomInfo.sceneName, rii.root);
             }
         }
     }
@@ -37,10 +48,10 @@ public class LevelManager : MonoBehaviour
     async Task LoadSceneObjects(string sceneName, Transform t) {
         await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         Scene scene = SceneManager.GetSceneByName(sceneName);
-        for (int i = 1; i < SceneManager.loadedSceneCount; ++i) {
-            scene = SceneManager.GetSceneAt(i);
-            if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
-        }
+        // for (int i = 1; i < SceneManager.loadedSceneCount; ++i) {
+        //     scene = SceneManager.GetSceneAt(i);
+        //     if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
+        // }
         scene.GetRootGameObjects().ToList().ForEach(go => go.transform.SetParent(t, false));
         t.gameObject.SetActive(false);
         await SceneManager.UnloadSceneAsync(scene);
@@ -64,5 +75,9 @@ public class LevelManager : MonoBehaviour
         if (exY > newY) return rooms[exX, exY].roomInfo.rd.up;
         if (exY < newY) return rooms[exX, exY].roomInfo.rd.down;
         return DirAvailability.Available;
+    }
+
+    public RoomInfoInstance GetRoom(int x, int y) {
+        return rooms[x, y];
     }
 }
