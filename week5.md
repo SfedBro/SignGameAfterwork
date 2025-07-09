@@ -87,6 +87,19 @@ link
 
 ### Performance & Stability
 
+*How would we measure the performance of SignGame?*
+
+To measure performance, we will analyze 2 most popular metrics:
+
+1. Frames Per Second (*FPS*).
+
+    * Purpose: have as minimum 60 FPS for target platforms
+
+2. Memory Usage (*RAM*).
+
+    * Purpose: minimize RAM usage to deny some game freezes and crushes.
+
+*Note: now we almost do not observe pr control these parameters. These are our musthave goals after the implementation of all the necessary features*
 
 ### Documentation
 
@@ -104,7 +117,7 @@ In this moment we have only [README](https://github.com/IU-Capstone-Project-2025
 
 ### ML Model Refinement
 
-
+For this week, we improve model accuarcy by increasing dataset and add variarity in size of syntetic images in dataset. For future increase input demension to 256x256, also find with gridSearch best hyperparameters like batch_size and threshlod
 
 ## Weekly commitments
 
@@ -112,19 +125,21 @@ In this moment we have only [README](https://github.com/IU-Capstone-Project-2025
 
 #### Danil Valiev
 
--
+- [Week 5 report](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/week5.md?plain=1)
 
--
+- Feedback [tasks distribution](https://trello.com/b/g98QWgRE/sign-game), Taskboard managing
 
--
+- Team and TA meetings organization
 
 #### Valeriia Kolesnikova
 
--
+- UI and design of [Death Screen](https://github.com/IU-Capstone-Project-2025/SignGame/commit/cd3a8595da0c6132a985653155a32d51a31122fd)
 
--
+- Changed shop view, added shop [item animation](https://github.com/IU-Capstone-Project-2025/SignGame/commit/1a3e0561b1c6e09cd98e34c540ff6e3ef5cf05e1)
 
--
+- 3 new shop [items](https://github.com/IU-Capstone-Project-2025/SignGame/commit/0cfedef927f8f31578c26c1d22d43ef59785a4b7)
+
+- Shop buying logic
 
 #### Sviatoslav Fediaev
 
@@ -136,35 +151,33 @@ In this moment we have only [README](https://github.com/IU-Capstone-Project-2025
 
 #### Egor Savchenko
 
--
+- Added new level system
 
--
+- Added level minimap
 
--
+- Resolving conflicts while merging content into Development and Main branches
 
 #### Stanislav Delyukov
 
-- 
+- New enemies animation: moving
 
--
+- Remade gameplay, graphics updates
 
--
+- Attack sprites and particles in coins, damage receive, checkpoint 
 
 #### Nikita Stepankov
 
--  
+- Add saving of user drawnings
 
--
+- Partially integrate model to Unity code
 
--
+- Improve model accuracy
 
 #### Fanis Zinnurov
 
--
+- Developed spell book: the history of casted spells
 
--
-
--
+- Corrected the effect of the spell that causes the effect on the cursor
 
 ### Plan for the next week
 
@@ -172,11 +185,11 @@ In this moment we have only [README](https://github.com/IU-Capstone-Project-2025
 
 - Release Week 5 bugfix 
 
--
+- Prepare project for **release production**
 
--
+- Develop bossfight, added new rooms
 
-- 
+- Optimize code and project size
 
 ## Confirmation of the code's operability
 
