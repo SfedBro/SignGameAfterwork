@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,13 +22,26 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("mage").GetComponent<Player>();
     }
 
-    // void Update()
-    // {
-    //     if (player.GetHP() <= 0f)
-    //     {
-    //         Invoke(nameof(RespawnPlayer), respawnDelay);
-    //     }
-    // }
+    public void RespawnWithouDeathScreen()
+    {
+        Invoke(nameof(RespawnPlayerWithPosition), respawnDelay);
+    }
+
+    private void RespawnPlayerWithPosition()
+    {
+        SceneManager.LoadScene("LevelCave000");
+        StartCoroutine(SetPlayerPositionAfterLoad());
+    }
+
+    private IEnumerator SetPlayerPositionAfterLoad()
+    {
+        yield return new WaitForSeconds(0.1f);
+        var player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            player.transform.position = DataContainer.checkpointIndex;
+        }
+    }
 
     public void PlayerDied()
     {
@@ -43,7 +57,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restart Clicked");
         SceneManager.LoadScene(levelCave000);
-        Time.timeScale = 1f;
     }
 
     public void ToMainMenu()

@@ -8,24 +8,24 @@ public class Checkpoint : MonoBehaviour
     private int maxHP;
     public int index;
 
-    void Awake()
-    {
-        player = GameObject.Find("mage");
-        if (DataContainer.checkpointIndex == index)
-        {
-            player.transform.position = transform.position;
-        }
-    }
+    // void Awake()
+    // {
+    //     player = GameObject.Find("mage");
+    //     if (DataContainer.checkpointIndex == index)
+    //     {
+    //         player.transform.position = transform.position;
+    //     }
+    // }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Trigger entered by: " + other.name);
         if (other.CompareTag("Player"))
         {
-            player.GetComponent<Player>().IncreaseHPToFull();
-            if (index > DataContainer.checkpointIndex)
+            other.GetComponent<Player>().IncreaseHPToFull();
+            if (transform.position.x > DataContainer.checkpointIndex.x)
             {
-                DataContainer.checkpointIndex = index;
+                DataContainer.checkpointIndex = transform.position;
             }
             
         }

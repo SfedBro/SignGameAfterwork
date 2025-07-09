@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemPurchase : MonoBehaviour
@@ -21,6 +22,7 @@ public class ItemPurchase : MonoBehaviour
                 break;
             case "Осколок Жизни":
                 Debug.Log("Осколок жизни");
+                player.GetComponent<Player>().ChangeDeathScreenBool();
                 break;
             case "Сапоги-скороходы":
                 Debug.Log("сапоги-скороходы");

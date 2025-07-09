@@ -2,5 +2,5 @@ using UnityEngine;
 
 public static class DataContainer
 {
-    public static int checkpointIndex = 0;
+    public static Vector3 checkpointIndex = new Vector3(-55, 25, 0);
 }

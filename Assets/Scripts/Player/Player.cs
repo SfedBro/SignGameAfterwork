@@ -13,11 +13,13 @@ public class Player : MonoBehaviour
     private GameObject deathScreenInstance;
     private Player Instance;
     private bool isDead = false;
-
+    private bool isDeathScreenUsing = true;
 
     void Awake()
     {
         Instance = this;
+
+        transform.position = DataContainer.checkpointIndex;
 
         if (deathScreenPrefab != null)
         {
@@ -44,6 +46,7 @@ public class Player : MonoBehaviour
     {
         isDead = false;
         hp = maxHP;
+        isDeathScreenUsing = true;
     }
 
     // for test
@@ -95,17 +98,31 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         // GameManager.I.PlayerDied();
-        
+
         Debug.Log("Die");
         Time.timeScale = 0;
 
         var characterControl = GetComponent<CharacterController>();
         if (characterControl != null)
             characterControl.enabled = false;
-
-        if (deathScreenInstance != null)
+        if (isDeathScreenUsing)
         {
-            deathScreenInstance.SetActive(true);
+            if (deathScreenInstance != null)
+            {
+                deathScreenInstance.SetActive(true);
+            }
         }
+        else
+        {
+            DataContainer.checkpointIndex = transform.position;
+            Time.timeScale = 1f;
+            Debug.Log("перерождаемся на том же месте");
+            GameManager.I.RespawnWithouDeathScreen();
+        }
+    }
+
+    public void ChangeDeathScreenBool()
+    {
+        isDeathScreenUsing = false;
     }
 }
