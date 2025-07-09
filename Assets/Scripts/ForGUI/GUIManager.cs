@@ -24,7 +24,7 @@ public class GUIManager : MonoBehaviour
 
     private IEnumerator DeactivatePanel()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
         panel.SetActive(false);
         IsPanelActive = false;
     }

@@ -7,7 +7,11 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        DataContainer.checkpointIndex = 0;
+        DataContainer.checkpointIndex = new Vector3(-55, 25, 0);
+        PlayerPrefs.DeleteAll();
+        //for test
+        PlayerPrefs.SetInt("coins", 200);
+        // for test
         SceneManager.LoadScene(startSceneName);
     }
 

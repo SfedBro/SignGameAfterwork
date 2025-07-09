@@ -11,8 +11,8 @@ public class MetroidvaniaCamera : MonoBehaviour
 
     [Header("Camera Bounds")]
     [SerializeField] private bool useBounds = true;
-    [SerializeField] private Vector2 minBounds;
-    [SerializeField] private Vector2 maxBounds;
+    [SerializeField] private Transform minBoundsPoint;
+    [SerializeField] private Transform maxBoundsPoint;
 
     private Camera cam;
     private Vector3 lookAheadOffset;
@@ -49,8 +49,8 @@ public class MetroidvaniaCamera : MonoBehaviour
             float camWidth = camHeight * cam.aspect;
 
             Vector3 clampedPosition = transform.position;
-            clampedPosition.x = Mathf.Clamp(clampedPosition.x, minBounds.x + camWidth, maxBounds.x - camWidth);
-            clampedPosition.y = Mathf.Clamp(clampedPosition.y, minBounds.y + camHeight, maxBounds.y - camHeight);
+            clampedPosition.x = Mathf.Clamp(clampedPosition.x, minBoundsPoint.position.x + camWidth, maxBoundsPoint.position.x - camWidth);
+            clampedPosition.y = Mathf.Clamp(clampedPosition.y, minBoundsPoint.position.y + camHeight, maxBoundsPoint.position.y - camHeight);
             transform.position = clampedPosition;
         }
 
@@ -73,8 +73,8 @@ public class MetroidvaniaCamera : MonoBehaviour
 
     public void SetCameraBounds(Vector2 newMinBounds, Vector2 newMaxBounds)
     {
-        minBounds = newMinBounds;
-        maxBounds = newMaxBounds;
+        minBoundsPoint.position = newMinBounds;
+        maxBoundsPoint.position = newMaxBounds;
     }
 
     public void SnapToPlayer()
