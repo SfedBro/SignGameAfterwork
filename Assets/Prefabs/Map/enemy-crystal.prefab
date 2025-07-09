@@ -138,8 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77c3fe6ec786dc24e96fb7784a09c849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 5
   stats: {fileID: 11400000, guid: 35215d32f5f288245ab45eb473f3d4ac, type: 2}
+  damageInterval: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8830624896990379866
 GameObject:
   m_ObjectHideFlags: 0
