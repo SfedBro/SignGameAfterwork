@@ -13,7 +13,7 @@ public class MorphEnemyAttack : MonoBehaviour
 }
 public interface IAttack
 {
-    public void Attack(int damage, Transform target);
+    public void Attack(Transform target, int damage, float speed = 0f, GameObject projectile = null);
 }
 public class CombatAttack : MonoBehaviour, IAttack
 {
@@ -25,28 +25,19 @@ public class CombatAttack : MonoBehaviour, IAttack
     private int damage;
     [SerializeField]
     private float stoppingDistance;
-    public void Attack(int damage, Transform target)
+    public void Attack(Transform target, int damage, float speed = 0f, GameObject projectile = null)
     {
         target.GetComponent<Player>().TakeDamage(damage);
     }
 }
 public class RangedAttack : MonoBehaviour, IAttack
 {
-    [SerializeField]
-    private EnemyInteractionCharacteristics stats;
-    [SerializeField]
-    private Transform target;
-    [SerializeField]
-    private GameObject projectile;
-    [SerializeField]
-    private int damage;
-    [SerializeField]
-    private float stoppingDistance;
-    public void Attack(int damage, Transform target)
+    public void Attack(Transform target, int damage, float speed = 0f, GameObject projectile = null)
     {
         Vector3 direction = (target.position - transform.position).normalized;
         Vector3 position = transform.position + direction;
         GameObject proj = Instantiate(projectile, position, Quaternion.LookRotation(direction));
-        proj.GetComponent<EnemyProjectile>().
+        proj.GetComponent<EnemyProjectile>().Damage = damage;
+        proj.GetComponent<EnemyProjectile>().Speed = speed;
     }
 }

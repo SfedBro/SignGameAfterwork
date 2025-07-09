@@ -38,7 +38,7 @@ public class DumbEnemyScript : MonoBehaviour
         }
         if (!ShouldStop())
         {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + multiplier * Vector3.right, speed * Time.deltaTime);
+            transform.Translate(multiplier * Vector3.right * speed * Time.deltaTime);
         }
         else
         {
