@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestRooms/TestRoomUR.unity
     guid: d3e49203a33c229488a54c3c9cfea827
+  - enabled: 1
+    path: Assets/Scenes/LevelTest.unity
+    guid: a1fbea4d9f61da1438c3493e46443098
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
