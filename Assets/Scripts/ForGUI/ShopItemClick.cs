@@ -8,7 +8,6 @@ public class ShopItemClick : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("OnClick shopitemclick");
         manager.OnItemClicked(itemUI, description);
     }
 }

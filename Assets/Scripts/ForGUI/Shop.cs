@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionField;
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private GameObject sourceImage;
+    [SerializeField] private GameObject panel;
     // [SerializeField] private GameObject block;
     [SerializeField] private int price;
     [SerializeField] public string objectName;
@@ -25,9 +26,10 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("coins", 100);
-        // block.SetActive(false);
+        // for test
+        // PlayerPrefs.DeleteAll();
+        // PlayerPrefs.SetInt("coins", 200);
+        // for test
         sourceImage.SetActive(false);
         
         rectTransform = GetComponent<RectTransform>();
@@ -77,16 +79,9 @@ public class Shop : MonoBehaviour
 
                 if (dragDistance > 5f)
                 {
-                    // float alpha = Mathf.Lerp(1f, 0.3f, dragDistance / 200f);
                     SetTransparency(alpha);
-
-                    if (dragDistance > 1f)
-                    {
-                        AttemptToBuy();
-                        Debug.Log("Куплен товар!");
-                        isDragging = false;
-                        // Тут можешь вызвать покупку
-                    }
+                    AttemptToBuy();
+                    isDragging = false;
                 }
             }
 
@@ -111,6 +106,10 @@ public class Shop : MonoBehaviour
                 coinCounter.text = PlayerPrefs.GetInt("coins").ToString();
                 // block.SetActive(true);
                 AccessUpdate();
+                ItemPurchase purchase = panel.GetComponent<ItemPurchase>();
+                purchase.Purchase(objectName);
+                descriptionField.text = $"Товар \"{objectName}\" куплен";
+                Debug.Log("Куплен товар!");
             }
             else
             {
@@ -207,7 +206,7 @@ public class Shop : MonoBehaviour
         Vector3 end = new Vector3(originalScale.x * 5f, originalScale.y, originalScale.z);
 
         sourceImage.SetActive(true);
-        
+
         while (t < duration)
         {
             t += Time.deltaTime;

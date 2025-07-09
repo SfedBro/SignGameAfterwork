@@ -58629,6 +58629,10 @@ PrefabInstance:
       propertyPath: torgashTransform
       value: 
       objectReference: {fileID: 919425114}
+    - target: {fileID: 2688999755298978474, guid: 1781dabcf5705624887b830f728096a1, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1009538667}
     - target: {fileID: 2761815006717637735, guid: 1781dabcf5705624887b830f728096a1, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -14.270651
@@ -59166,6 +59170,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7961081998083397650, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302740668593887471, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302740668593887471, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302740668593887471, guid: 6a1c1be6e69933f418bfbf455cb29680, type: 3}
+      propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

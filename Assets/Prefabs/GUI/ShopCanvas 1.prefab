@@ -282,8 +282,9 @@ MonoBehaviour:
   descriptionField: {fileID: 6677028771875878512}
   coinCounter: {fileID: 8522026398726075382}
   sourceImage: {fileID: 2297590949301685597}
+  panel: {fileID: 7252566099388931718}
   price: 64
-  objectName: "\u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435"
+  objectName: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0416\u0438\u0437\u043D\u0438"
 --- !u!114 &5248670680377879312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,10 +342,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemUI: {fileID: 7585038512094756978}
   manager: {fileID: 3218284578227533726}
-  description: "\u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u2014 \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u044C,
-    \u043A\u043E\u0442\u043E\u0440\u0430\u044F \u043F\u043E\u0432\u044B\u0448\u0430\u0435\u0442
-    \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C \u0442\u043E\u0433\u043E,
-    \u0447\u0442\u043E \u0432\u0440\u0430\u0433 \u043F\u0440\u043E\u043C\u0430\u0445\u043D\u0435\u0442\u0441\u044F.\r"
+  description: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0416\u0438\u0437\u043D\u0438 
+    \u2014 \u0434\u0430\u0451\u0442 1 \u0440\u0430\u0437 \u0432\u043E\u0437\u0440\u043E\u0434\u0438\u0442\u044C\u0441\u044F
+    \u043D\u0430 \u0442\u043E\u043C \u0436\u0435 \u043C\u0435\u0441\u0442\u0435 \u0441
+    1 HP.\r"
 --- !u!1 &1046992400423462761
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,8 +647,9 @@ MonoBehaviour:
   descriptionField: {fileID: 6677028771875878512}
   coinCounter: {fileID: 8522026398726075382}
   sourceImage: {fileID: 6786200456700110311}
+  panel: {fileID: 7252566099388931718}
   price: 98
-  objectName: "\u0421\u0435\u0440\u0434\u0446\u0435"
+  objectName: "\u0425\u041F"
 --- !u!114 &944097122131958232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,7 +721,7 @@ GameObject:
   - component: {fileID: 2195149842365544144}
   - component: {fileID: 6651464945728238274}
   m_Layer: 5
-  m_Name: HPImage
+  m_Name: FragmentOfLife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -742,7 +744,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -90, y: 337.99988}
-  m_SizeDelta: {x: 600, y: 500}
+  m_SizeDelta: {x: 730, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2195149842365544144
 CanvasRenderer:
@@ -765,14 +767,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1083404945477237729, guid: 8a85804eceaad7a40bf61c15920e0ea4, type: 3}
+  m_Sprite: {fileID: 5726080727020278575, guid: 15d1ccbede9b3a945be870a3db35d955, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2121,6 +2123,7 @@ GameObject:
   - component: {fileID: 2022674339812893582}
   - component: {fileID: 6030149660473561733}
   - component: {fileID: 3218284578227533726}
+  - component: {fileID: 2688999755298978474}
   m_Layer: 5
   m_Name: ShopPanel
   m_TagString: Untagged
@@ -2230,6 +2233,20 @@ MonoBehaviour:
   - {fileID: 7585038512094756978}
   - {fileID: 8443084446634704133}
   descriptionField: {fileID: 6677028771875878512}
+--- !u!114 &2688999755298978474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7252566099388931718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2194bf0dad72db4d8af438c707b2c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  changeSpeed: 0.7
 --- !u!1 &8378233291332811684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2395,6 +2412,7 @@ MonoBehaviour:
   descriptionField: {fileID: 6677028771875878512}
   coinCounter: {fileID: 8522026398726075382}
   sourceImage: {fileID: 8974327311818095123}
+  panel: {fileID: 7252566099388931718}
   price: 37
   objectName: "\u0421\u0430\u043F\u043E\u0433\u0438-\u0441\u043A\u043E\u0440\u043E\u0445\u043E\u0434\u044B"
 --- !u!114 &1222815728604531807
@@ -2681,7 +2699,7 @@ GameObject:
   - component: {fileID: 77507445183475407}
   - component: {fileID: 5385480841895306167}
   m_Layer: 5
-  m_Name: HPImage
+  m_Name: BootsRunners
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2703,8 +2721,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2476, y: 337.99988}
-  m_SizeDelta: {x: 600, y: 500}
+  m_AnchoredPosition: {x: 2476, y: 477.55682}
+  m_SizeDelta: {x: 600, y: 779.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &77507445183475407
 CanvasRenderer:
@@ -2734,7 +2752,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1083404945477237729, guid: 8a85804eceaad7a40bf61c15920e0ea4, type: 3}
+  m_Sprite: {fileID: -8577595738134336212, guid: 46b049d4e58f844489b4d0ff2ade037c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

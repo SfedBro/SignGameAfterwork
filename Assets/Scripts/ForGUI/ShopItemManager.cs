@@ -18,7 +18,6 @@ public class ShopItemManager : MonoBehaviour
             foreach (var other in items)
             {
                 access = PlayerPrefs.GetInt(other.objectName + "Access");
-                Debug.Log(access);
                 if (access == 0)
                 {
                     if (other != item)
