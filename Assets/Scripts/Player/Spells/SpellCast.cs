@@ -42,6 +42,10 @@ public class SpellCast : MonoBehaviour
         {
             SelfSpell((BuffSpell)someSpell);
         }
+        else if (someSpell.Type == "FindNearest")
+        {
+            NearestEnemySpell((NearestEnemySpell)someSpell);
+        }
         else
         {
             Debug.Log($"{someSpell.Type} - неизвестный тип заклинания");
@@ -70,6 +74,18 @@ public class SpellCast : MonoBehaviour
         obj.GetComponent<AreaSpellActions>().effectType = someSpell.Effect;
         obj.GetComponent<AreaSpellActions>().effectDuration = someSpell.EffectDuration;
         obj.GetComponent<AreaSpellActions>().duration = someSpell.AreaLifetime;
+        obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
+    }
+
+    private void NearestEnemySpell(NearestEnemySpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, cursorWorldPos, Quaternion.identity);
+        obj.AddComponent<NearestEnemyActions>();
+        obj.GetComponent<NearestEnemyActions>().effectCaster = gameObject;
+        obj.GetComponent<NearestEnemyActions>().element = someSpell.MainElement;
+        obj.GetComponent<NearestEnemyActions>().effectType = someSpell.Effect;
+        obj.GetComponent<NearestEnemyActions>().effectDuration = someSpell.EffectDuration;
+        obj.GetComponent<NearestEnemyActions>().maxLifeTime = someSpell.AreaLifetime;
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 

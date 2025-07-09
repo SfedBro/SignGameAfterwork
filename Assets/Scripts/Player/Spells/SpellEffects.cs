@@ -34,7 +34,7 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "ThroughShot")
         {
-            ThroughShot(target, amount);
+            MakeDamage(target, amount);
         }
         else if (type == "Knockback")
         {
@@ -133,11 +133,6 @@ public class SpellEffect : MonoBehaviour
     {
         Debug.Log($"Следующее заклинание {obj.name} нанесет на {100 * multiplier - 100}% больше урона");
         damageMultiplier = multiplier;
-    }
-
-    private void ThroughShot(GameObject obj, float damage)
-    {
-        MakeDamage(obj, damage);
     }
     
     private void ReturnToOriginal(GameObject obj)

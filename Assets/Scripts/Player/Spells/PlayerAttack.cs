@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour
     private SpellCast spellCaster; // Реализация заклинаний
     private Spell newSpell; // Объект заклинания
     private SpellsManager allSpells; // Все заклинания
+
     private List<string> actualCombo = new();
     private float timer;
     private bool inputForTimer = false;
@@ -28,7 +29,6 @@ public class PlayerAttack : MonoBehaviour
         }
         spellCaster = GetComponent<SpellCast>();
         allSpells = GetComponent<SpellsManager>();
-
     }
 
     private void Update()
@@ -99,14 +99,14 @@ public class PlayerAttack : MonoBehaviour
 
     private void MakeAttack(List<string> combo)
     {
-        if (allSpells.getSpellByCombo(string.Join("+", combo)) == null)
+        if (allSpells.GetSpellByCombo(string.Join("+", combo)) == null)
         {
             Debug.Log("Заклинание не изучено!");
         }
         else
         {
-            newSpell = allSpells.getSpellByCombo(string.Join("+", combo));
-            Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.Name}");
+            newSpell = allSpells.GetSpellByCombo(string.Join("+", combo));
+            Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.name}");
             spellCaster.castSpell(newSpell);
         }
         

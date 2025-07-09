@@ -4,6 +4,7 @@ using UnityEngine;
 public class SpellsManager : MonoBehaviour
 {
     private Dictionary<string, Spell> allSpells;
+    private Dictionary<string, Spell>.ValueCollection values;
     void Start()
     {
         allSpells = new Dictionary<string, Spell>();
@@ -13,9 +14,11 @@ public class SpellsManager : MonoBehaviour
             //Debug.Log($"Изучено заклинание {spell.Name}, комбинация: {spell.Combo}");
             allSpells.Add(spell.Combo, spell);
         }
+
+        values = allSpells.Values;
     }
 
-    public Spell getSpellByCombo(string combo)
+    public Spell GetSpellByCombo(string combo)
     {
         if (allSpells.ContainsKey(combo))
         {
@@ -25,5 +28,10 @@ public class SpellsManager : MonoBehaviour
         {
             return null;
         }
+    }
+
+    public Dictionary<string, Spell>.ValueCollection GetAllSpells()
+    {
+        return values;
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f454488273a2074eb08a0ef1ee88df2, type: 3}
   m_Name: Shoot
   m_EditorClassIdentifier: 
-  spellName: Shoot
+  description: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0432\u044B\u0441\u0442\u0440\u0435\u043B"
   mainElement: Fire
   combo: Fire1
   effect: No effect

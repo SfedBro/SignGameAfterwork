@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 242b3d7f02192fe449e2716582a6e7f1, type: 3}
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
-  spellName: Speed Boost
+  description: "\u0423\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u043D\u0430
+    50% \u043D\u0430 5 \u0441\u0435\u043A\u0443\u043D\u0434"
   mainElement: Fire
   combo: Fire2
   effect: SpeedBoost

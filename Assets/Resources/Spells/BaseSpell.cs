@@ -4,7 +4,7 @@ using UnityEngine;
 public class Spell : ScriptableObject
 {
     [Header("Основные настройки")]
-    [SerializeField] private string spellName;
+    [SerializeField] private string description;
     [SerializeField] private string mainElement;
     [SerializeField] private string combo;
     protected string spellType;
@@ -14,11 +14,11 @@ public class Spell : ScriptableObject
     [SerializeField] private string effect;
     [SerializeField] private float effectDuration;
 
-    public string Name
+    public string Description
     {
         get
         {
-            return spellName;
+            return description;
         }
     }
 

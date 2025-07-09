@@ -70,10 +70,10 @@ public class FlyingEnemyMovement : MonoBehaviour
     }
     IEnumerator InitAgent()
     {
-        yield return new WaitForEndOfFrame(); // Подождать 1 кадр
+        yield return new WaitForEndOfFrame(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅ
 
         if (!agent.isOnNavMesh) {
-            Debug.LogWarning("NavMeshAgent не на NavMesh!");
+            Debug.LogWarning("NavMeshAgent пїЅпїЅ пїЅпїЅ NavMesh!");
         }
         playerTag = target.gameObject.tag;
         SetAgentParameters();
@@ -91,7 +91,7 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, playerTag))
         {
-            agent.SetDestination(target.position);
+            //agent.SetDestination(target.position);
             agent.stoppingDistance = stoppingDistance;
         }
         else
