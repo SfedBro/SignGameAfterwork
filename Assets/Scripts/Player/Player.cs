@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
         transform.position = DataContainer.checkpointIndex;
 
-        if (deathScreenPrefab != null && false)
+        if (deathScreenPrefab != null)
         {
             deathScreenInstance = Instantiate(deathScreenPrefab);
             deathScreenInstance.SetActive(false);
@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         // GameManager.I.PlayerDied();
+        Time.timeScale = 0;
 
         if (characterControl != null)
             characterControl.enabled = false;
@@ -132,12 +133,6 @@ public class Player : MonoBehaviour
             if (deathScreenInstance != null)
             {
                 deathScreenInstance.SetActive(true);
-                Time.timeScale = 0;
-            }
-            if (deathScreenPrefab != null)
-            {
-                deathScreenPrefab.SetActive(true);
-                Time.timeScale = 0;
             }
         }
         else
