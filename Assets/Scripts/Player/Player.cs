@@ -33,16 +33,6 @@ public class Player : MonoBehaviour
         {
             deathScreenInstance = Instantiate(deathScreenPrefab);
             deathScreenInstance.SetActive(false);
-
-            var buttons = deathScreenInstance.GetComponentsInChildren<Button>();
-            Debug.Log(buttons[0]);
-            if (buttons.Length >= 2)
-            {
-                buttons[0].onClick.RemoveAllListeners();
-                buttons[1].onClick.RemoveAllListeners();
-                buttons[0].onClick.AddListener(GameManager.I.RestartGame);
-                buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
-            }
         }
         else
         {
@@ -59,6 +49,21 @@ public class Player : MonoBehaviour
         damageParticles = GetComponent<DamageParticles>();
         characterControl = GetComponent<CharacterController>();
         isDeathScreenUsing = true;
+        AddDScreenButtonFunctions();
+    }
+    private void AddDScreenButtonFunctions()
+    {
+        if (deathScreenPrefab != null)
+        {
+            var buttons = deathScreenInstance.GetComponentsInChildren<Button>();
+            if (buttons.Length >= 2)
+            {
+                buttons[0].onClick.RemoveAllListeners();
+                buttons[1].onClick.RemoveAllListeners();
+                buttons[0].onClick.AddListener(GameManager.I.RestartGame);
+                buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
+            }
+        }
     }
 
     // for test
