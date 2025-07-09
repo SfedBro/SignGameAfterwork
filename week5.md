@@ -27,11 +27,11 @@ They also *liked it*, especially they note the *design is great*.
 But they added that in our game there are *no variety of levels, deceptions and traps*, which is very *base feature of the platformer genres games*,
 and that there are more places where code *needs to be optimized*.
 
-4. **Parents**. We also asked some of our own parents (with average 40 y.o.) to play our game to identify problems with the older generation.
+3. **Parents**. We also asked some of our own parents (with average 40 y.o.) to play our game to identify problems with the older generation.
 They liked the *playstyle*, as well as *its dynamism*.
 But they replied that due to the *lack of any train content*, they were *hard to understand the game mechanics*.
 
-Full feedback description we post [here](https://docs.google.com/document/d/16ctDdci5QG5hciUa0b_qXY9E2nrB_7QUlsFKHVc8lGw/edit?usp=sharing)
+There were main takes that we bring from all groups
 
 ### Analyze
 
@@ -57,33 +57,37 @@ We are completely focused on the performance of these tasks. At the moment, we h
 
 ### Implemented features based on feedback
 
-#### Level light
+#### Lights and particles
 
-link
-
-#### Item particles
-
-link
-
-#### Damage receiving
-
-link
+![lights](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/particles.gif)
 
 #### Traps
 
-link
+![traps](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/traps.gif)
+
+#### Damage receiving
+
+![receive](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/damage.gif)
 
 #### Vertical platform
 
-link
+![platform](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/platform.gif)
 
-#### New level logic: room generation
+#### Store items
 
-link
+![shop](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/shop.gif)
+
+#### Settings (BETA)
+
+![settings](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/settings.gif)
+
+#### New level logic: room generation (BETA)
+
+![rooms](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/room.gif)
 
 #### Minimap
 
-link
+![map](https://github.com/IU-Capstone-Project-2025/SignGame/blob/reports/assets/week5/minimap.gif)
 
 ### Performance & Stability
 
