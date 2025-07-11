@@ -263,10 +263,10 @@ MonoBehaviour:
   speed: 2
   acceleration: 3
   stoppingDistance: 15
-  groundDetectionOffset: 0.5
-  jumpHeight: 0.5
-  minJumpHeight: 0
-  jumpTime: 0
+  groundDetectionOffset: 0.2
+  jumpHeight: 1.5
+  minJumpHeight: 1
+  jumpTime: 0.5
   enemyCollider: {fileID: 586740952487356201}
   onGround: 0
   verticalSpeed: 0

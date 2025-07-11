@@ -19,7 +19,7 @@ MonoBehaviour:
   acceleration: 3
   stoppingDistance: 15
   isGround: 1
-  minJumpHeight: 0
-  maxJumpHeight: 0.5
+  minJumpHeight: 1
+  maxJumpHeight: 1.5
   jumpTime: 0.5
   gravity: 10

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(LayerMask), typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(IAttack))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class LandEnemyMovement : MonoBehaviour
@@ -182,7 +182,7 @@ public class LandEnemyMovement : MonoBehaviour
             if (heightDifference <= jumpHeight && heightDifference >= minJumpHeight)
             {
                 //Debug.Log("Wanna jump");
-                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, target)))
+                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime * Time.smoothDeltaTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, target)))
                 {
                     return true;
                 }
@@ -314,21 +314,18 @@ public class LandEnemyMovement : MonoBehaviour
         isWaitingForPlayer = false;
         waitForPlayerCoroutine = null;
         isPatrolRunning = true;
-        Debug.Log("Something went to here");
         yield return null;
         patrolCoroutine = StartCoroutine(Patrol(untilChangeTime));
     }
     private IEnumerator Patrol(float changePosTime = 1f)
     {
-        Vector2 initPos = agent.transform.position;
-        initPatrolPosition = initPos;
-        Debug.Log("Ok here 0");
+        Vector2 initPos = enemyCollider.bounds.center;
+        initPatrolPosition = agent.transform.position;
         while (isPatrolRunning)
         {
             yield return new WaitForSecondsRealtime(changePosTime);
-            if ((agent.transform.position - agent.destination).magnitude < stoppingDistance)
+            if (!agent.pathPending && agent.remainingDistance <= stoppingDistance)
             {
-                Debug.Log("Went to here 1");
                 yield return new WaitForEndOfFrame();
                 changePosition(initPos, patrolRange);
             }
@@ -337,17 +334,24 @@ public class LandEnemyMovement : MonoBehaviour
     }
     private void changePosition(Vector2 initialPosition, float patrolRange)
     {
-        Vector2 offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, groundDetectionOffset, ~notGroundMasks);
-        while (!hit)
+        Vector2 offsetPosition = initialPosition + Random.Range(-jumpHeight, jumpHeight) * Vector2.up + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight * 2, ~notGroundMasks);
+        int maxAttempts = 10;
+        int attempts = 0;
+        while (!hit && attempts < maxAttempts)
         {
-            Debug.Log("Cycle?");
-            offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-            hit = Physics2D.Raycast(offsetPosition, Vector2.down, groundDetectionOffset, ~notGroundMasks);
+            Debug.DrawRay(offsetPosition, Vector2.down * jumpHeight * 2, Color.red, 2f);
+            offsetPosition = initialPosition + Random.Range(-jumpHeight, jumpHeight) * Vector2.up + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+            hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight * 2, ~notGroundMasks);
+            attempts++;
+        }
+        if (!hit)
+        {
+            Debug.Log("Failed to find new destination to patrol");
         }
         if (hit.collider != null && isPatrolRunning)
         {
-            Vector2 newPosition = new(offsetPosition.x, hit.point.y + agent.radius);
+            Vector2 newPosition = new(offsetPosition.x, hit.point.y + agent.radius - groundDetectionOffset);
             agent.SetDestination(newPosition);
         }
     }
