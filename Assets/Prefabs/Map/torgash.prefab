@@ -163,4 +163,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopCanvas: {fileID: 0}
   detectionRadius: 3
-  playerNearbyTimeMax: 0
+  playerNearbyTimeMax: 2
