@@ -912,9 +912,9 @@ MonoBehaviour:
   acceleration: 1
   stoppingDistance: 1
   visionRange: 15
-  untilPatrolTime: 0
-  untilChangeTime: 0
-  patrolRange: 0
+  untilPatrolTime: 10
+  untilChangeTime: 3
+  patrolRange: 7
   isPatrolRunning: 0
   isWaitingForPlayer: 0
 --- !u!114 &6106228146414313247

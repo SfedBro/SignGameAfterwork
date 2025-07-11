@@ -384,9 +384,9 @@ MonoBehaviour:
   notGroundMasks:
     serializedVersion: 2
     m_Bits: 1536
-  untilPatrolTime: 0
-  untilChangeTime: 0
-  patrolRange: 0
+  untilPatrolTime: 5
+  untilChangeTime: 1
+  patrolRange: 10
   isPatrolRunning: 0
   isWaitingForPlayer: 0
   speed: 30

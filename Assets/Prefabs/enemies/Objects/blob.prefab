@@ -169,7 +169,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1729
   reachRange: 1
-  damage: 0
+  damage: 5
   target: {fileID: 0}
 --- !u!114 &6650095510690353281
 MonoBehaviour:

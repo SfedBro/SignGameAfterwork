@@ -314,17 +314,22 @@ public class LandEnemyMovement : MonoBehaviour
         isWaitingForPlayer = false;
         waitForPlayerCoroutine = null;
         isPatrolRunning = true;
+        Debug.Log("Something went to here");
+        yield return null;
         patrolCoroutine = StartCoroutine(Patrol(untilChangeTime));
     }
     private IEnumerator Patrol(float changePosTime = 1f)
     {
         Vector2 initPos = agent.transform.position;
         initPatrolPosition = initPos;
+        Debug.Log("Ok here 0");
         while (isPatrolRunning)
         {
             yield return new WaitForSecondsRealtime(changePosTime);
             if ((agent.transform.position - agent.destination).magnitude < stoppingDistance)
             {
+                Debug.Log("Went to here 1");
+                yield return new WaitForEndOfFrame();
                 changePosition(initPos, patrolRange);
             }
         }
@@ -333,11 +338,12 @@ public class LandEnemyMovement : MonoBehaviour
     private void changePosition(Vector2 initialPosition, float patrolRange)
     {
         Vector2 offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
+        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, groundDetectionOffset, ~notGroundMasks);
         while (!hit)
         {
+            Debug.Log("Cycle?");
             offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-            hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
+            hit = Physics2D.Raycast(offsetPosition, Vector2.down, groundDetectionOffset, ~notGroundMasks);
         }
         if (hit.collider != null && isPatrolRunning)
         {

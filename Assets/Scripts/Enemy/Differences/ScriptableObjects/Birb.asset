@@ -15,8 +15,8 @@ MonoBehaviour:
   health: 10
   damage: 3
   visionRange: 15
-  speed: 5
-  acceleration: 1
+  speed: 15
+  acceleration: 5
   stoppingDistance: 1
   isGround: 0
   minJumpHeight: 0
