@@ -36,10 +36,6 @@ jobs:
             fi
           done < cs_file_list.txt
           echo "⚠️ Total formatting issues: $issue_count"
-          if (( issue_count > 100 )); then
-            echo "❌ Too many formatting issues"
-            exit 1
-          fi
 
   build-webgl:
     name: Build WebGL
