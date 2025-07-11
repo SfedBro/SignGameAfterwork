@@ -18,8 +18,8 @@ TagManager:
   - Wall
   - Coins
   - Player
-  - Enemy
-  - 
+  - PostProcessing
+  - Platform
   - 
   - 
   - 
@@ -41,8 +41,38 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 1612474431
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Back0
+    uniqueID: 4199135175
+    locked: 0
+  - name: Back1
+    uniqueID: 3218262949
+    locked: 0
+  - name: Back2
+    uniqueID: 3190985053
+    locked: 0
+  - name: Mid0
+    uniqueID: 1864694517
+    locked: 0
+  - name: Mid1
+    uniqueID: 4127880871
+    locked: 0
+  - name: Mid2
+    uniqueID: 755978015
+    locked: 0
+  - name: Fore0
+    uniqueID: 3793647847
+    locked: 0
+  - name: Fore1
+    uniqueID: 712046017
+    locked: 0
+  - name: Fore2
+    uniqueID: 114955391
     locked: 0
   m_RenderingLayers:
   - Default
