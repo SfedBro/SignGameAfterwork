@@ -112,7 +112,6 @@ public class FlyingEnemyMovement : MonoBehaviour
                     StopCoroutine(waitForPlayerCoroutine);
                 }
             }
-
             agent.stoppingDistance = stoppingDistance;
             agent.SetDestination(target.position);
         }

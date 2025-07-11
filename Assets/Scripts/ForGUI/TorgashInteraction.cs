@@ -14,6 +14,14 @@ public class TorgashInteraction : MonoBehaviour
     private bool isInteractive = false;
     private float playerNearbyTimer = 0f;
 
+    void Awake()
+    {
+        if (PlayerPrefs.GetInt("Torgash" + transform) == 1)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -36,7 +44,7 @@ public class TorgashInteraction : MonoBehaviour
 
             if (playerNearbyTimer >= playerNearbyTimeMax && !isInteractive)
             {
-                Debug.Log("open shop");
+                // Debug.Log("open shop");
                 StartCoroutine(OpenShop());
             }
         }
@@ -69,6 +77,12 @@ public class TorgashInteraction : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         guiManager.PanelActivate(true);
+
+        ShopItemManager shopManager = shopCanvas.GetComponentInChildren<ShopItemManager>();
+        foreach (var item in shopManager.GetComponentsInChildren<Shop>())
+        {
+            item.AnimateIn();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -105,6 +119,7 @@ public class TorgashInteraction : MonoBehaviour
         animator.SetTrigger("disappear");
         Debug.Log("disappear");
         yield return new WaitForSeconds(1.4f);
+        PlayerPrefs.SetInt("Torgash" + transform, 1);
 
         if (playerController != null)
         {
