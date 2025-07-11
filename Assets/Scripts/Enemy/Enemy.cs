@@ -53,6 +53,7 @@ public class Enemy : MonoBehaviour
     {
         hp -= amount;
         Debug.Log($"{name} получил {amount} урона. Осталось HP: {hp}.");
+        ScreenShake.Instance.ShakeVeryLight();
 
         if (impactFlash != null)
         {

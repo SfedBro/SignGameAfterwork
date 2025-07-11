@@ -15319,7 +15319,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Enemy
   timeAvailableForCombo: 1
-  lookRight: 0
 --- !u!114 &6564763382186493191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15332,9 +15331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {fileID: 1269320656592670241}
-  shootSprite: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
-  coilSprite: {fileID: 1355593592257874325, guid: e777bb5642dcbeb429df116e731c0953, type: 3}
+  shootingSpellPrefab: {fileID: 0}
+  areaSpellPrefab: {fileID: 0}
+  shootingSpellForce: 100
 --- !u!114 &583594564192648147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15349,7 +15348,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Enemy
   timeAvailableForCombo: 1
-  lookRight: 0
 --- !u!114 &1525282971909289490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15362,9 +15360,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {fileID: 1269320656592670241}
-  shootSprite: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
-  coilSprite: {fileID: 1355593592257874325, guid: e777bb5642dcbeb429df116e731c0953, type: 3}
+  shootingSpellPrefab: {fileID: 0}
+  areaSpellPrefab: {fileID: 0}
+  shootingSpellForce: 100
 --- !u!114 &6377138182487133699
 MonoBehaviour:
   m_ObjectHideFlags: 0
