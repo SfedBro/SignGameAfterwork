@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 74636442821917590}
   - component: {fileID: 6118470073494318705}
   - component: {fileID: 3167809394193359231}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 1069963108207734509}
   - component: {fileID: 104629769590998563}
   - component: {fileID: 4719359554338171692}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: enemy-crystal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -328,11 +328,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 35215d32f5f288245ab45eb473f3d4ac, type: 2}
   target: {fileID: 0}
+  damage: 0
+  attackPeriod: 0
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
-  speed: 10
-  acceleration: 5
+  speed: 15
+  acceleration: 1
   stoppingDistance: 1.5
   visionRange: 25
   untilPatrolTime: 5

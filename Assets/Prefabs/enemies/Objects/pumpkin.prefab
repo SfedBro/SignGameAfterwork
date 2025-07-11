@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8031943565552196359}
   - component: {fileID: 7708255562637577509}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wing2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5509471592103672248}
   - component: {fileID: 6731552189135154634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,9 @@ GameObject:
   - component: {fileID: 5554145003143223997}
   - component: {fileID: 7828135088097915835}
   - component: {fileID: -484647645023813222}
-  m_Layer: 0
+  - component: {fileID: -479745501756293401}
+  - component: {fileID: -7206213265254690538}
+  m_Layer: 10
   m_Name: pumpkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +274,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4683463488484545184}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -336,20 +338,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797ac7fe2e269e74faf252be0b8f98e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 7ab51d329f790eb4e99c07cb1d75a484, type: 2}
   target: {fileID: 0}
+  damage: 5
+  attackPeriod: 0
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
   consideredMasks:
     serializedVersion: 2
     m_Bits: 512
-  speed: 0
-  acceleration: 0
+  speed: 7
+  acceleration: 5
   stoppingDistance: 0
-  visionRange: 0
+  visionRange: 25
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0
   isPatrolRunning: 0
   isWaitingForPlayer: 0
+--- !u!114 &-479745501756293401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683463488484545184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc74b2ee8385454f92911b66962f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7206213265254690538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683463488484545184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 3
+  hp: 0
+  spawn: {fileID: 0}
 --- !u!1 &7804399530249672081
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +395,7 @@ GameObject:
   - component: {fileID: 1905442333614785909}
   - component: {fileID: 7002271649122434078}
   - component: {fileID: 844000659281883214}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pumpkin (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

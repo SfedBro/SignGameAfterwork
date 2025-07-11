@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
+//[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyProjectile : MonoBehaviour
 {
     [SerializeField]
@@ -46,9 +47,16 @@ public class EnemyProjectile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject == target.gameObject)
+        if (target != null)
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+            if (collision.gameObject == target.gameObject)
+            {
+                collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+            }
+        }
+        if (!(collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.name.Contains(this.name)))
+        {
+            Destroy(gameObject);
         }
     }
 }

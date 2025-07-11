@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3919176209152241629}
   - component: {fileID: 6186245491068064220}
   - component: {fileID: 8855529388687378319}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 8803339643666690029}
   - component: {fileID: 6915563038782108801}
   - component: {fileID: 3299982904304845482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm-parts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 6530952426920015048}
   - component: {fileID: 3385300947147768462}
   - component: {fileID: 1036438332653662046}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm-parts1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 2916078212324546333}
   - component: {fileID: 2997969234241601169}
   - component: {fileID: 118586935640731018}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm-parts2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,7 +514,7 @@ GameObject:
   - component: {fileID: 8416562416955950843}
   - component: {fileID: 8492025150188345946}
   - component: {fileID: -9043938559957441163}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190321459602354524}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: 1479372276
   m_Radius: 0.45749998
   m_Speed: 3.5
   m_Acceleration: 8
@@ -689,31 +689,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d31c1017261e84f9f86700f0ee6ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 32582c97c3ad111408f0d167d539c856, type: 2}
   target: {fileID: 0}
-  visionRange: 0
+  damage: 4
+  attackPeriod: 0
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
+  visionRange: 10
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 0
-  untilPatrolTime: 0
-  untilChangeTime: 0
-  patrolRange: 0
+    m_Bits: 1536
+  untilPatrolTime: 5
+  untilChangeTime: 2
+  patrolRange: 5
   isPatrolRunning: 0
   isWaitingForPlayer: 0
-  speed: 0
-  acceleration: 0
-  stoppingDistance: 0.5
+  speed: 10
+  acceleration: 2
+  stoppingDistance: 0
   groundDetectionOffset: 0.1
-  jumpHeight: 0
-  minJumpHeight: 0
-  jumpTime: 0
-  enemyCollider: {fileID: 0}
+  jumpHeight: 7
+  minJumpHeight: 1
+  jumpTime: 1
+  enemyCollider: {fileID: 8416562416955950843}
   onGround: 0
   verticalSpeed: 0
-  gravity: 0
+  gravity: 10
   isJumping: 0
   corners: []
 --- !u!1 &7027919355607312632
@@ -726,7 +731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7142116946630360769}
   - component: {fileID: 2044824839439372551}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: worm-parts3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

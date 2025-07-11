@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 843903949395636621}
   - component: {fileID: 885489849104641581}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_15 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4841769939156355750}
   - component: {fileID: 7828203597672213909}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2162451885925673708}
   - component: {fileID: 6497451110662085786}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 720533005294934682}
   - component: {fileID: 7033959896701906385}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 3666173090076321477}
   - component: {fileID: -8957180925457664376}
   - component: {fileID: 4546343179692200631}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: creaper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,18 +587,18 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4908241347365451111}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.485
+  m_AgentTypeID: 1479372276
+  m_Radius: 1.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2.060458
-  m_BaseOffset: 1.030229
+  m_Height: 3
+  m_BaseOffset: 1.75
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4546343179692200631
@@ -613,31 +613,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d31c1017261e84f9f86700f0ee6ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: e8ca48fec87f4bb49b8acc4fb4da646f, type: 2}
   target: {fileID: 0}
-  visionRange: 0
+  damage: 0
+  attackPeriod: 0
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
+  visionRange: 15
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0
   isPatrolRunning: 0
   isWaitingForPlayer: 0
-  speed: 0
-  acceleration: 0
+  speed: 5
+  acceleration: 3
   stoppingDistance: 0
-  groundDetectionOffset: 0
-  jumpHeight: 0
-  minJumpHeight: 0
-  jumpTime: 0
+  groundDetectionOffset: 1.8
+  jumpHeight: 15
+  minJumpHeight: 2
+  jumpTime: 2
   enemyCollider: {fileID: 0}
   onGround: 0
   verticalSpeed: 0
-  gravity: 0
+  gravity: 10
   isJumping: 0
   corners: []
 --- !u!1 &5153591616708786975
@@ -650,7 +655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857769878973913310}
   - component: {fileID: 7623586359553144322}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: creaper (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6156350901414646751}
   - component: {fileID: 6469076967326470984}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_12 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

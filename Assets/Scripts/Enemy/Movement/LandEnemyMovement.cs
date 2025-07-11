@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LayerMask), typeof(NavMeshAgent))]
-[RequireComponent(typeof(MorphEnemyAttack))]
+[RequireComponent(typeof(IAttack))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class LandEnemyMovement : MonoBehaviour
 {
@@ -13,6 +13,18 @@ public class LandEnemyMovement : MonoBehaviour
     //Target detection
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private IAttack attackScript;
+    [SerializeField]
+    private int damage;
+    [SerializeField]
+    private float attackPeriod;
+    [SerializeField]
+    private bool isRanged;
+    [SerializeField]
+    private GameObject projectile;
+    [SerializeField]
+    private float projSpeed;
     [SerializeField]
     private float visionRange;
     [SerializeField]
@@ -74,6 +86,7 @@ public class LandEnemyMovement : MonoBehaviour
             speed = stats.speed;
             acceleration = stats.acceleration;
             stoppingDistance = stats.stoppingDistance;
+            damage = stats.damage;
             if (stats.isGround)
             {
                 jumpHeight = stats.maxJumpHeight;
@@ -84,6 +97,10 @@ public class LandEnemyMovement : MonoBehaviour
             else
             {
                 Debug.Log("Wrong enemy type! :: LandEnemyMovement; OnValidate");
+            }
+            if (GetComponent<Enemy>())
+            {
+                GetComponent<Enemy>().maxHp = stats.health;
             }
         }
     }
@@ -99,13 +116,34 @@ public class LandEnemyMovement : MonoBehaviour
         }
         if (target == null)
         {
-            target = FindFirstObjectByType<Player>().transform;
+            target = transform;
+            if (FindFirstObjectByType<Player>()?.transform != null)
+            {
+                target = FindFirstObjectByType<Player>().transform;
+            }
+        }
+        if (attackScript == null)
+        {
+            attackScript = GetComponent<IAttack>();
         }
     }
     void Start()
     {
         playerTag = target.gameObject.tag;
         SetAgentParameters();
+        isRanged = attackScript is RangedAttack;
+        if (isRanged)
+        {
+            if (projectile == null)
+            {
+                Debug.LogWarning("No projectile on ranged enemy: " + this.name.ToString());
+            }
+        }
+        if (damage < 0)
+        {
+            damage = 0;
+            Debug.LogWarning("Damage on enemy " + this.name.ToString() + " was nullified due to negative value");
+        }
     }
     private void SetAgentParameters()
     {
@@ -127,6 +165,10 @@ public class LandEnemyMovement : MonoBehaviour
     }
     private bool ShouldJump()
     {
+        if (jumpHeight <= 0)
+        {
+            return false;
+        }
         corners = agent.path.corners;
         if (corners.Length >= 2 && onGround && !isJumping)
         {
@@ -140,7 +182,7 @@ public class LandEnemyMovement : MonoBehaviour
             if (heightDifference <= jumpHeight && heightDifference >= minJumpHeight)
             {
                 //Debug.Log("Wanna jump");
-                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, playerTag)))
+                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, target)))
                 {
                     return true;
                 }
@@ -210,7 +252,7 @@ public class LandEnemyMovement : MonoBehaviour
     {
         Vector2 agentPos = agent.transform.position;
         Vector2 targetPos = target.position;
-        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, playerTag))
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, target))
         {
             if (waitForPlayerCoroutine != null)
             {
@@ -236,6 +278,20 @@ public class LandEnemyMovement : MonoBehaviour
             else
             {
                 agent.SetDestination(agentPos);
+            }
+            if ((agentPos - targetPos).magnitude <= stoppingDistance)
+            {
+                if (attackScript != null)
+                {
+                    if (isRanged)
+                    {
+                        attackScript.Attack(target, damage, attackPeriod, projSpeed, projectile);
+                    }
+                    else
+                    {
+                        attackScript.Attack(target, damage, attackPeriod);
+                    }
+                }
             }
         }
         else
@@ -305,6 +361,7 @@ public class LandEnemyMovement : MonoBehaviour
         startAbove = transform.position;
         endAbove = startAbove + Vector2.up * minJumpHeight;
         Gizmos.DrawLine(startAbove, endAbove);
+        Gizmos.color = Color.red;
         endBelow = startAbove - Vector2.up * groundDetectionOffset;
         Gizmos.DrawLine(startAbove, endBelow);
 
@@ -315,6 +372,7 @@ public class LandEnemyMovement : MonoBehaviour
 
         Vector2 prevPoint = center + new Vector2(Mathf.Cos(0), Mathf.Sin(0)) * radius;
 
+        Gizmos.color = Color.white;
         for (int i = 1; i <= circleSegments; i++)
         {
             float angle = i * angleStep * Mathf.Deg2Rad;

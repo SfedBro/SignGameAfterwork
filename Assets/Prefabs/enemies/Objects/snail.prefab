@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: 4698217585788592214}
   - component: {fileID: 4604771381998134318}
   - component: {fileID: -1440924609247501824}
-  m_Layer: 0
+  - component: {fileID: -2550626273566953102}
+  - component: {fileID: -3675452317813006293}
+  m_Layer: 10
   m_Name: snail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +215,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997470017142330632}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: 1479372276
   m_Radius: 0.93249995
   m_Speed: 3.5
   m_Acceleration: 8
@@ -239,33 +241,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d31c1017261e84f9f86700f0ee6ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: 4768c881d90811e4389402d42323b6ca, type: 2}
   target: {fileID: 0}
-  visionRange: 0
+  damage: 1
+  attackPeriod: 2
+  isRanged: 1
+  projectile: {fileID: 5649252163690582418, guid: 5bf56d6448869c54fb7109fc4a2f36b1, type: 3}
+  projSpeed: 25
+  visionRange: 25
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 0
-  untilPatrolTime: 0
-  untilChangeTime: 0
-  patrolRange: 0
+    m_Bits: 1536
+  untilPatrolTime: 10
+  untilChangeTime: 3
+  patrolRange: 3
   isPatrolRunning: 0
   isWaitingForPlayer: 0
-  speed: 0
-  acceleration: 0
-  stoppingDistance: 0
-  groundDetectionOffset: 0
-  jumpHeight: 0
+  speed: 2
+  acceleration: 3
+  stoppingDistance: 15
+  groundDetectionOffset: 0.5
+  jumpHeight: 0.5
   minJumpHeight: 0
   jumpTime: 0
-  enemyCollider: {fileID: 0}
+  enemyCollider: {fileID: 586740952487356201}
   onGround: 0
   verticalSpeed: 0
-  gravity: 0
+  gravity: 10
   isJumping: 0
   corners: []
+--- !u!114 &-2550626273566953102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997470017142330632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2186cc9a3534c2347a4b20d11c19f826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3675452317813006293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997470017142330632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 50
+  hp: 0
+  spawn: {fileID: 0}
 --- !u!1 &6977731297970806391
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +312,7 @@ GameObject:
   - component: {fileID: 4942007007440124083}
   - component: {fileID: 3452981824358142868}
   - component: {fileID: 6380352428028300088}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: snail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3761727922040356456}
   - component: {fileID: 1365656463144812896}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}

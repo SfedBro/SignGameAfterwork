@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8357878036721761268}
   - component: {fileID: 8778542671052507881}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7208321077004733698}
   - component: {fileID: 26755906906698059}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: spider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,8 @@ GameObject:
   - component: {fileID: 3876231371145817187}
   - component: {fileID: 7794148286378587312}
   - component: {fileID: -2538549736254017530}
-  m_Layer: 0
+  - component: {fileID: -54058297220531753}
+  m_Layer: 10
   m_Name: spider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,33 +369,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d31c1017261e84f9f86700f0ee6ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: f7a4a88707ad2d2419c06fa55e9a66ce, type: 2}
   target: {fileID: 0}
-  visionRange: 10
+  damage: 3
+  attackPeriod: 0.5
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
+  visionRange: 20
   consideredMasks:
     serializedVersion: 2
     m_Bits: 704
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 1537
+    m_Bits: 1536
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0
   isPatrolRunning: 0
   isWaitingForPlayer: 0
-  speed: 10
-  acceleration: 30
+  speed: 30
+  acceleration: 10
   stoppingDistance: 1
   groundDetectionOffset: 0.1
-  jumpHeight: 5
-  minJumpHeight: 1
-  jumpTime: 0.25
+  jumpHeight: 20
+  minJumpHeight: 2
+  jumpTime: 1
   enemyCollider: {fileID: 8530997272302229964}
   onGround: 0
   verticalSpeed: 0
   gravity: 10
   isJumping: 0
   corners: []
+--- !u!114 &-54058297220531753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083999650774535920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc74b2ee8385454f92911b66962f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2874729791343259378
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 843253688096292288}
   - component: {fileID: 8778137570594233514}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8644098518927162641}
   - component: {fileID: 44833989213650362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 936446859646603916}
   - component: {fileID: 2288362738094348738}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7941104164604271764}
   - component: {fileID: 7602045448009221655}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7363289591695452497}
   - component: {fileID: 7743073574050000407}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4920809034808660000}
   - component: {fileID: 9174759566237663459}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,7 +945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7394726048891695313}
   - component: {fileID: 3550431777228170390}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,7 +1032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8389952736857063083}
   - component: {fileID: 9208275169561985044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ccadf28913bab44b89040f420408b32, type: 3}
-  m_Name: EnemyCrystal
+  m_Name: Mother
   m_EditorClassIdentifier: 
-  health: 10
+  health: 40
   damage: 1
-  visionRange: 25
-  speed: 10
-  acceleration: 5
-  stoppingDistance: 1.5
-  isGround: 0
+  visionRange: 40
+  speed: 1
+  acceleration: 1
+  stoppingDistance: 15
+  isGround: 1
   minJumpHeight: 0
-  maxJumpHeight: 0
-  jumpTime: 0
-  gravity: 0
+  maxJumpHeight: 2
+  jumpTime: 0.5
+  gravity: 10

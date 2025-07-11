@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4325141081266552672}
   - component: {fileID: 7918337461292477170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3809277082979190922}
   - component: {fileID: 2056774297023589610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8508827140804101863}
   - component: {fileID: 7030683539580881463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5440071507266782914}
   - component: {fileID: 8721688707109503435}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: bull (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 492619408818764214}
   - component: {fileID: 6548173674370988089}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemies_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1206862822970204873}
   - component: {fileID: 507520618473510452}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: leg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,9 @@ GameObject:
   - component: {fileID: 2562605714569040951}
   - component: {fileID: -9161671781602634989}
   - component: {fileID: 3625010011446613363}
-  m_Layer: 0
+  - component: {fileID: 1799007848406073239}
+  - component: {fileID: 9110626774206339434}
+  m_Layer: 10
   m_Name: bull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,7 +688,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8091370015252734922}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: 1479372276
   m_Radius: 1.8100001
   m_Speed: 3.5
   m_Acceleration: 8
@@ -712,30 +714,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d31c1017261e84f9f86700f0ee6ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: fe40a4ac058dd594db1a25a1ed9ed0ba, type: 2}
   target: {fileID: 0}
-  visionRange: 0
+  damage: 3
+  attackPeriod: 1
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
+  visionRange: 20
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 0
-  untilPatrolTime: 0
-  untilChangeTime: 0
-  patrolRange: 0
+    m_Bits: 1536
+  untilPatrolTime: 5
+  untilChangeTime: 2
+  patrolRange: 4
   isPatrolRunning: 0
   isWaitingForPlayer: 0
   speed: 0
   acceleration: 0
   stoppingDistance: 0
-  groundDetectionOffset: 0
-  jumpHeight: 0
-  minJumpHeight: 0
-  jumpTime: 0
+  groundDetectionOffset: 1.3
+  jumpHeight: 3
+  minJumpHeight: 1
+  jumpTime: 1
   enemyCollider: {fileID: 0}
   onGround: 0
   verticalSpeed: 0
-  gravity: 0
+  gravity: 10
   isJumping: 0
   corners: []
+--- !u!114 &1799007848406073239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091370015252734922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc74b2ee8385454f92911b66962f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9110626774206339434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091370015252734922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 30
+  hp: 0
+  spawn: {fileID: 0}

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7138779554614768817}
   - component: {fileID: 4775549926324020648}
-  m_Layer: 0
-  m_Name: x_55
+  m_Layer: 10
+  m_Name: Tail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,8 +97,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1291702656711828814}
   - component: {fileID: 1072858461068163309}
-  m_Layer: 0
-  m_Name: x_69
+  m_Layer: 10
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184,13 +184,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3403539254419320260}
   - component: {fileID: 3498958190004061000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3403539254419320260
 Transform:
   m_ObjectHideFlags: 0
@@ -271,8 +271,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4453099381078457467}
   - component: {fileID: 397749481982497344}
-  m_Layer: 0
-  m_Name: z_61
+  m_Layer: 10
+  m_Name: Left3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,8 +358,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1205919135952594211}
   - component: {fileID: 3889887150954710124}
-  m_Layer: 0
-  m_Name: y_53
+  m_Layer: 10
+  m_Name: Right3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,8 +445,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7116155332074848979}
   - component: {fileID: 4176814195721005594}
-  m_Layer: 0
-  m_Name: y_62 (1)
+  m_Layer: 10
+  m_Name: Left5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -532,8 +532,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4200000637764806946}
   - component: {fileID: 9165685533412258036}
-  m_Layer: 0
-  m_Name: y_51
+  m_Layer: 10
+  m_Name: Right2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -619,8 +619,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4495066335166959898}
   - component: {fileID: 6503710965682695795}
-  m_Layer: 0
-  m_Name: z_64
+  m_Layer: 10
+  m_Name: Left4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -710,7 +710,9 @@ GameObject:
   - component: {fileID: 4795624262347725940}
   - component: {fileID: 1639836469436231515}
   - component: {fileID: 5482380846589999046}
-  m_Layer: 0
+  - component: {fileID: 6106228146414313247}
+  - component: {fileID: -4543009065927017444}
+  m_Layer: 10
   m_Name: bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,16 +738,16 @@ Transform:
   - {fileID: 4699729408517082399}
   - {fileID: 4200000637764806946}
   - {fileID: 1205919135952594211}
-  - {fileID: 8805899662970428504}
-  - {fileID: 7116155332074848979}
   - {fileID: 3060621235087261475}
+  - {fileID: 8805899662970428504}
   - {fileID: 7539421999499705475}
   - {fileID: 6234901333691498339}
   - {fileID: 4453099381078457467}
   - {fileID: 4495066335166959898}
+  - {fileID: 7116155332074848979}
+  - {fileID: 3237683097138163023}
   - {fileID: 4115741737549159403}
   - {fileID: 7138779554614768817}
-  - {fileID: 3237683097138163023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5170364473345806120
@@ -896,20 +898,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797ac7fe2e269e74faf252be0b8f98e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 11400000, guid: e1129a582b2044b468e3334796edd336, type: 2}
   target: {fileID: 0}
+  damage: 3
+  attackPeriod: 0
+  isRanged: 0
+  projectile: {fileID: 0}
+  projSpeed: 0
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
-  speed: 0
-  acceleration: 0
-  stoppingDistance: 0
-  visionRange: 0
+  speed: 5
+  acceleration: 1
+  stoppingDistance: 1
+  visionRange: 15
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0
   isPatrolRunning: 0
   isWaitingForPlayer: 0
+--- !u!114 &6106228146414313247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012434815414950361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc74b2ee8385454f92911b66962f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4543009065927017444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012434815414950361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 10
+  hp: 0
+  spawn: {fileID: 0}
 --- !u!1 &5799560389489877936
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,8 +954,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4699729408517082399}
   - component: {fileID: 2177668762872489895}
-  m_Layer: 0
-  m_Name: y_49
+  m_Layer: 10
+  m_Name: Right1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,8 +1041,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3237683097138163023}
   - component: {fileID: 6828563489708636942}
-  m_Layer: 0
-  m_Name: x_56
+  m_Layer: 10
+  m_Name: Tail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1094,8 +1128,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6234901333691498339}
   - component: {fileID: 3907541803921476498}
-  m_Layer: 0
-  m_Name: z_57
+  m_Layer: 10
+  m_Name: Left2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1181,8 +1215,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8805899662970428504}
   - component: {fileID: 4109200672157155537}
-  m_Layer: 0
-  m_Name: y_62
+  m_Layer: 10
+  m_Name: Right5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1268,8 +1302,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8957336252589616297}
   - component: {fileID: 1109363322198071248}
-  m_Layer: 0
-  m_Name: x_68
+  m_Layer: 10
+  m_Name: Beak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1355,8 +1389,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3060621235087261475}
   - component: {fileID: 5825677848131883537}
-  m_Layer: 0
-  m_Name: y_65
+  m_Layer: 10
+  m_Name: Right4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1442,8 +1476,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4115741737549159403}
   - component: {fileID: 6818694074541214662}
-  m_Layer: 0
-  m_Name: x_54
+  m_Layer: 10
+  m_Name: Tail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1529,8 +1563,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7539421999499705475}
   - component: {fileID: 4823969956799320579}
-  m_Layer: 0
-  m_Name: z_50
+  m_Layer: 10
+  m_Name: Left1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
