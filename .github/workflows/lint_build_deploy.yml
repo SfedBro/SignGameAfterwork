@@ -1,0 +1,105 @@
+name: Lint, Build and Deploy WebGL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Code Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install CSharpier
+        run: dotnet tool install -g csharpier
+
+      - name: Run code style check with CSharpier
+        run: |
+          export PATH="$PATH:$HOME/.dotnet/tools"
+          cs_files=$(find . -type f -name "*.cs")
+          echo "$cs_files" > cs_file_list.txt
+          issue_count=0
+          while IFS= read -r file; do
+            output=$(csharpier --check "$file" 2>&1 || true)
+            echo "$output"
+            if echo "$output" | grep -q "formatted"; then
+              issue_count=$((issue_count + 1))
+            fi
+          done < cs_file_list.txt
+          echo "⚠️ Total formatting issues: $issue_count"
+          if (( issue_count > 100 )); then
+            echo "❌ Too many formatting issues"
+            exit 1
+          fi
+
+  build-webgl:
+    name: Build WebGL
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0  
+
+      - name: Cache Unity Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-WebGL
+          restore-keys: Library-
+          
+      - name: Clean up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          docker system prune -af
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          buildName: WebGL
+          buildsPath: build
+
+      - name: Upload WebGL Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-WebGL
+          path: build/WebGL
+
+  deploy:
+    name: Deploy WebGL to GitHub Pages
+    needs: build-webgl
+    if: success() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download WebGL artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Build-WebGL
+          path: build/WebGL
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GH_PAGES_TOKEN }}
+          publish_dir: build/WebGL
