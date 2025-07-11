@@ -514,6 +514,8 @@ GameObject:
   - component: {fileID: 8416562416955950843}
   - component: {fileID: 8492025150188345946}
   - component: {fileID: -9043938559957441163}
+  - component: {fileID: 5669196824917244471}
+  - component: {fileID: -942320550297925076}
   m_Layer: 10
   m_Name: worm
   m_TagString: Untagged
@@ -721,6 +723,33 @@ MonoBehaviour:
   gravity: 10
   isJumping: 0
   corners: []
+--- !u!114 &5669196824917244471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190321459602354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcc74b2ee8385454f92911b66962f664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-942320550297925076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190321459602354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 15
+  hp: 0
+  spawn: {fileID: 0}
 --- !u!1 &7027919355607312632
 GameObject:
   m_ObjectHideFlags: 0

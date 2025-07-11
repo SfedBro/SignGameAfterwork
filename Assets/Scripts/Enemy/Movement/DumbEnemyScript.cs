@@ -18,6 +18,8 @@ public class DumbEnemyScript : MonoBehaviour
     private CapsuleCollider2D enemyCollider;
     private int multiplier;
     private Animator animator;
+    //private int noGroundForFrames;
+    //private float fallSpeed;
     private void Awake()
     {
         if (target == null)
@@ -28,6 +30,7 @@ public class DumbEnemyScript : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
+        //noGroundForFrames = 0;
     }
     private void Start()
     {
@@ -38,12 +41,14 @@ public class DumbEnemyScript : MonoBehaviour
     private void Update()
     {
         multiplier = isMovingRight ? -1 : 1;
+        //if (noGroundForFrames < 5)
+        //{
         if (ShouldRotate())
         {
             isMovingRight = !isMovingRight;
         }
         transform.rotation = Quaternion.Euler(0, (isMovingRight ? 0 : 180), 0);
-        float currentSpeed = (!ShouldStop()) ? (speed/60f) : 0f;
+        float currentSpeed = (!ShouldStop()) ? (speed / 60f) : 0f;
         animator.SetFloat("Speed", currentSpeed);
         if (!ShouldStop())
         {
@@ -53,6 +58,12 @@ public class DumbEnemyScript : MonoBehaviour
         {
             Attack();
         }
+        //}
+        //else
+        //{
+        //    transform.Translate(Vector2.down * fallSpeed * Time.deltaTime);
+        //    fallSpeed += 10f * Time.deltaTime;
+        //}
     }
 
     private bool ShouldRotate()
@@ -66,6 +77,15 @@ public class DumbEnemyScript : MonoBehaviour
         Debug.DrawRay(origin + Vector2.down * 0.1f, Vector2.down * 0.5f, Color.green);
         bool isObstacleAhead = hitObstacle.collider != null;
         bool isGroundAhead = hitGround.collider != null;
+        //if (!isGroundAhead)
+        //{
+        //    noGroundForFrames++;
+        //}
+        //else
+        //{
+        //    noGroundForFrames = 0;
+        //    fallSpeed = 0;
+        //}
         return !isGroundAhead || isObstacleAhead;
     }
     //Stop, not rotate!
