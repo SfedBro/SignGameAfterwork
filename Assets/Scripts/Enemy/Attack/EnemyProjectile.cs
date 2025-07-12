@@ -47,12 +47,9 @@ public class EnemyProjectile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (target != null)
+        if (collision.gameObject.GetComponent<Player>())
         {
-            if (collision.gameObject == target.gameObject)
-            {
-                collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            }
+            collision.gameObject.GetComponent<Player>().TakeDamage(damage, transform.forward);
         }
         if (!(collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.name.Contains(this.name)))
         {
