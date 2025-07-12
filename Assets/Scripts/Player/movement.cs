@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -16,16 +18,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxJumps = 2;
     [SerializeField] private float jumpCutMultiplier = 0.5f;
     [SerializeField] private float coyoteTime = 0.1f;
+    [SerializeField] private float coyoteTimeForPlatform = 0.1f;
     [SerializeField] private float jumpBufferTime = 0.1f;
+    [SerializeField] private float fallingGravityFactor = 2f;
 
     [Header("Dash")]
     [SerializeField] private float dashSpeed = 20f;
+    [SerializeField] private int maxDashesInAir = 1;
     [SerializeField] private float dashTime = 0.2f;
     [SerializeField] private float dashCooldown = 0.5f;
     [SerializeField] private bool canDashInAir = true;
 
     [Header("Ground")]
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask platformLayer;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.4f, 0.1f);
     [SerializeField] private Transform groundCheck;
 
@@ -39,11 +45,15 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private Collider2D playerCollider;
     private float moveInput;
     private bool isFacingRight = false;
+    private bool isCrossingPlatform;
     private bool isGrounded;
     private int jumpsLeft;
+    private int dashesLeft;
     private float coyoteTimer;
+    private float coyoteTimerForPlatform;
     private float jumpBufferTimer;
     private bool isDashing;
     private float dashTimer;
@@ -57,7 +67,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        playerCollider = GetComponent<Collider2D>();
         jumpsLeft = maxJumps;
+        dashesLeft = maxDashesInAir;
         baseGravity = rb.gravityScale;
         blurTimer = blurSpawnRate;
     }
@@ -67,12 +79,13 @@ public class PlayerController : MonoBehaviour
         moveInput = Input.GetAxisRaw("Horizontal");
         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ OnTriggerEnter2D)
         isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer);
-
+        isGrounded = isGrounded && (rb.linearVelocity.y <= 0f);
         // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (isGrounded)
         {
             coyoteTimer = coyoteTime;
             jumpsLeft = maxJumps;
+            dashesLeft = maxDashesInAir;
         }
         else if (!isGrounded && jumpsLeft == maxJumps)
         {
@@ -94,6 +107,15 @@ public class PlayerController : MonoBehaviour
             jumpBufferTimer -= Time.deltaTime;
         }
 
+        if (Input.GetButtonDown("Down"))
+        {
+            coyoteTimerForPlatform = coyoteTimeForPlatform;
+        }
+        else
+        {
+            coyoteTimerForPlatform -= Time.deltaTime;
+        }
+
         if (jumpBufferTimer > 0f && (coyoteTimer > 0f || jumpsLeft > 0))
         {
             Jump();
@@ -104,7 +126,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * jumpCutMultiplier);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f && (!isDashing && (canDashInAir || isGrounded)))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && dashCooldownTimer <= 0f && dashesLeft > 0 && (!isDashing && (canDashInAir || isGrounded)))
         {
             StartDash();
         }
@@ -129,7 +151,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        dashCooldownTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime; 
+        if (coyoteTimerForPlatform > 0f)
+        {
+            StartCoroutine(DisablePlatformCollision());
+        }
+
         UpdateAnimations();
     }
 
@@ -173,6 +200,7 @@ public class PlayerController : MonoBehaviour
 
     private void StartDash()
     {
+        dashesLeft--;
         isDashing = true;
         dashTimer = dashTime;
         dashCooldownTimer = dashCooldown;
@@ -220,7 +248,7 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
         animator.SetBool("IsGrounded", isGrounded);
-        animator.SetBool("IsJumping", !isGrounded && rb.linearVelocity.y > 0f);
+        animator.SetBool("IsJumping", !isGrounded && rb.linearVelocity.y > 0.05f);
         animator.SetBool("IsFalling", !isGrounded && rb.linearVelocity.y < 0f);
     }
 
@@ -229,7 +257,14 @@ public class PlayerController : MonoBehaviour
         // ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (!isDashing)
         {
-            rb.gravityScale = baseGravity;
+            if (rb.linearVelocityY < 0f)
+            {
+                rb.gravityScale = baseGravity * fallingGravityFactor;
+            } 
+            else
+            {
+                rb.gravityScale = baseGravity;
+            }
         }
     }
 
@@ -247,4 +282,23 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed += amount;
     }
+    private IEnumerator DisablePlatformCollision()
+    {
+        Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);
+        foreach (Collider2D col in overlappingPlatforms)
+        {
+            PlatformEffector2D effector = col.GetComponent<PlatformEffector2D>();
+            if (effector != null)
+            {
+                Collider2D platformCollider = col.GetComponent<Collider2D>();
+                if (platformCollider != null)
+                {
+                    platformCollider.enabled = false;
+                    yield return new WaitForSeconds(0.5f);
+                    platformCollider.enabled = true;
+                }
+            }
+        }
+    }
+
 }

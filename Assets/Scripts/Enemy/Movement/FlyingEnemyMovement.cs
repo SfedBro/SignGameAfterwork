@@ -148,7 +148,6 @@ public class FlyingEnemyMovement : MonoBehaviour
                 patrolCoroutine = null;
                 isPatrolRunning = false;
             }
-
             agent.stoppingDistance = stoppingDistance;
             agent.SetDestination(target.position);
             if ((agent.transform.position - target.position).magnitude <= stoppingDistance)

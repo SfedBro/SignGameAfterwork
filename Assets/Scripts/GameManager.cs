@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,10 +6,13 @@ public class GameManager : MonoBehaviour
 {
     private Player player;
     [SerializeField] private float respawnDelay = 1f;
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private string levelCave000 = "LevelCave000";
 
     public static GameManager I;
 
-    void Awake() {
+    void Awake()
+    {
         if (I != null) return;
         I = this;
     }
@@ -18,11 +22,24 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("mage").GetComponent<Player>();
     }
 
-    void Update()
+    public void RespawnWithouDeathScreen()
     {
-        if (player.GetHP() <= 0f)
+        Invoke(nameof(RespawnPlayerWithPosition), respawnDelay);
+    }
+
+    private void RespawnPlayerWithPosition()
+    {
+        SceneManager.LoadScene("LevelCave000");
+        StartCoroutine(SetPlayerPositionAfterLoad());
+    }
+
+    private IEnumerator SetPlayerPositionAfterLoad()
+    {
+        yield return new WaitForSeconds(0.1f);
+        var player = GameObject.FindWithTag("Player");
+        if (player != null)
         {
-            Invoke(nameof(RespawnPlayer), respawnDelay);
+            player.transform.position = DataContainer.checkpointIndex;
         }
     }
 
@@ -34,5 +51,18 @@ public class GameManager : MonoBehaviour
     private void RespawnPlayer()
     {
         SceneManager.LoadScene("LevelCave000");
+    }
+
+    public void RestartGame()
+    {
+        Debug.Log("Restart Clicked");
+        SceneManager.LoadScene(levelCave000);
+    }
+
+    public void ToMainMenu()
+    {
+        Debug.Log("Main Menu Clicked");
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 }
