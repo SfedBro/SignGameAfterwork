@@ -85,7 +85,10 @@ public class DamageParticles : MonoBehaviour
             // cone if with direction
             shape.angle = 15f;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            particles.transform.rotation = Quaternion.Euler(0, 0, angle + 180);
+            // particles.transform.rotation = Quaternion.Euler(0, 0, angle + 180);
+            Debug.Log(direction);
+            Debug.Log(angle);
+            particles.transform.rotation = Quaternion.Euler(0, 0, angle + 90);
         }
         else
         {

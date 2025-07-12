@@ -49,7 +49,9 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Player>())
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage, transform.forward);
+            float angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            collision.gameObject.GetComponent<Player>().TakeDamage(damage, direction.normalized);
         }
         if (!(collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.name.Contains(this.name)))
         {
