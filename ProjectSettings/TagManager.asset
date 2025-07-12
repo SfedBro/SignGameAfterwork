@@ -18,9 +18,9 @@ TagManager:
   - Wall
   - Coins
   - Player
-  - PostProcessing
+  - Enemy
   - Platform
-  - 
+  - PostProcessing
   - 
   - 
   - 
