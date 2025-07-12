@@ -231,7 +231,8 @@ public class LandEnemyMovement : MonoBehaviour
         }
         else
         {
-            verticalSpeed = -gravity * Time.deltaTime;
+            verticalSpeed = 0f;
+            //verticalSpeed = -gravity * Time.deltaTime;
         }
         if (jumpingCoroutine == null)
         {
