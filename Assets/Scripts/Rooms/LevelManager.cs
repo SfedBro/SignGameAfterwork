@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
         List<RoomInfo> roomInfos = Resources.LoadAll<RoomInfo>("RoomInfos").ToList();
         // List<Vector2Int> path = new PathGenerator(roomsX, roomsY, minPathSize, maxPathSize).GenerateRandomPath(0, 0, roomsX - 1, roomsY - 1);
         List<Vector2Int> path = new PathGenerator(roomsX, roomsY).GenerateRandomPath(0, 0, roomsX - 1, roomsY - 1) ?? throw new Exception("Path cannot be generated");
-        Debug.Log(string.Join(" ", path.Select(p => $"[{p[0]} {p[1]}]")));
+        Debug.Log("Path: " + string.Join(" ", path.Select(p => $"[{p[0]} {p[1]}]")));
         RoomDirections[,] pathRooms = new RoomDirections[roomsX, roomsY];
         for (int x = 0; x < roomsX; ++x) for (int y = 0; y < roomsY; ++y) pathRooms[x, y] = RoomDirections.Any();
         for (int i = 0; i < path.Count - 1; ++i) {
@@ -131,7 +131,6 @@ class PathGenerator {
         Vector2Int endPoint = new(xTo, yTo);
         visited = new() {startPoint};
         IEnumerable<Vector2Int> dirs = directions.OrderBy(_ => Random.value);
-        Debug.Log(string.Join(" ", dirs.Select(d => d.ToString())));
         foreach (var dir in dirs) {
             List<Vector2Int> path = Extend(startPoint, dir, endPoint, minPathSize, maxPathSize);
             if (path == null) continue;
