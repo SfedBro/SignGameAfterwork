@@ -713,6 +713,8 @@ GameObject:
   - component: {fileID: 5482380846589999046}
   - component: {fileID: 6106228146414313247}
   - component: {fileID: -4543009065927017444}
+  - component: {fileID: -2189379067732031717}
+  - component: {fileID: -1495441982941773093}
   m_Layer: 10
   m_Name: bird
   m_TagString: Untagged
@@ -945,6 +947,50 @@ MonoBehaviour:
   maxHp: 10
   hp: 0
   spawn: {fileID: 0}
+  flashDuration: 1
+  spriteRenderers: []
+--- !u!114 &-2189379067732031717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012434815414950361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21154a65374c03d4babe784c2f506ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMaterialName: Flash
+--- !u!114 &-1495441982941773093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5012434815414950361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158e1a5ab6f44734cbd36f45e0261bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodParticles: {fileID: 0}
+  sparkParticles: {fileID: 0}
+  weakForce:
+    minSpeed: 5
+    maxSpeed: 15
+    lifetime: 0.5
+  mediumForce:
+    minSpeed: 10
+    maxSpeed: 25
+    lifetime: 1
+  strongForce:
+    minSpeed: 15
+    maxSpeed: 35
+    lifetime: 1.5
+  weakEmissionCount: 10
+  mediumEmissionCount: 20
+  strongEmissionCount: 35
 --- !u!1 &5799560389489877936
 GameObject:
   m_ObjectHideFlags: 0

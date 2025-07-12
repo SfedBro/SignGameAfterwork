@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,9 +12,9 @@ public class Enemy : MonoBehaviour
     private float hp;
     [SerializeField]
     private EnemySpawn spawn;
-    [SerializeField] private float flashDuration = 1f;
+    [SerializeField] private float flashDuration = 0.06f;
     private ImpactFlash impactFlash;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private List<SpriteRenderer> spriteRenderers;
     private DamageParticles damageParticles;
     public float GetHp
     {
@@ -40,7 +42,7 @@ public class Enemy : MonoBehaviour
         hp = maxHp;
         originalColor = this.GetComponent<SpriteRenderer>().color;
         impactFlash = GetComponent<ImpactFlash>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true).ToList();
         damageParticles = GetComponent<DamageParticles>();
     }
 
@@ -53,13 +55,18 @@ public class Enemy : MonoBehaviour
     {
         hp -= amount;
         Debug.Log($"{name} получил {amount} урона. Осталось HP: {hp}.");
-        ScreenShake.Instance.ShakeVeryLight();
+        // не просто так я не использую его, включать на свой страх и риск
+        // ScreenShake.Instance.ShakeVeryLight();
 
         if (impactFlash != null)
         {
-            impactFlash.Flash(spriteRenderer, flashDuration);
+            foreach (var sprite in spriteRenderers)
+            {
+                if (sprite != null)
+                    impactFlash.Flash(sprite, flashDuration);
+            }
         }
-        if (direction == default)
+        if (direction == Vector3.zero)
         {
             damageParticles.PlayMediumSparkEffect(transform.position);
         }
@@ -76,7 +83,13 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         Debug.Log($"Объект {name} был уничтожен!");
-        spawn.DeleteEnemy();
+        if (spawn != null)
+        {
+            spawn.DeleteEnemy();
+        } else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void ReturnToOrig()
