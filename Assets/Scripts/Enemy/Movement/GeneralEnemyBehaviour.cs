@@ -3,13 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(LayerMask))]
 public class GeneralEnemyBehaviour
 {
-    public static bool LookingDirectlyAtPlayer(Vector3 p1, Vector3 p2, float visionDistance, LayerMask masks, Transform transform)
+    public static bool LookingDirectlyAtPlayer(Vector3 p1, Vector3 p2, float visionDistance, LayerMask masks, string tag)
     {
         if ((p1 - p2).magnitude <= visionDistance) {
             RaycastHit2D hit = Physics2D.Linecast(p1, p2, masks);
             if (hit)
             {
-                if (hit.collider.gameObject == transform.gameObject)
+                if (hit.collider.tag == tag)
                 {
                     return true;
                 }
