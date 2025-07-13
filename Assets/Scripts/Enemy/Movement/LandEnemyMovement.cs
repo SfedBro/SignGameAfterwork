@@ -319,4 +319,9 @@ public class LandEnemyMovement : MonoBehaviour
             }
         }
     }
+
+    public void SpeedChange(float amount)
+    {
+        agent.speed = speed + speed*amount;
+    }
 }

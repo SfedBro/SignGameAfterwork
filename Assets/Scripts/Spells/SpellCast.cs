@@ -32,7 +32,6 @@ public class SpellCast : MonoBehaviour
     private Vector3 targetPosition;
     private Camera mainCamera;
     private float lastHorizontalInput;
-    private float lastSpellCastTimer = 0f;
     private Spell spellToCast;
 
     private void Start()
@@ -51,7 +50,6 @@ public class SpellCast : MonoBehaviour
         if (spellToCast && Input.GetMouseButtonDown(1) && !isCasting)
         {
             StartCasting();
-            lastSpellCastTimer = 1f / spellsPerSecond;
         }
         if (Input.GetMouseButtonUp(1) && isCasting)
         {
@@ -77,7 +75,6 @@ public class SpellCast : MonoBehaviour
         {
             UpdateIdleStaff();
         }
-        lastSpellCastTimer -= Time.deltaTime;
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         if (horizontalInput != 0f)
@@ -179,6 +176,10 @@ public class SpellCast : MonoBehaviour
         {
             NearestEnemySpell((NearestEnemySpell)spellToCast);
         }
+        else if (spellToCast.Type == "Cloud")
+        {
+            CloudSpell((CloudSpell)spellToCast);
+        }
         else
         {
             Debug.Log($"{spellToCast.Type} - неизвестный тип заклинания");
@@ -228,6 +229,14 @@ public class SpellCast : MonoBehaviour
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
         obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime);
+        obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
+    }
+
+    private void CloudSpell(CloudSpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
+        obj.AddComponent<AreaSpellActions>();
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime, someSpell.Amount);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
