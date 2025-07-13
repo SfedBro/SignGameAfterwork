@@ -18,9 +18,9 @@ TagManager:
   - Wall
   - Coins
   - Player
-  - Enemy
-  - Platform
   - PostProcessing
+  - Platform
+  - 
   - 
   - 
   - 
@@ -61,9 +61,6 @@ TagManager:
     locked: 0
   - name: Mid1
     uniqueID: 4127880871
-    locked: 0
-  - name: particles
-    uniqueID: 2849989201
     locked: 0
   - name: Mid2
     uniqueID: 755978015

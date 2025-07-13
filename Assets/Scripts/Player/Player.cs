@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         {
             impactFlash.Flash(spriteRenderer, flashDuration);
         }
-        if (direction == Vector3.zero)
+        if (direction == default)
         {
             damageParticles.PlayMediumSparkEffect(transform.position);
         }
