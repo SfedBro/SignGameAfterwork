@@ -696,7 +696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &232232887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8543,8 +8543,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0674b05ad40112d4ca8173b26acf51a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuCanvas: {fileID: 232232885}
+  mainCanvas: {fileID: 232232885}
   settingsCanvas: {fileID: 1077717573}
+  shopCanvas: {fileID: 0}
+  mapCanvas: {fileID: 0}
 --- !u!4 &1363448126
 Transform:
   m_ObjectHideFlags: 0

@@ -51,8 +51,11 @@ public class UIManager : MonoBehaviour
     {
         if (mainCanvas != null)
             mainCanvas.SetActive(false);
-        settingsCanvas.SetActive(false);
-        shopCanvas.SetActive(false);
-        mapCanvas.SetActive(false);
+        if (settingsCanvas != null)
+            settingsCanvas.SetActive(false);
+        if (shopCanvas != null)
+            shopCanvas.SetActive(false);
+        if (mapCanvas != null)
+            mapCanvas.SetActive(false);
     }
 }
