@@ -97,7 +97,7 @@ public class PauseManager : MonoBehaviour
         {
             if (ui_manager != null)
             {
-                ui_manager.ShowScreen(UIScreen.MainMenu);
+                ui_manager.ShowScreen(UIScreen.MainCanvas);
             }
             else
             {

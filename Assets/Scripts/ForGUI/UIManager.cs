@@ -3,20 +3,24 @@ using UnityEngine;
 public enum UIScreen
 {
     None,
-    MainMenu,
-    Settings
+    MainCanvas,
+    Settings,
+    Shop,
+    Map
 }
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject mainMenuCanvas;
-    public GameObject settingsCanvas;
+    [SerializeField] private GameObject mainCanvas;
+    [SerializeField] private GameObject settingsCanvas;
+    [SerializeField] private GameObject shopCanvas;
+    [SerializeField] private GameObject mapCanvas;
 
     private UIScreen currentScreen = UIScreen.None;
 
     private void Start()
     {
-        ShowScreen(UIScreen.MainMenu);
+        ShowScreen(UIScreen.MainCanvas);
     }
 
     public void ShowScreen(UIScreen screen)
@@ -25,11 +29,18 @@ public class UIManager : MonoBehaviour
 
         switch (screen)
         {
-            case UIScreen.MainMenu:
-                mainMenuCanvas.SetActive(true);
+            case UIScreen.MainCanvas:
+                if (mainCanvas != null)
+                    mainCanvas.SetActive(true);
                 break;
             case UIScreen.Settings:
                 settingsCanvas.SetActive(true);
+                break;
+            case UIScreen.Shop:
+                shopCanvas.SetActive(true);
+                break;
+            case UIScreen.Map:
+                mapCanvas.SetActive(true);
                 break;
         }
 
@@ -38,7 +49,10 @@ public class UIManager : MonoBehaviour
 
     private void HideAll()
     {
-        mainMenuCanvas.SetActive(false);
+        if (mainCanvas != null)
+            mainCanvas.SetActive(false);
         settingsCanvas.SetActive(false);
+        shopCanvas.SetActive(false);
+        mapCanvas.SetActive(false);
     }
 }
