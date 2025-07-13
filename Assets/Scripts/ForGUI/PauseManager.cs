@@ -15,24 +15,17 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button mainSettingsIcon;
     [SerializeField] private string mainMenuSceneName = "MainMenu";
-    [SerializeField] private UIManager ui_manager;
     private bool isPaused = false;
 
     void Start()
     {
-        GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
-        if (manager != null)
-        {
-            ui_manager = manager.GetComponent<UIManager>();
-        }
         exitButton.onClick.AddListener(ExitGame);
         pauseIcon.onClick.AddListener(OpenGameSettingsPanel);
         mainSettingsIcon.onClick.AddListener(OpenLevelSettings);
         continueButton.onClick.AddListener(OpenCloseSettings);
-        if (toMainMenuButton != null)
-            toMainMenuButton.onClick.AddListener(OpenMainMenu);
-        if (settingsButton != null)
-            settingsButton.onClick.AddListener(OpenCloseSettings);
+        toMainMenuButton.onClick.AddListener(OpenMainMenu);
+        settingsButton.onClick.AddListener(OpenCloseSettings);
+
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
@@ -44,6 +37,7 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenCloseSettings();
+            // TogglePause();
         }
     }
 
@@ -82,27 +76,14 @@ public class PauseManager : MonoBehaviour
 
     private void OpenCloseSettings()
     {
+        Debug.Log(isPaused);
         if (!isPaused)
         {
-            if (ui_manager != null)
-            {
-                ui_manager.ShowScreen(UIScreen.Settings);
-            }
-            else
-            {
-                settingsPanel.SetActive(true);
-            }
+            settingsPanel.SetActive(true);
         }
         else
         {
-            if (ui_manager != null)
-            {
-                ui_manager.ShowScreen(UIScreen.MainCanvas);
-            }
-            else
-            {
-                settingsPanel.SetActive(false);
-            }
+            settingsPanel.SetActive(false);
         }
         TogglePause();
     }

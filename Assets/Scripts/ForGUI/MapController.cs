@@ -13,10 +13,7 @@ public class MapController : MonoBehaviour
 
     void Start() {
         map.SetActive(false);
-        if (mapPointer)
-        {
-            mapPointer.SetActive(false);
-        }
+        mapPointer.SetActive(false);
     }
 
     public void SetMapActive(bool active) {

@@ -7,7 +7,6 @@ TagManager:
   - Enemy
   - Ground
   - Heart
-  - UIManager
   layers:
   - Default
   - TransparentFX
