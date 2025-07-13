@@ -89,31 +89,25 @@ public class SpellEffect : MonoBehaviour
         float timer = 0f;
         damageMultiplier = 1f;
 
-        while (timer < duration)
+        if (obj.CompareTag("Enemy"))
         {
-            if (obj != null)
+            obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
+            while (timer < duration && obj != null)
             {
                 int damage = UnityEngine.Random.Range(1, 4);
-                obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
-                if (obj.CompareTag("Enemy"))
-                {
-                    obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
-                }
-                else if (obj.CompareTag("Player"))
-                {
-                    obj.GetComponent<Player>().TakeDamage((int)(damage * dmgMultiplier));
-                }
-                
+
+                obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
+
+                timer += 1f;
+                yield return new WaitForSeconds(1f);
             }
-            timer += 1f;
-            yield return new WaitForSeconds(1f);
         }
 
         // Возвращаем в исходное состояние
-        if (obj != null)
-        {
-            ReturnToOriginal(obj);
-        }
+            if (obj != null)
+            {
+                ReturnToOriginal(obj);
+            }
         onComplete?.Invoke();
     }
 
@@ -178,9 +172,9 @@ public class SpellEffect : MonoBehaviour
         {
             obj.GetComponent<Enemy>().ReturnToOrig();
         }
-        else if (obj.CompareTag("Player"))
-        {
-            obj.GetComponent<Player>().ReturnToOrig();
-        }
+        // else if (obj.CompareTag("Player"))
+        // {
+        //     obj.GetComponent<Player>().ReturnToOrig();
+        // }
     }
 }
