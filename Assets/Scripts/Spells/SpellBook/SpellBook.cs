@@ -37,6 +37,11 @@ public class SpellBook : MonoBehaviour
         if (isOpen)
         {
             OpenSpellBook();
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
         }
     }
 
