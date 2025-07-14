@@ -659,8 +659,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 0}
-  hoverSound: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
-  clickSound: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+  hoverSound: {fileID: 8300000, guid: f2d9af177377c8d488faeea4a1ec717e, type: 3}
+  clickSound: {fileID: 8300000, guid: d7685ed240c6f4047b76d9386e43da5e, type: 3}
+  soundsMixerGroup: {fileID: -4822787318669579641, guid: 0a2cc4a872e653145bcacd83cf751db6, type: 2}
   hoverDelay: 0.2
 --- !u!4 &197067870
 Transform:
