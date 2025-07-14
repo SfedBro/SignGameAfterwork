@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public string enemyTag = "Enemy";
-    public float timeAvailableForCombo = 1f;
+    [SerializeField] private string enemyTag = "Enemy";
+    [SerializeField] private float timeAvailableForCombo = 0.5f;
 
     private SpellCast spellCaster; // Реализация заклинаний
     private Spell newSpell; // Объект заклинания
@@ -107,7 +107,7 @@ public class PlayerAttack : MonoBehaviour
         {
             newSpell = allSpells.GetSpellByCombo(string.Join("+", combo));
             Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.name}");
-            spellCaster.castSpell(newSpell);
+            spellCaster.SetSpell(newSpell);
         }
         
     }

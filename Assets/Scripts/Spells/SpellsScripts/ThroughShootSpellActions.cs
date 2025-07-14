@@ -3,17 +3,13 @@ using UnityEngine;
 
 public class ThroughShootSpellActions : MonoBehaviour
 {
-    public GameObject effectCaster;
-    public float force;
-    public float lifeDistance = 10f;
-    public float damage;
-    public string element;
-    public string effectType;
-    public float effectDuration;
-    public float amount;
-    public Vector3 cursorPos;
+    private GameObject effectCaster;
+    private float lifeDistance = 20f;
+    private float damage;
+    private string element;
+    private string effectType;
+    private float effectDuration;
 
-    private Rigidbody2D physic;
     private Vector3 origPos;
 
     private void Start()
@@ -23,9 +19,6 @@ public class ThroughShootSpellActions : MonoBehaviour
         {
             gameObject.AddComponent<Rigidbody2D>();
         }
-
-        physic = GetComponent<Rigidbody2D>();
-        physic.AddForce(force * (cursorPos - origPos).normalized);
     }
 
     void Update()
@@ -51,5 +44,13 @@ public class ThroughShootSpellActions : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void SetSettings(GameObject caster, string elem, float dmg, string effType)
+    {
+        effectCaster = caster;
+        element = elem;
+        damage = dmg;
+        effectType = effType;
     }
 }

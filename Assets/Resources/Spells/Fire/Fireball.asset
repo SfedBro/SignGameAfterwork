@@ -18,5 +18,5 @@ MonoBehaviour:
   combo: Fire3
   effect: Burn
   effectDuration: 3
-  spellPrefab: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
+  spellPrefab: {fileID: 3190285968056344791, guid: 37a9480354784f44ba56f2531a5637c3, type: 3}
   damage: 3
