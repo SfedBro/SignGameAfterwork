@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent (typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class Player : MonoBehaviour
 {
     public float iSeconds = 2f;
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private Player Instance;
     private bool isDead = false;
     private bool isDeathScreenUsing = true;
+    private Color originalColor;
 
     void Awake()
     {
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("DeathScreenPrefab не найден");
         }
+        originalColor = this.GetComponent<SpriteRenderer>().color;
     }
 
     void Start()
@@ -110,7 +112,7 @@ public class Player : MonoBehaviour
         {
             impactFlash.Flash(spriteRenderer, flashDuration);
         }
-        if (direction == Vector3.zero)
+        if (direction == default)
         {
             damageParticles.PlayMediumSparkEffect(transform.position);
         }
@@ -152,5 +154,10 @@ public class Player : MonoBehaviour
     public void ChangeDeathScreenBool()
     {
         isDeathScreenUsing = false;
+    }
+    
+    public void ReturnToOrig()
+    {
+        GetComponent<SpriteRenderer>().color = originalColor;
     }
 }

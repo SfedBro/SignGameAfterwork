@@ -7,7 +7,7 @@ public class DamageOnTouch : MonoBehaviour
     private Vector2 spikeRotation = Vector2.zero;
     private void Start()
     {
-        float angle = (transform.rotation.eulerAngles.z - 90) * Mathf.Deg2Rad;
+        float angle = (transform.rotation.eulerAngles.z + 180) * Mathf.Deg2Rad;
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
         spikeRotation = new Vector2(x, y).normalized;

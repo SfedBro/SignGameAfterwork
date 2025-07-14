@@ -5208,7 +5208,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -5276,8 +5276,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.6
-      minScalar: 0.2
+      scalar: 0.8
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5329,8 +5329,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 5
-      minScalar: 3
+      scalar: 3
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5447,7 +5447,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
+      scalar: 0.2
       minScalar: 0.05
       maxCurve:
         serializedVersion: 2
@@ -5771,7 +5771,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -15053,8 +15053,7 @@ GameObject:
   - component: {fileID: 1002626329222257382}
   - component: {fileID: 2690089605500233412}
   - component: {fileID: 586311875640278083}
-  - component: {fileID: 7928863086052366388}
-  - component: {fileID: 6564763382186493191}
+  - component: {fileID: 583594564192648147}
   - component: {fileID: 6377138182487133699}
   - component: {fileID: 8140098238340407890}
   - component: {fileID: 6946282676061063420}
@@ -15073,7 +15072,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7074238555592012898}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15303,35 +15302,6 @@ MonoBehaviour:
   blurLifetime: 0.32
   blurStartAlpha: 0.5
   blurEndAlpha: 0
---- !u!114 &7928863086052366388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyTag: Enemy
-  timeAvailableForCombo: 1
---- !u!114 &6564763382186493191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingSpellPrefab: {fileID: 0}
-  areaSpellPrefab: {fileID: 0}
-  shootingSpellForce: 100
 --- !u!114 &583594564192648147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15346,21 +15316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTag: Enemy
   timeAvailableForCombo: 1
---- !u!114 &1525282971909289490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingSpellPrefab: {fileID: 0}
-  areaSpellPrefab: {fileID: 0}
-  shootingSpellForce: 100
 --- !u!114 &6377138182487133699
 MonoBehaviour:
   m_ObjectHideFlags: 0

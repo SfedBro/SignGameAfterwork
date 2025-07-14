@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 5216078958278152330}
   - component: {fileID: 3005419789388633945}
   - component: {fileID: 2087480039090388560}
-  - component: {fileID: 6450645497351827334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,8 +68,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -2.05}
-  m_Radius: 2.43
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 7.66
 --- !u!50 &2087480039090388560
 Rigidbody2D:
   serializedVersion: 5
@@ -98,18 +97,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6450645497351827334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190285968056344791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0958dc30d8720ec4eb64f40e585a64e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5189272620700166029
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +108,7 @@ GameObject:
   - component: {fileID: 3906005221500195519}
   - component: {fileID: 706080531671179681}
   - component: {fileID: 4311640980432494145}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4954,7 +4941,7 @@ GameObject:
   - component: {fileID: 7769202348231302464}
   - component: {fileID: 6020114961009783951}
   - component: {fileID: 6572537635442245907}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particles (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
