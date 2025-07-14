@@ -22,22 +22,14 @@ public class Player : MonoBehaviour
     private Player Instance;
     private bool isDead = false;
     private bool isDeathScreenUsing = true;
-
+    [SerializeField] private bool isCheckPointUsed = false;
     void Awake()
     {
         Instance = this;
+        if (isCheckPointUsed)
+            transform.position = DataContainer.checkpointIndex;
 
-        transform.position = DataContainer.checkpointIndex;
-
-        if (deathScreenPrefab != null)
-        {
-            deathScreenInstance = Instantiate(deathScreenPrefab);
-            deathScreenInstance.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("DeathScreenPrefab не найден");
-        }
+        CreateDeathScreen();
     }
 
     void Start()
@@ -49,23 +41,41 @@ public class Player : MonoBehaviour
         damageParticles = GetComponent<DamageParticles>();
         characterControl = GetComponent<CharacterController>();
         isDeathScreenUsing = true;
-        AddDScreenButtonFunctions();
     }
-    private void AddDScreenButtonFunctions()
+    private void CreateDeathScreen()
     {
         if (deathScreenPrefab != null)
         {
-            var buttons = deathScreenInstance.GetComponentsInChildren<Button>();
-            if (buttons.Length >= 2)
-            {
-                buttons[0].onClick.RemoveAllListeners();
-                buttons[1].onClick.RemoveAllListeners();
-                buttons[0].onClick.AddListener(GameManager.I.RestartGame);
-                buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
-            }
+            deathScreenInstance = Instantiate(deathScreenPrefab);
+            SetupDeathScreenButtons();
+            deathScreenInstance.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("DeathScreenPrefab не назначен в инспекторе!");
         }
     }
+    private void SetupDeathScreenButtons()
+    {
+        if (deathScreenInstance == null) return;
 
+        Button[] buttons = deathScreenInstance.GetComponentsInChildren<Button>();
+
+        if (buttons.Length >= 2)
+        {
+            buttons[0].onClick.RemoveAllListeners();
+            buttons[1].onClick.RemoveAllListeners();
+
+            buttons[0].onClick.AddListener(() => GameManager.I.RestartGame());
+            buttons[1].onClick.AddListener(() => GameManager.I.ToMainMenu());
+
+            Debug.Log("Кнопки экрана смерти настроены успешно");
+        }
+        else
+        {
+            Debug.LogWarning($"Найдено {buttons.Length} кнопок, ожидалось минимум 2");
+        }
+    }
     // for test
     void Update()
     {
