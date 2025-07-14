@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class PauseManager : MonoBehaviour
 {
@@ -17,6 +17,12 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private UIManager ui_manager;
     private bool isPaused = false;
+
+    [Header("Volume")]
+    public AudioSource audioSource;
+    public AudioMixer audioMixer;
+    public AudioClip hoverSound;
+    public AudioClip clickSound;
 
     void Start()
     {
@@ -118,5 +124,22 @@ public class PauseManager : MonoBehaviour
     private void CloseSettings()
     {
         settingsPanel.SetActive(false);
+    }
+
+    public void OnMasterVolumeChanged(float value) {
+        audioMixer.SetFloat("masterVolume", value);
+    }
+    public void OnMusicVolumeChanged(float value) {
+        audioMixer.SetFloat("musicVolume", value);
+    }
+    public void OnSoundsVolumeChanged(float value) {
+        audioMixer.SetFloat("soundsVolume", value);
+    }
+
+    public void PlayHoverSound() {
+        audioSource.PlayOneShot(hoverSound);
+    }
+    public void PlayClickSound() {
+        audioSource.PlayOneShot(clickSound);
     }
 }
