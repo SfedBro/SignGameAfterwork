@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrice: {fileID: 3226182865965088599}
   descriptionField: {fileID: 6677028771875878512}
-  coinCounter: {fileID: 0}
+  coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 2297590949301685597}
   panel: {fileID: 7252566099388931718}
   price: 64
@@ -727,7 +727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrice: {fileID: 5455004480713162390}
   descriptionField: {fileID: 6677028771875878512}
-  coinCounter: {fileID: 0}
+  coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 6786200456700110311}
   panel: {fileID: 7252566099388931718}
   price: 98
@@ -3079,7 +3079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrice: {fileID: 8409613828179595080}
   descriptionField: {fileID: 6677028771875878512}
-  coinCounter: {fileID: 0}
+  coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 8974327311818095123}
   panel: {fileID: 7252566099388931718}
   price: 37
