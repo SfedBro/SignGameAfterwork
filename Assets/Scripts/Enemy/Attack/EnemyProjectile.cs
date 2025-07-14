@@ -47,12 +47,11 @@ public class EnemyProjectile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (target != null)
+        if (collision.gameObject.GetComponent<Player>())
         {
-            if (collision.gameObject == target.gameObject)
-            {
-                collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            }
+            float angle = transform.eulerAngles.z * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            collision.gameObject.GetComponent<Player>().TakeDamage(damage, direction.normalized);
         }
         if (!(collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.name.Contains(this.name)))
         {

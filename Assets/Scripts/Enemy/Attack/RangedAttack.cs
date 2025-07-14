@@ -25,6 +25,10 @@ public class RangedAttack : MonoBehaviour, IAttack
     private IEnumerator AttackDelay(float time)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Debug.Log(direction);
+        Debug.Log(angle);
+        Debug.Log(Mathf.Atan2(1, 0) * Mathf.Rad2Deg);
+        Debug.Log("_______");
         GameObject projInstance = Instantiate(proj, position, Quaternion.Euler(0, 0, angle));
         projInstance.GetComponent<EnemyProjectile>().Damage = dmg;
         projInstance.GetComponent<EnemyProjectile>().Speed = spd;

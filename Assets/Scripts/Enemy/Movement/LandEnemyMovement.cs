@@ -232,11 +232,12 @@ public class LandEnemyMovement : MonoBehaviour
         else
         {
             verticalSpeed = 0f;
+            //verticalSpeed = -gravity * Time.deltaTime;
         }
         if (jumpingCoroutine == null)
         {
             Vector2 currentPos = agent.transform.position;
-            Vector2 nextPos = new Vector2(currentPos.x, currentPos.y + verticalSpeed * Time.deltaTime);
+            Vector2 nextPos = currentPos + Vector2.up * verticalSpeed * Time.deltaTime;
             if (IsPointOnNavMesh(nextPos))
             {
                 agent.transform.position = nextPos;
@@ -250,7 +251,7 @@ public class LandEnemyMovement : MonoBehaviour
     }
     private void FollowPlayer()
     {
-        Vector2 agentPos = agent.transform.position;
+        Vector2 agentPos = transform.position;
         Vector2 targetPos = target.position;
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, target))
         {
@@ -268,19 +269,16 @@ public class LandEnemyMovement : MonoBehaviour
             }
 
             agent.stoppingDistance = stoppingDistance;
-            Vector2 goalPosition = (Mathf.Abs(targetPos.y - agentPos.y) >= minJumpHeight && Mathf.Abs(targetPos.y - agentPos.y) >= agent.height) ? targetPos : new Vector2(targetPos.x, agentPos.y);
+            Vector2 goalPosition = (targetPos.y - agentPos.y >= Mathf.Max(agent.radius, groundDetectionOffset) && Mathf.Abs(targetPos.y - agentPos.y) <= agent.radius + groundDetectionOffset) ? targetPos : new Vector2(targetPos.x, agentPos.y);
+            //Vector2 goalPosition = new Vector2(targetPos.x, agentPos.y);
             Vector2 direction = agentPos - targetPos;
-            if ((agentPos - targetPos).magnitude > stoppingDistance)
+            if (direction.magnitude > stoppingDistance)
             {
-
                 agent.SetDestination(goalPosition);
             }
             else
             {
                 agent.SetDestination(agentPos);
-            }
-            if ((agentPos - targetPos).magnitude <= stoppingDistance)
-            {
                 if (attackScript != null)
                 {
                     if (isRanged)
@@ -296,8 +294,7 @@ public class LandEnemyMovement : MonoBehaviour
         }
         else
         {
-            agent.stoppingDistance = 0;
-            if (((Vector2)agent.destination - agentPos).magnitude < stoppingDistance && untilPatrolTime > 0)
+            if (agent.remainingDistance <= stoppingDistance && untilPatrolTime > 0)
             {
                 if (!isPatrolRunning & !isWaitingForPlayer)
                 {
