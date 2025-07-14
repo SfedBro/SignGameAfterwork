@@ -29457,7 +29457,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1496138198}
-  - component: {fileID: 1496138197}
   - component: {fileID: 1496138196}
   m_Layer: 0
   m_Name: EffectsManager
@@ -29479,18 +29478,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockbackForce: 200
---- !u!114 &1496138197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496138195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 351221bd94de3f14c9ac4a9fbd6f5b7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1496138198
 Transform:
   m_ObjectHideFlags: 0
@@ -32242,6 +32229,10 @@ PrefabInstance:
       propertyPath: shopCanvas
       value: 
       objectReference: {fileID: 5567841351830162917}
+    - target: {fileID: 5869799813162502942, guid: e1bd47e993237174990b02e7adf604b3, type: 3}
+      propertyPath: playerNearbyTimeMax
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
