@@ -5,6 +5,7 @@ using UnityEngine;
 public class TorgashInteraction : MonoBehaviour
 {
     [SerializeField] private GameObject shopCanvas;
+    [SerializeField] private Indicator indicator;
     [SerializeField] private float detectionRadius = 3f;
     [SerializeField] private float playerNearbyTimeMax = 2f;
 
@@ -42,6 +43,9 @@ public class TorgashInteraction : MonoBehaviour
         {
             playerNearbyTimer += Time.deltaTime;
 
+            if (indicator != null)
+                indicator.SetProgress(playerNearbyTimer / playerNearbyTimeMax);
+
             if (playerNearbyTimer >= playerNearbyTimeMax && !isInteractive)
             {
                 // Debug.Log("open shop");
@@ -50,7 +54,11 @@ public class TorgashInteraction : MonoBehaviour
         }
         else
         {
-            playerNearbyTimer = 0f;
+            playerNearbyTimer -= Time.deltaTime;
+            playerNearbyTimer = Mathf.Clamp(playerNearbyTimer, 0f, playerNearbyTimeMax);
+
+            if (indicator != null)
+                indicator.SetProgress(playerNearbyTimer / playerNearbyTimeMax);
         }
 
         // проверяем ЛКМ вне UI
@@ -68,11 +76,15 @@ public class TorgashInteraction : MonoBehaviour
         isInteractive = true;
         playerNearbyTimer = 0f;
 
+        if (indicator != null)
+            indicator.SetActive(false);
+
         GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
         if (playerController != null)
         {
             playerController.enabled = false;
         }
+
         this.GetComponent<Animator>().SetBool("open", true);
         yield return new WaitForSeconds(0.4f);
 
@@ -116,6 +128,7 @@ public class TorgashInteraction : MonoBehaviour
         animator.SetBool("open", false);
         Debug.Log("open=false");
         yield return new WaitForSeconds(1.3f);
+        transform.Find("Canvas").gameObject.SetActive(false);
         animator.SetTrigger("disappear");
         Debug.Log("disappear");
         yield return new WaitForSeconds(1.4f);

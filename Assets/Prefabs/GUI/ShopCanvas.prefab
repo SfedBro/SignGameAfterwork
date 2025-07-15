@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 396000275811429649}
   - component: {fileID: 1934032864039798495}
   m_Layer: 5
-  m_Name: ShopCanvas 1 1
+  m_Name: ShopCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,12 +390,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e76f3d45858b1d48b9ce3e7b5b2c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPrice: {fileID: 117465741232873411}
+  descriptionField: {fileID: 0}
+  coinCounter: {fileID: 1070481513014471730}
+  sourceImage: {fileID: 0}
+  panel: {fileID: 0}
   price: 15
   objectName: "\u0417\u043D\u0430\u043D\u0438\u044F \u043C\u0430\u0433\u0438\u0438"
-  block: {fileID: 3661411344666830687}
-  objectPrice: {fileID: 117465741232873411}
-  coinCounter: {fileID: 1070481513014471730}
-  fl: 0
 --- !u!114 &4745293834185232807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,12 +562,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e76f3d45858b1d48b9ce3e7b5b2c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPrice: {fileID: 3622452952873651673}
+  descriptionField: {fileID: 0}
+  coinCounter: {fileID: 1070481513014471730}
+  sourceImage: {fileID: 0}
+  panel: {fileID: 0}
   price: 23
   objectName: "\u0428\u0438\u043F\u0430\u0441\u0442\u044B\u0439 \u043D\u0430\u0433\u0440\u0443\u0434\u043D\u0438\u043A"
-  block: {fileID: 2230878884461136871}
-  objectPrice: {fileID: 3622452952873651673}
-  coinCounter: {fileID: 1070481513014471730}
-  fl: 0
 --- !u!114 &5191315278196413703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2535,12 +2537,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e76f3d45858b1d48b9ce3e7b5b2c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPrice: {fileID: 3665024558843383047}
+  descriptionField: {fileID: 0}
+  coinCounter: {fileID: 1070481513014471730}
+  sourceImage: {fileID: 0}
+  panel: {fileID: 0}
   price: 67
   objectName: "\u0421\u043A\u043E\u0440\u043E\u0445\u043E\u0434"
-  block: {fileID: 2334699192345274010}
-  objectPrice: {fileID: 3665024558843383047}
-  coinCounter: {fileID: 1070481513014471730}
-  fl: 0
 --- !u!114 &2268842110119998697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2917,12 +2920,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e76f3d45858b1d48b9ce3e7b5b2c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPrice: {fileID: 5495365292780300710}
+  descriptionField: {fileID: 0}
+  coinCounter: {fileID: 1070481513014471730}
+  sourceImage: {fileID: 0}
+  panel: {fileID: 0}
   price: 4
   objectName: "\u0417\u0430\u043F\u0438\u0441\u0438 \u043E \u0431\u043E\u0433\u0430\u0445"
-  block: {fileID: 2161324149152435461}
-  objectPrice: {fileID: 5495365292780300710}
-  coinCounter: {fileID: 1070481513014471730}
-  fl: 0
 --- !u!114 &2129416839058291556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3089,13 +3093,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e76f3d45858b1d48b9ce3e7b5b2c446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPrice: {fileID: 7853823906735372242}
+  descriptionField: {fileID: 0}
+  coinCounter: {fileID: 1070481513014471730}
+  sourceImage: {fileID: 0}
+  panel: {fileID: 0}
   price: 98
   objectName: "\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0435
     \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435"
-  block: {fileID: 4371949852768523169}
-  objectPrice: {fileID: 7853823906735372242}
-  coinCounter: {fileID: 1070481513014471730}
-  fl: 0
 --- !u!114 &2367924519166475516
 MonoBehaviour:
   m_ObjectHideFlags: 0
