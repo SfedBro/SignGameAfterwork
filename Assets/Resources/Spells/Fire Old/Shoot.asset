@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0432\u044B\u0441\u0442\u0440\u0435\u043B"
   mainElement: Fire
-  combo: Fire1
+  combo: '!Fire1'
   effect: No effect
+  effectAmount: 0
   effectDuration: 0
+  effectChance: 0
   spellPrefab: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
   damage: 5

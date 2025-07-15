@@ -8,7 +8,9 @@ public class ThroughShootSpellActions : MonoBehaviour
     private float damage;
     private string element;
     private string effectType;
+    private float effectAmount;
     private float effectDuration;
+    private float effectChance;
 
     private Vector3 origPos;
 
@@ -34,7 +36,11 @@ public class ThroughShootSpellActions : MonoBehaviour
             {
                 collider.gameObject.AddComponent<EffectsHandler>();
             }
-            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, damage);
+            if (damage != 0)
+            {
+                collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, "No effect", damage);
+            }
+            collider.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectAmount, effectDuration, effectChance);
         }
     }
 
@@ -42,15 +48,25 @@ public class ThroughShootSpellActions : MonoBehaviour
     {
         if (Math.Abs((transform.position - origPos).magnitude) >= lifeDistance)
         {
+            // Снятие множителя урона с игрока
+            if (!effectCaster.GetComponent<EffectsHandler>())
+            {
+                effectCaster.AddComponent<EffectsHandler>();
+            }
+            effectCaster.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, "NextSpellDamageBoost", -1);
+            
             Destroy(gameObject);
         }
     }
 
-    public void SetSettings(GameObject caster, string elem, float dmg, string effType)
+    public void SetSettings(GameObject caster, string elem, float dmg, string effType, float effAmount, float effDuration, float effChance)
     {
         effectCaster = caster;
         element = elem;
         damage = dmg;
         effectType = effType;
+        effectAmount = effAmount;
+        effectDuration = effDuration;
+        effectChance = effChance;
     }
 }

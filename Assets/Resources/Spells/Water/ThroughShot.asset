@@ -17,6 +17,8 @@ MonoBehaviour:
   mainElement: Water
   combo: Water1
   effect: ThroughShot
+  effectAmount: 3
   effectDuration: 0
+  effectChance: 1
   spellPrefab: {fileID: 4762664593250855657, guid: 940b8872680ffe547b2570f68975bcae, type: 3}
-  damage: 3
+  damage: 0

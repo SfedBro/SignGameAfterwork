@@ -14,7 +14,18 @@ public class EffectsHandler : MonoBehaviour
             {"Water", "Burn"}
         };
     }
-    public void HandleEffect(GameObject effectCaster, string element, string effectName, float effectDuration, float amount)
+
+    public void TakeDamage(GameObject effectCaster, float damage)
+    {
+        if (!effectCaster.GetComponent<SpellEffect>())
+        {
+            effectCaster.AddComponent<SpellEffect>();
+        }
+        spells = effectCaster.GetComponent<SpellEffect>();
+
+        spells.ApplyEffect(effectCaster, gameObject, "No effect", damage);
+    }
+    public void HandleEffect(GameObject effectCaster, string element, string effectName = "No effect", float effectAmount = 0f, float effectDuration = 0f, float effectChance = 0f)
     {
         // Обращаемся всегда к спелл эффектам кастера, т.к. там хранятся данные об изменениях для следующих заклинаний
         if (!effectCaster.GetComponent<SpellEffect>())
@@ -39,15 +50,14 @@ public class EffectsHandler : MonoBehaviour
             }
         }
 
-        ApplyEffect(effectCaster, effectName, effectDuration, amount);
+        ApplyEffect(effectCaster, effectName, effectAmount, effectDuration, effectChance);
     }
 
-    private void ApplyEffect(GameObject effectCaster, string effectName, float effectDuration, float amount)
+    private void ApplyEffect(GameObject effectCaster, string effectName, float effectAmount, float effectDuration, float effectChance)
     {
-        Coroutine newEffect = spells.ApplyEffect(effectCaster, gameObject, effectName, effectDuration, amount, () => OnEffectComplete(effectName));
+        Coroutine newEffect = spells.ApplyEffect(effectCaster, gameObject, effectName, effectAmount, effectDuration, effectChance, () => OnEffectComplete(effectName));
         if (newEffect != null)
         {
-            Debug.Log($"На {gameObject.name} наложен эффект {effectName}");
             activeEffects.Add(effectName, newEffect);
         }
     }

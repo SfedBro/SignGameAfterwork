@@ -217,7 +217,8 @@ public class SpellCast : MonoBehaviour
 
         GameObject obj = Instantiate(someSpell.Prefab, spellCastPosition, Quaternion.Euler(0, 0, angle - 90f));
         obj.AddComponent<ShootSpellActions>();
-        obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect, someSpell.EffectDuration);
+        obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
+                                                        someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
@@ -226,7 +227,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
-        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime);
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
@@ -234,7 +236,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
-        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime, someSpell.Amount);
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
@@ -242,7 +245,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<NearestEnemyActions>();
-        obj.GetComponent<NearestEnemyActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime);
+        obj.GetComponent<NearestEnemyActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                            someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
 
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
@@ -251,7 +255,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
         obj.AddComponent<ThroughShootSpellActions>();
-        obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect);
+        obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
+                                                                someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
 
         Vector3 direction = (targetPosition - wandTip.position).normalized;
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
@@ -263,6 +268,7 @@ public class SpellCast : MonoBehaviour
         {
             gameObject.AddComponent<EffectsHandler>();
         }
-        GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.Amount);
+        GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect,
+                                                    someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
     }
 }

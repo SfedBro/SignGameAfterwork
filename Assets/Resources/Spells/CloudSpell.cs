@@ -6,7 +6,6 @@ public class CloudSpell : Spell
     [SerializeField] private GameObject spellPrefab;
     [SerializeField] private float radius;
     [SerializeField] private float areaLifetime;
-    [SerializeField] private float amount;
 
     private void Awake()
     {
@@ -33,14 +32,6 @@ public class CloudSpell : Spell
         get
         {
             return areaLifetime;
-        }
-    }
-
-    public float Amount
-    {
-        get
-        {
-            return amount;
         }
     }
 }
