@@ -10567,7 +10567,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2.1604803
   m_BaseOffset: 1.0802401
@@ -10607,7 +10607,7 @@ MonoBehaviour:
   speed: 20
   acceleration: 3
   stoppingDistance: 2
-  groundDetectionOffset: 0.2
+  groundDetectionOffset: 0.3
   jumpHeight: 0
   minJumpHeight: 0
   jumpTime: 0
