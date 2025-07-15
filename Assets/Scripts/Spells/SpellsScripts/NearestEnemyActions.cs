@@ -3,12 +3,11 @@ using System.Collections;
 
 public class NearestEnemyActions : MonoBehaviour
 {
-    public GameObject effectCaster;
-    public float maxLifeTime;
-    public bool lookRight;
-    public string element;
-    public string effectType;
-    public float effectDuration;
+    private GameObject effectCaster;
+    private float maxLifeTime;
+    private string element;
+    private string effectType;
+    private float effectDuration;
 
     private void Start()
     {
@@ -43,5 +42,14 @@ public class NearestEnemyActions : MonoBehaviour
             other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, 0);
             Destroy(gameObject);
         }
+    }
+
+    public void SetSettings(GameObject caster, string elem, string effType, float effDur, float lifetime)
+    {
+        effectCaster = caster;
+        element = elem;
+        effectType = effType;
+        effectDuration = effDur;
+        maxLifeTime = lifetime;
     }
 }

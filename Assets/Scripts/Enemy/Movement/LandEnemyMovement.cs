@@ -78,6 +78,7 @@ public class LandEnemyMovement : MonoBehaviour
     private bool isJumping;
     [SerializeField]
     private Vector3[] corners;
+    private float baseSpeed;
     private void OnValidate()
     {
         if (stats != null)
@@ -126,6 +127,8 @@ public class LandEnemyMovement : MonoBehaviour
         {
             attackScript = GetComponent<IAttack>();
         }
+
+        baseSpeed = speed;
     }
     void Start()
     {
@@ -418,5 +421,10 @@ public class LandEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+    }
+
+    public void SpeedChange(float amount)
+    {
+        speed = baseSpeed + baseSpeed*amount;
     }
 }

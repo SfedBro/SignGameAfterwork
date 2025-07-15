@@ -55,9 +55,12 @@ public class EffectsHandler : MonoBehaviour
     void RemoveEffect(string effectName)
     {
         StopCoroutine(activeEffects[effectName]);
-        if (gameObject.CompareTag("Enemy")) {
+
+        if (gameObject.CompareTag("Enemy"))
+        {
             gameObject.GetComponent<Enemy>().ReturnToOrig();
         }
+        
         activeEffects.Remove(effectName);
     }
 

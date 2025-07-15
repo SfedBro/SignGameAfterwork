@@ -20,6 +20,7 @@ public class DumbEnemyScript : MonoBehaviour
     private Animator animator;
     //private int noGroundForFrames;
     //private float fallSpeed;
+    private float baseSpeed = 1f;
     private void Awake()
     {
         if (target == null)
@@ -104,5 +105,10 @@ public class DumbEnemyScript : MonoBehaviour
     {
         target.gameObject.GetComponent<Player>().TakeDamage(damage);
         //Attack animation Here
+    }
+
+    public void SpeedChange(float amount)
+    {
+        speed = baseSpeed + baseSpeed*amount;
     }
 }

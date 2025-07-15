@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastVelocity;
     private float baseGravity;
     private float blurTimer;
+    private float baseMoveSpeed = 8f;
 
     private void Awake()
     {
@@ -280,8 +281,9 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedChange(float amount)
     {
-        moveSpeed += amount;
+        moveSpeed = baseMoveSpeed + baseMoveSpeed*amount;
     }
+    
     private IEnumerator DisablePlatformCollision()
     {
         Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);

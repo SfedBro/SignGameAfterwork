@@ -237,4 +237,9 @@ public class FlyingEnemyMovement : MonoBehaviour
             }
         }
     }
+
+    public void SpeedChange(float amount)
+    {
+        agent.speed = speed + speed*amount;
+    }
 }
