@@ -60,10 +60,6 @@ public class EffectsHandler : MonoBehaviour
         {
             gameObject.GetComponent<Enemy>().ReturnToOrig();
         }
-        else if (gameObject.CompareTag("Player"))
-        {
-            gameObject.GetComponent<Player>().ReturnToOrig();
-        }
         
         activeEffects.Remove(effectName);
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private float timeAvailableForCombo = 0.5f;
 
     private SpellCast spellCaster; // Реализация заклинаний

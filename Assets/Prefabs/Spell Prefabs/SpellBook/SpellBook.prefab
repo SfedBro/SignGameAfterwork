@@ -1012,7 +1012,7 @@ GameObject:
   - component: {fileID: 573813598186464909}
   - component: {fileID: 1670338930653014073}
   m_Layer: 5
-  m_Name: SpellBookPrefab
+  m_Name: SpellBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

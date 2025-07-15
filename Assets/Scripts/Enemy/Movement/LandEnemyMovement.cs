@@ -63,6 +63,7 @@ public class LandEnemyMovement : MonoBehaviour
     private bool isJumping;
     [SerializeField]
     private Vector3[] corners;
+    private float baseSpeed;
     private void OnValidate()
     {
         if (stats != null)
@@ -98,6 +99,8 @@ public class LandEnemyMovement : MonoBehaviour
         {
             target = FindFirstObjectByType<Player>().transform;
         }
+
+        baseSpeed = speed;
     }
     void Start()
     {
@@ -323,5 +326,10 @@ public class LandEnemyMovement : MonoBehaviour
     public void SpeedChange(float amount)
     {
         agent.speed = speed + speed*amount;
+    }
+
+    public void SpeedChange(float amount)
+    {
+        speed = baseSpeed + baseSpeed*amount;
     }
 }

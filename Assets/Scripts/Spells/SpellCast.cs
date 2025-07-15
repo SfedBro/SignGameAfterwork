@@ -5,26 +5,24 @@ public class SpellCast : MonoBehaviour
     [Header("Staff Settings")]
     [SerializeField] private Transform wandTip; // точка на посохе для эффектов и каста заклинаний
     [SerializeField] private float wandOffset = 1f; // расстояние нижнего конца посоха от центра персонажа
-    [SerializeField] private Vector3 wandPlayerCenterOffset = new Vector3(0, 0, 0);
+    [SerializeField] private Vector3 wandPlayerCenterOffset = new Vector3(0, -0.36f, 0);
     [SerializeField] private Transform wandTransform;
     [SerializeField] private SpriteRenderer wandSpriteRenderer;
     // положения посоха
-    [SerializeField] private Vector3 idleStaffPositionLeft = new Vector3(0.335000008f, -0.555999994f, 0f);
-    [SerializeField] private Vector3 idleStaffPositionRight = new Vector3(0.335000008f, -0.555999994f, 0f);
+    [SerializeField] private Vector3 idleStaffPositionLeft = new Vector3(-0.34f, 0.16f, 0f);
+    [SerializeField] private Vector3 idleStaffPositionRight = new Vector3(0.34f, 0.16f, 0f);
     [SerializeField] private Vector3 idleWandRotationLeft = new Vector3(0f, 0f, 45f);
     [SerializeField] private Vector3 idleWandRotationRight = new Vector3(0f, 0f, -45f);
 
     [Header("Spell Settings")]
     [SerializeField] private GameObject aim;
-    [SerializeField] private GameObject fireballPrefab;
-    [SerializeField] private float spellSpeed = 30f;
+    [SerializeField] private float spellSpeed = 15f;
     [SerializeField] private ParticleSystem redWandParticles;
     [SerializeField] private ParticleSystem castEffectParticles;
     [SerializeField] private float spellDuration = 3f;
-    [SerializeField] private float aimRotationSpeed = 30f;
-    [SerializeField] private float timeSlowFactor = 0.5f;
-    [SerializeField] private int spellsPerSecond = 3;
-    [SerializeField] private float spellSpread = 5f;
+    [SerializeField] private float aimRotationSpeed = 200f;
+    [SerializeField] private float timeSlowFactor = 1f;
+    [SerializeField] private float spellSpread = 0.4f;
 
     private float currentSpellTime;
     private bool isCasting;

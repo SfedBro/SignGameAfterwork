@@ -283,6 +283,7 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed = baseMoveSpeed + baseMoveSpeed*amount;
     }
+    
     private IEnumerator DisablePlatformCollision()
     {
         Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);
