@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de23406ef0e4dda49b8742cfa4f0c242, type: 3}
+  m_Name: Cloud of slowness 1
+  m_EditorClassIdentifier: 
+  description: "\u041E\u0431\u043B\u0430\u043A\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u044F"
+  mainElement: Water
+  combo: Water3
+  effect: Slowness
+  effectAmount: 0.3
+  effectDuration: 5
+  effectChance: 1
+  spellPrefab: {fileID: 4762664593250855657, guid: 29ad56bf972b3e441aedc54dc1cdd269, type: 3}
+  radius: 2.5
+  areaLifetime: 3

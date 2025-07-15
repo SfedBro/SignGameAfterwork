@@ -21,7 +21,7 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "PercentDamage")
         {
-            MakePercentDamage(target, duration);
+            MakePercentDamage(target, amount);
         }
         else if (type == "Burn")
         {
@@ -72,7 +72,7 @@ public class SpellEffect : MonoBehaviour
 
     private void MakePercentDamage(GameObject obj, float percent)
     {
-        MakeDamage(obj, (float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent / 100f));
+        MakeDamage(obj, (float)Math.Round(obj.GetComponent<Enemy>().GetHp * percent));
     }
 
     private void ApplyKnockback(GameObject self, GameObject obj)

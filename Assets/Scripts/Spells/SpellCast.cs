@@ -22,7 +22,6 @@ public class SpellCast : MonoBehaviour
     [SerializeField] private float spellDuration = 3f;
     [SerializeField] private float aimRotationSpeed = 200f;
     [SerializeField] private float timeSlowFactor = 1f;
-    [SerializeField] private float spellSpread = 0.4f;
 
     private float currentSpellTime;
     private bool isCasting;
@@ -208,11 +207,8 @@ public class SpellCast : MonoBehaviour
     {
         Vector3 direction = (targetPosition - wandTip.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Vector2 perpendicular = new Vector2(-direction.y, direction.x);
-        perpendicular *= Random.Range(-spellSpread, spellSpread);
-        Vector3 spellCastPosition = new Vector3(wandTip.position.x + perpendicular.x, wandTip.position.y + perpendicular.y, 0);
 
-        GameObject obj = Instantiate(someSpell.Prefab, spellCastPosition, Quaternion.Euler(0, 0, angle - 90f));
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle - 90f));
         obj.AddComponent<ShootSpellActions>();
         obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
                                                         someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
@@ -250,12 +246,14 @@ public class SpellCast : MonoBehaviour
 
     private void ThroughShootSpelling(ThroughShootSpell someSpell)
     {
-        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
+        Vector3 direction = (targetPosition - wandTip.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle));
         obj.AddComponent<ThroughShootSpellActions>();
         obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
                                                                 someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
 
-        Vector3 direction = (targetPosition - wandTip.position).normalized;
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
 
