@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelCave001.unity
     guid: c729e2b4ce2a79d429904878cbdbf03c
   - enabled: 1
-    path: Assets/Scenes/MapTemplate.unity
+    path: Assets/Scenes/Rooms/MapTemplate.unity
     guid: 1df4d51d8dce9e8428b700567b51e475
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

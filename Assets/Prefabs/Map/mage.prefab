@@ -15159,7 +15159,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -15281,7 +15281,7 @@ MonoBehaviour:
   coyoteTime: 0.1
   coyoteTimeForPlatform: 0.1
   jumpBufferTime: 0.1
-  fallingGravityFactor: 1.5
+  fallingGravityFactor: 1
   dashSpeed: 20
   maxDashesInAir: 1
   dashTime: 0.2
