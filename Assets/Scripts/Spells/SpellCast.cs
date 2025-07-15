@@ -153,14 +153,11 @@ public class SpellCast : MonoBehaviour
 
         if (spellToCast.Type == "Shoot")
         {
-            if (spellToCast.Effect == "ThroughShot")
-            {
-                ThroughtShootSpell((ShootSpell)spellToCast);
-            }
-            else
-            {
-                ShootingSpell((ShootSpell)spellToCast);
-            }
+            ShootingSpell((ShootSpell)spellToCast);
+        }
+        else if (spellToCast.Type == "ThroughShoot")
+        {
+            ThroughShootSpelling((ThroughShootSpell)spellToCast);
         }
         else if (spellToCast.Type == "AoE")
         {
@@ -251,7 +248,7 @@ public class SpellCast : MonoBehaviour
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
-    private void ThroughtShootSpell(ShootSpell someSpell)
+    private void ThroughShootSpelling(ThroughShootSpell someSpell)
     {
         GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
         obj.AddComponent<ThroughShootSpellActions>();

@@ -39,22 +39,21 @@ public class SpellEffect : MonoBehaviour
             DamageBoost(self, amount);
             return null;
         }
-        else if (type == "ThroughShot")
-        {
-            MakeDamage(target, amount);
-        }
         else if (type == "Knockback")
         {
             ApplyKnockback(self, target);
         }
         else if (type == "Slowness")
         {
-            return StartCoroutine(SpeedBoost(target, duration, -amount, onComplete));
+            if (rnd.Next(100) <= chance * 100)
+            {
+                return StartCoroutine(SpeedBoost(target, duration, -amount, onComplete));
+            }
         }
-        else
-        {
-            Debug.Log("Неизвестный тип эффекта!");
-        }
+            else
+            {
+                Debug.Log("Неизвестный тип эффекта!");
+            }
 
         return null;
     }
