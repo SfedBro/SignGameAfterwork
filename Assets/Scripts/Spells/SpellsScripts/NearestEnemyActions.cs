@@ -7,7 +7,9 @@ public class NearestEnemyActions : MonoBehaviour
     private float maxLifeTime;
     private string element;
     private string effectType;
+    private float effectAmount;
     private float effectDuration;
+    private float effectChance;
 
     private void Start()
     {
@@ -39,17 +41,19 @@ public class NearestEnemyActions : MonoBehaviour
             {
                 other.gameObject.AddComponent<EffectsHandler>();
             }
-            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, 0);
+            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectAmount, effectDuration, effectChance);
             Destroy(gameObject);
         }
     }
 
-    public void SetSettings(GameObject caster, string elem, string effType, float effDur, float lifetime)
+    public void SetSettings(GameObject caster, string elem, string effType, float effAmount, float effDuration, float effChance, float lifetime)
     {
         effectCaster = caster;
         element = elem;
         effectType = effType;
-        effectDuration = effDur;
+        effectAmount = effAmount;
+        effectDuration = effDuration;
+        effectChance = effChance;
         maxLifeTime = lifetime;
     }
 }

@@ -22,7 +22,6 @@ public class SpellCast : MonoBehaviour
     [SerializeField] private float spellDuration = 3f;
     [SerializeField] private float aimRotationSpeed = 200f;
     [SerializeField] private float timeSlowFactor = 1f;
-    [SerializeField] private float spellSpread = 0.4f;
 
     private float currentSpellTime;
     private bool isCasting;
@@ -153,14 +152,11 @@ public class SpellCast : MonoBehaviour
 
         if (spellToCast.Type == "Shoot")
         {
-            if (spellToCast.Effect == "ThroughShot")
-            {
-                ThroughtShootSpell((ShootSpell)spellToCast);
-            }
-            else
-            {
-                ShootingSpell((ShootSpell)spellToCast);
-            }
+            ShootingSpell((ShootSpell)spellToCast);
+        }
+        else if (spellToCast.Type == "ThroughShoot")
+        {
+            ThroughShootSpelling((ThroughShootSpell)spellToCast);
         }
         else if (spellToCast.Type == "AoE")
         {
@@ -211,13 +207,11 @@ public class SpellCast : MonoBehaviour
     {
         Vector3 direction = (targetPosition - wandTip.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Vector2 perpendicular = new Vector2(-direction.y, direction.x);
-        perpendicular *= Random.Range(-spellSpread, spellSpread);
-        Vector3 spellCastPosition = new Vector3(wandTip.position.x + perpendicular.x, wandTip.position.y + perpendicular.y, 0);
 
-        GameObject obj = Instantiate(someSpell.Prefab, spellCastPosition, Quaternion.Euler(0, 0, angle - 90f));
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle - 90f));
         obj.AddComponent<ShootSpellActions>();
-        obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect, someSpell.EffectDuration);
+        obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
+                                                        someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
@@ -226,7 +220,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
-        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime);
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
@@ -234,7 +229,8 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
-        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime, someSpell.Amount);
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
@@ -242,18 +238,22 @@ public class SpellCast : MonoBehaviour
     {
         GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
         obj.AddComponent<NearestEnemyActions>();
-        obj.GetComponent<NearestEnemyActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.AreaLifetime);
+        obj.GetComponent<NearestEnemyActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                            someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
 
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
-    private void ThroughtShootSpell(ShootSpell someSpell)
+    private void ThroughShootSpelling(ThroughShootSpell someSpell)
     {
-        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
-        obj.AddComponent<ThroughShootSpellActions>();
-        obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect);
-
         Vector3 direction = (targetPosition - wandTip.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle));
+        obj.AddComponent<ThroughShootSpellActions>();
+        obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
+                                                                someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
+
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
 
@@ -263,6 +263,7 @@ public class SpellCast : MonoBehaviour
         {
             gameObject.AddComponent<EffectsHandler>();
         }
-        GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectDuration, someSpell.Amount);
+        GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect,
+                                                    someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
     }
 }

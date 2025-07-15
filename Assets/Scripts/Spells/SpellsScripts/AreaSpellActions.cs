@@ -4,15 +4,16 @@ using System.Collections;
 public class AreaSpellActions : MonoBehaviour
 {
     private GameObject effectCaster;
-    private float duration;
+    private float maxLifeTime;
     private string element;
     private string effectType;
+    private float effectAmount;
     private float effectDuration;
-    private float amount = 0;
+    private float effectChance;
 
     private void Start()
     {
-        StartCoroutine(CreateForTime(duration));
+        StartCoroutine(CreateForTime(maxLifeTime));
     }
 
     private IEnumerator CreateForTime(float duration)
@@ -35,17 +36,18 @@ public class AreaSpellActions : MonoBehaviour
             {
                 other.gameObject.AddComponent<EffectsHandler>();
             }
-            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectDuration, amount);
+            other.gameObject.GetComponent<EffectsHandler>().HandleEffect(effectCaster, element, effectType, effectAmount, effectDuration, effectChance);
         }
     }
 
-    public void SetSettings(GameObject caster, string elem, string effType, float effDur, float lifetime, float amt = 0)
+    public void SetSettings(GameObject caster, string elem, string effType, float effAmount, float effDuration, float effChance, float lifetime)
     {
         effectCaster = caster;
         element = elem;
         effectType = effType;
-        effectDuration = effDur;
-        duration = lifetime;
-        amount = amt;
+        effectAmount = effAmount;
+        effectDuration = effDuration;
+        effectChance = effChance;
+        maxLifeTime = lifetime;
     }
 }

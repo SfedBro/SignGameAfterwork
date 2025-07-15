@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f454488273a2074eb08a0ef1ee88df2, type: 3}
-  m_Name: Fireball
+  m_Name: Better Fireball
   m_EditorClassIdentifier: 
   description: "\u0424\u0430\u0435\u0440\u0431\u043E\u043B, \u0441 \u043F\u043E\u0434\u0436\u0438\u0433\u0430\u043D\u0438\u0435\u043C
-    \u043D\u0430 3 \u0441\u0435\u043A\u0443\u043D\u0434\u044B \u0441 30% \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C\u044E"
+    \u043D\u0430 3 \u0441\u0435\u043A\u0443\u043D\u0434\u044B \u0441 60% \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C\u044E"
   mainElement: Fire
-  combo: Fire1
+  combo: Fire1+Fire2
   effect: Burn
-  effectAmount: 2
+  effectAmount: 4
   effectDuration: 3
-  effectChance: 0.3
+  effectChance: 0.6
   spellPrefab: {fileID: 3190285968056344791, guid: 3f97ed5563598484688183065472068e, type: 3}
-  damage: 3
+  damage: 5

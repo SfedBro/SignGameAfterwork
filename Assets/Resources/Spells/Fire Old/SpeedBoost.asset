@@ -15,7 +15,9 @@ MonoBehaviour:
   description: "\u0423\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u043D\u0430
     50% \u043D\u0430 5 \u0441\u0435\u043A\u0443\u043D\u0434"
   mainElement: Fire
-  combo: Fire2
+  combo: '!Fire2'
   effect: SpeedBoost
+  effectAmount: 0
   effectDuration: 5
+  effectChance: 0
   amount: 0.5

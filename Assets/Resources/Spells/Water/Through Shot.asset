@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f454488273a2074eb08a0ef1ee88df2, type: 3}
-  m_Name: ThroughShot
+  m_Script: {fileID: 11500000, guid: 14638336abf56e34496ed14665c884ca, type: 3}
+  m_Name: Through Shot
   m_EditorClassIdentifier: 
   description: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B, \u043F\u0440\u043E\u0445\u043E\u0434\u044F\u0449\u0438\u0439
     \u0441\u043A\u0432\u043E\u0437\u044C \u0432\u0440\u0430\u0433\u043E\u0432"
   mainElement: Water
   combo: Water1
-  effect: ThroughShot
+  effect: No effect
+  effectAmount: 0
   effectDuration: 0
+  effectChance: 0
   spellPrefab: {fileID: 4762664593250855657, guid: 940b8872680ffe547b2570f68975bcae, type: 3}
   damage: 3
