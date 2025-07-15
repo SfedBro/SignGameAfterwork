@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class MainMenuMusic : MonoBehaviour
 {
     public AudioSource musicSource;
     public AudioClip menuMusic;
+    public AudioMixerGroup musicMixerGroup;
     [SerializeField] private float fadeDuration = 1f;
 
     private bool isFading = false;
@@ -14,6 +16,7 @@ public class MainMenuMusic : MonoBehaviour
         musicSource.clip = menuMusic;
         musicSource.loop = true;
         musicSource.volume = 1f;
+        musicSource.outputAudioMixerGroup = musicMixerGroup;
         musicSource.Play();
     }
 
