@@ -15,15 +15,17 @@ public class PlayerAttack : MonoBehaviour
     private bool inputForTimer = false;
     private bool timerIsOn = false;
 
-    
     private void Start()
     {
+        
         spell = GetComponent<SpellCast>();
         shootPos = transform.Find("ShootPos").gameObject;
+        
     }
 
     private void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Debug.Log("1 was pressed");
@@ -66,7 +68,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void HandleInput(string symb)
+    public void HandleInput(string symb)
     {
         inputForTimer = true;
         if (timerIsOn == false)

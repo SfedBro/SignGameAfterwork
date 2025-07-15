@@ -23,22 +23,33 @@ public class LineDrawer : MonoBehaviour
     public NNModel modelAsset;
     public float confidenceThreshold = 0.5f;
     
+
+    [SerializeField] private PlayerAttack playerAttack;
     
-    [SerializeField]
-    private List<ClassMapping> _classMap = new List<ClassMapping>
+    List<string> elements = new List<string>
     {
-        new ClassMapping{className="air1",classIndex=0},
-        new ClassMapping{className="air2",classIndex=1},
-        // Add all other classes similarly
+        "Air1",    
+        "Air2",    
+        "Air3",    
+        "Earth1",  
+        "Earth2",  
+        "Earth3",  
+        "Fire1",   
+        "Fire2",   
+        "Fire3",   
+        "Water1",  
+        "Water2",  
+        "Water3"   
     };
 
     private LineRenderer currentLine;
     private IWorker _worker;
     private Model _runtimeModel;
-    int num = 0;
+    int num = 1000;
 
     private void Start()
     {
+        
         // Initialize Barracuda model
         if (modelAsset != null)
         {
@@ -70,9 +81,12 @@ public class LineDrawer : MonoBehaviour
             
             // Save and classify the line
             byte[] pngData = SaveLineToPNG(currentLine);
+            string element;
             if (modelAsset != null)
             {
-                ClassifyDrawing(pngData, num++);
+                element = ClassifyDrawing(pngData, num++);
+                playerAttack.HandleInput(element);
+                Debug.Log("Predictred class" + element + " with confidence" );
             }
             else {
                 Debug.Log("Model is not assigned");
@@ -105,6 +119,7 @@ public class LineDrawer : MonoBehaviour
         texture.SetPixels(pixels);
         texture.Apply();
 
+        Color lineColor = Color.black;
         for (int i = 0; i < line.positionCount - 1; i++)
         {
             Vector3 start = line.GetPosition(i);
@@ -119,7 +134,7 @@ public class LineDrawer : MonoBehaviour
                 (end.y - bounds.min.y) / bounds.size.y * height
             );
 
-            DrawLineOnTexture(texture, startTexCoord, endTexCoord, line.startColor, line.startWidth * 100);
+            DrawLineOnTexture(texture, startTexCoord, endTexCoord, lineColor, line.startWidth * 100);
         }
 
         texture.Apply();
@@ -133,7 +148,7 @@ public class LineDrawer : MonoBehaviour
         {
             Directory.CreateDirectory(directoryPath);
         }
-        string filePath = Path.Combine(directoryPath, "cast.png");
+        string filePath = Path.Combine(directoryPath, "water2-" + num + ".png");
         File.WriteAllBytes(filePath, bytes);
         Debug.Log("Line saved to " + filePath);
         */
@@ -141,7 +156,7 @@ public class LineDrawer : MonoBehaviour
         return bytes;
     }
 
-    void ClassifyDrawing(byte[] pngData, int num)
+    string ClassifyDrawing(byte[] pngData, int num)
     {
         Debug.Log("Start classfy " + num + "image");
         // Convert PNG byte array to Texture2D
@@ -175,32 +190,23 @@ public class LineDrawer : MonoBehaviour
         UnityEngine.Object.Destroy(texture);
         
         // Display results
-        if (maxConfidence >= confidenceThreshold && predictedClass >= 0)
-        {
-
-            for (int i  =0;i  < _classMap.Count; ++i){
-                if (_classMap[i].classIndex == predictedClass ){
-                    var className = _classMap[i].className;
-                    Debug.Log($"Predicted: {className}\nConfidence: {maxConfidence:P0}");
-                } 
-
-            }
-        }
-        else
+        
+        if (! ((maxConfidence >= confidenceThreshold && predictedClass >= 0)))
         {
             Debug.Log( "Unknown drawing");
+            return "None";
         }
         
-        Debug.Log("End classfy " + num + "image" + "Class is " + predictedClass + "with confidence" + maxConfidence );
+        return elements[predictedClass];
     }
 
     Tensor PreprocessTexture(Texture2D texture)
     {
         // Resize and convert to grayscale
-        Texture2D processedTexture = ResizeAndGrayscale(texture, 64, 64);
+        Texture2D processedTexture = ResizeAndGrayscale(texture, 128, 128);
         
         // Create tensor
-        TensorShape shape = new TensorShape(1, 64, 64, 1);
+        TensorShape shape = new TensorShape(1, 128, 128, 1);
         float[] tensorData = new float[shape.length];
         
         // Fill tensor data (normalized 0-1)
