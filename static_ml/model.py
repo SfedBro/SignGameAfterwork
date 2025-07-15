@@ -13,13 +13,21 @@ from keras.models import load_model
 import cv2
 import json
 
+def save_as_onnx( model_path, output_onnx_path):
+        model = tf.keras.models.load_model(model_path)
+        model.output_names=['output']
+        input_signature = [tf.TensorSpec(model.inputs[0].shape, model.inputs[0].dtype)]
+        onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature,opset=9) 
+        onnx.checker.check_model(onnx_model)
+        onnx.save(onnx_model, output_onnx_path)
+        
 class CNNModel:
     #initialize model with threshlod of 0.7
     def __init__(self, input_shape, num_classes):
         self.input_shape = input_shape
         self.num_classes = num_classes
         self.model = self._build_model()
-        self.confidence_threshold = 0.7  
+        self.confidence_threshold = 0.8
     #saving in onnx to proccess in C#
     def save_as_onnx(self, model_path, output_onnx_path):
         model = tf.keras.models.load_model(model_path)
@@ -34,27 +42,27 @@ class CNNModel:
         #3 CNN layers with batch and dropout
         #also have a dense layer for output
         model = models.Sequential([
-            layers.Conv2D(32, (3, 3), activation='relu', 
+            layers.Conv2D(64, (3, 3), activation='relu', 
                          kernel_regularizer=regularizers.l2(0.001),
                          input_shape=self.input_shape),
             layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
             layers.Dropout(0.2),
             
-            layers.Conv2D(64, (3, 3), activation='relu',
+            layers.Conv2D(128, (3, 3), activation='relu',
                          kernel_regularizer=regularizers.l2(0.001)),
             layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
             layers.Dropout(0.3),
             
-            layers.Conv2D(128, (3, 3), activation='relu',
+            layers.Conv2D(256, (3, 3), activation='relu',
                          kernel_regularizer=regularizers.l2(0.001)),
             layers.BatchNormalization(),
             layers.MaxPooling2D((2, 2)),
             layers.Dropout(0.4),
             
             layers.Flatten(),
-            layers.Dense(256, activation='relu',
+            layers.Dense(512, activation='relu',
                        kernel_regularizer=regularizers.l2(0.001)),
             layers.BatchNormalization(),
             layers.Dropout(0.5),
@@ -70,7 +78,7 @@ class CNNModel:
         
         return model
     #training
-    def train(self, X_train, y_train, X_val, y_val, epochs=100):
+    def train(self, X_train, y_train, X_val, y_val, epochs=50):
         checkpoint_path = "static_ml/model.h5"
         #have chekpoints for safety
         callbacks_list = [
@@ -145,8 +153,9 @@ def load_dataset(data_dir):
             #preproccess to grayscale and resizing to 64 to 64 with scale
             img_path = os.path.join(data_dir, filename)
             img = cv2.imread(img_path)
+            
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            img = cv2.resize(img, dsize = (64, 64) )
+            img = cv2.resize(img, dsize = (128, 128) )
             img_array = np.array(img) / 255.0
             img_array = np.expand_dims(img_array, axis=-1)
             
@@ -172,16 +181,18 @@ def plot_history(history):
     plt.show()
     
 if __name__ == "__main__":
-    dataset_dir = "static_ml\images"
-    X, y = load_dataset(dataset_dir)
-    X_pre_train, X_test, y_pre_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    X_train, X_val, y_train, y_val = train_test_split(X_pre_train,y_pre_train, test_size = 0.2, random_state= 42)
-    hc_model = CNNModel(input_shape=X_train[0].shape, num_classes=len(np.unique(y)))
-    history, model_path = hc_model.train(X_train, y_train, X_val, y_val, epochs=50)
+    #dataset_dir = "static_ml\images"
+    #X, y = load_dataset(dataset_dir)
+    #X_pre_train, X_test, y_pre_train, y_test = train_test_split(X, y, test_size=0.2, random_state=52)
+    #X_train, X_val, y_train, y_val = train_test_split(X_pre_train,y_pre_train, test_size = 0.2, random_state= 52)
+    #hc_model = CNNModel(input_shape=X_train[0].shape, num_classes=len(np.unique(y)))
     
-    hc_model.save_as_onnx(model_path, "static_ml\CNNModelC#\CNN_model.onnx")
+    #history, model_path = hc_model.train(X_train, y_train, X_val, y_val, epochs=50)
     
-    plot_history(history)
     
-    hc_model.evaluate_high_confidence(X_test, y_test)
+    save_as_onnx('static_ml\saved\\7_model.h5', "static_ml\CNNModelC#\CNN_model.onnx")
+    
+    #plot_history(history)
+    
+    #hc_model.evaluate_high_confidence(X_test, y_test)
     
