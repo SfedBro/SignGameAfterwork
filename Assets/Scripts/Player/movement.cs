@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float deceleration = 50f;
     [SerializeField] private float airControl = 0.8f;
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastVelocity;
     private float baseGravity;
     private float blurTimer;
+    private float baseMoveSpeed = 8f;
 
     private void Awake()
     {
@@ -280,7 +281,7 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedChange(float amount)
     {
-        moveSpeed += amount;
+        moveSpeed = baseMoveSpeed + baseMoveSpeed*amount;
     }
     private IEnumerator DisablePlatformCollision()
     {

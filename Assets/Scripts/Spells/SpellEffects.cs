@@ -40,6 +40,10 @@ public class SpellEffect : MonoBehaviour
         {
             ApplyKnockback(self, target);
         }
+        else if (type == "Slowness")
+        {
+            return StartCoroutine(SpeedBoost(target, duration, -amount, onComplete));
+        }
         else
         {
             Debug.Log("Неизвестный тип эффекта!");
@@ -85,32 +89,48 @@ public class SpellEffect : MonoBehaviour
         float timer = 0f;
         damageMultiplier = 1f;
 
-        while (timer < duration)
+        if (obj.CompareTag("Enemy"))
         {
-            if (obj != null)
+            obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
+            while (timer < duration && obj != null)
             {
                 int damage = UnityEngine.Random.Range(1, 4);
-                obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
+
                 obj.GetComponent<Enemy>().TakeDamage(damage * dmgMultiplier);
+
+                timer += 1f;
+                yield return new WaitForSeconds(1f);
             }
-            timer += 1f;
-            yield return new WaitForSeconds(1f);
         }
 
         // Возвращаем в исходное состояние
-        if (obj != null)
-        {
-            ReturnToOriginal(obj);
-        }
+            if (obj != null)
+            {
+                ReturnToOriginal(obj);
+            }
         onComplete?.Invoke();
     }
 
     private IEnumerator SpeedBoost(GameObject obj, float duration, float change, Action onComplete)
     {
-        if (obj.CompareTag("Player"))
+        if (obj != null)
         {
-            Debug.Log($"{obj.name} получил ускорение на {change} на {duration} секунд");
-            obj.GetComponent<PlayerController>().SpeedChange(change);
+            Debug.Log($"{obj.name} получил {(change >0 ? "ускорение" : "замедление")} на {(int)(change*(change>0 ? 100 : -100))}% на {duration} секунд");
+            if (obj.CompareTag("Player"))
+            {
+                obj.GetComponent<PlayerController>().SpeedChange(change);
+            }
+            else if (obj.CompareTag("Enemy"))
+            {
+                // if (obj.GetComponent<FlyingEnemyMovement>())
+                // {
+                //     obj.GetComponent<FlyingEnemyMovement>().SpeedChange(change);
+                // }
+                // else if (obj.GetComponent<LandEnemyMovement>())
+                // {
+                //     obj.GetComponent<LandEnemyMovement>().SpeedChange(change);
+                // }
+            }
         }
 
         float timer = 0f;
@@ -124,7 +144,18 @@ public class SpellEffect : MonoBehaviour
         // Возвращаем в исходное состояние
         if (obj.CompareTag("Player"))
         {
-            obj.GetComponent<PlayerController>().SpeedChange(-change);
+            obj.GetComponent<PlayerController>().SpeedChange(0);
+        }
+        else if (obj.CompareTag("Enemy"))
+        {
+            // if (obj.GetComponent<FlyingEnemyMovement>())
+            // {
+            //     obj.GetComponent<FlyingEnemyMovement>().SpeedChange(0);
+            // }
+            // else if (obj.GetComponent<LandEnemyMovement>())
+            // {
+            //     obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
+            // }
         }
         onComplete?.Invoke();
     }
@@ -141,5 +172,9 @@ public class SpellEffect : MonoBehaviour
         {
             obj.GetComponent<Enemy>().ReturnToOrig();
         }
+        // else if (obj.CompareTag("Player"))
+        // {
+        //     obj.GetComponent<Player>().ReturnToOrig();
+        // }
     }
 }

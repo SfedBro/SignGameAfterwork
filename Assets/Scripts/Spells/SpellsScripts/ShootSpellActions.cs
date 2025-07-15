@@ -3,17 +3,14 @@ using UnityEngine;
 
 public class ShootSpellActions : MonoBehaviour
 {
-    public GameObject effectCaster;
-    public float force;
-    public float lifeDistance = 20f;
-    public float damage;
-    public string element;
-    public string effectType;
-    public float effectDuration;
-    public float amount;
-    public Vector3 cursorPos;
+    private GameObject effectCaster;
+    private float lifeDistance = 20f;
+    private float damage;
+    private string element;
+    private string effectType;
+    private float effectDuration;
+    private float amount;
 
-    private Rigidbody2D physic;
     private Vector3 origPos;
 
     private void Start()
@@ -23,12 +20,9 @@ public class ShootSpellActions : MonoBehaviour
         {
             gameObject.AddComponent<Rigidbody2D>();
         }
-
-        physic = GetComponent<Rigidbody2D>();
-        physic.AddForce(force * (cursorPos - origPos).normalized);
     }
 
-    void Update()
+    private void Update()
     {
         CheckIfAlive();
     }
@@ -53,5 +47,15 @@ public class ShootSpellActions : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void SetSettings(GameObject caster, string elem, float dmg, string effType, float effDur, float effDmg = 0f)
+    {
+        effectCaster = caster;
+        element = elem;
+        damage = dmg;
+        effectType = effType;
+        effectDuration = effDur;
+        amount = effDmg;
     }
 }
