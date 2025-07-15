@@ -48,7 +48,6 @@ public class TorgashInteraction : MonoBehaviour
 
             if (playerNearbyTimer >= playerNearbyTimeMax && !isInteractive)
             {
-                // Debug.Log("open shop");
                 StartCoroutine(OpenShop());
             }
         }

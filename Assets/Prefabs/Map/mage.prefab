@@ -15179,16 +15179,13 @@ GameObject:
   - component: {fileID: 4363013096503735964}
   - component: {fileID: 3342336803248370645}
   - component: {fileID: 7875497112058209862}
-  - component: {fileID: 1002626329222257382}
+  - component: {fileID: 55980693275440825}
   - component: {fileID: 2690089605500233412}
   - component: {fileID: 586311875640278083}
-  - component: {fileID: 7928863086052366388}
-  - component: {fileID: 6564763382186493191}
+  - component: {fileID: 3059513110413570464}
   - component: {fileID: 6377138182487133699}
   - component: {fileID: 8140098238340407890}
   - component: {fileID: 6946282676061063420}
-  - component: {fileID: 583594564192648147}
-  - component: {fileID: 1525282971909289490}
   m_Layer: 9
   m_Name: mage
   m_TagString: Player
@@ -15292,7 +15289,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -15341,7 +15338,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.25}
   m_Size: {x: 0.4, y: 1}
   m_Direction: 0
---- !u!114 &1002626329222257382
+--- !u!114 &55980693275440825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15350,7 +15347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7074238555592012898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d396fa55030ab2b4e951213bee9294a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wandTip: {fileID: 3999551153525997899}
@@ -15363,14 +15360,12 @@ MonoBehaviour:
   idleWandRotationLeft: {x: 0, y: 0, z: 45}
   idleWandRotationRight: {x: 0, y: 0, z: -45}
   aim: {fileID: 3722217823535746285, guid: 991277aec79cafb41bc1a075077b903b, type: 3}
-  fireballPrefab: {fileID: 3190285968056344791, guid: 37a9480354784f44ba56f2531a5637c3, type: 3}
   spellSpeed: 15
   redWandParticles: {fileID: 3999551153525997901}
   castEffectParticles: {fileID: 7086726496284618607}
   spellDuration: 3
   aimRotationSpeed: 200
   timeSlowFactor: 1
-  spellsPerSecond: 3
   spellSpread: 0.4
 --- !u!95 &2690089605500233412
 Animator:
@@ -15416,7 +15411,7 @@ MonoBehaviour:
   coyoteTime: 0.1
   coyoteTimeForPlatform: 0.1
   jumpBufferTime: 0.1
-  fallingGravityFactor: 1.5
+  fallingGravityFactor: 1
   dashSpeed: 20
   maxDashesInAir: 1
   dashTime: 0.2
@@ -15451,23 +15446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTag: Enemy
-  timeAvailableForCombo: 1
---- !u!114 &6564763382186493191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingSpellPrefab: {fileID: 0}
-  areaSpellPrefab: {fileID: 0}
-  shootingSpellForce: 100
+  timeAvailableForCombo: 0.5
 --- !u!114 &6377138182487133699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15532,35 +15511,6 @@ MonoBehaviour:
   weakEmissionCount: 10
   mediumEmissionCount: 20
   strongEmissionCount: 35
---- !u!114 &583594564192648147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyTag: Enemy
-  timeAvailableForCombo: 1
---- !u!114 &1525282971909289490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7074238555592012898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09796cd555c3f1247a85a9fb98fc2c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingSpellPrefab: {fileID: 0}
-  areaSpellPrefab: {fileID: 0}
-  shootingSpellForce: 100
 --- !u!1 &7192116295743320878
 GameObject:
   m_ObjectHideFlags: 0
