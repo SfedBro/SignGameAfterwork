@@ -42,6 +42,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float blurStartAlpha = 0.5f;
     [SerializeField] private float blurEndAlpha = 0f;
 
+    [Header("Audio")]
+    public AudioSource audioSourceOneShot;
+    public AudioSource audioSourceMoving;
+    public AudioClip audioJump;
+    public AudioClip audioDash;
+
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -183,11 +189,18 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(movement * Vector2.right);
 
         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        bool moveSoundPlaying = false;
         if (moveInput != 0)
         {
             isFacingRight = moveInput > 0;
             spriteRenderer.flipX = isFacingRight;
+            moveSoundPlaying = isGrounded;
         }
+        if (moveSoundPlaying && !audioSourceMoving.isPlaying) {
+            audioSourceMoving.Play();
+            audioSourceMoving.loop = true;
+        }
+        else if (!moveSoundPlaying) audioSourceMoving.loop = false;
     }
 
     private void Jump()
@@ -196,6 +209,7 @@ public class PlayerController : MonoBehaviour
         jumpsLeft--;
         coyoteTimer = 0f;
         jumpBufferTimer = 0f;
+        audioSourceOneShot.PlayOneShot(audioJump);
     }
 
     private void StartDash()
@@ -208,6 +222,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2((isFacingRight ? 1 : -1) * dashSpeed, 0f);
         rb.gravityScale = 0f;
         isMotionBlurActive = true;
+        audioSourceOneShot.PlayOneShot(audioDash);
     }
 
     private void CreateBlurCopy()
