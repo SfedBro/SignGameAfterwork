@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 242b3d7f02192fe449e2716582a6e7f1, type: 3}
-  m_Name: SpeedBoost
+  m_Name: 5 secs attacks dodge
   m_EditorClassIdentifier: 
-  description: "\u0423\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u043D\u0430
-    50% \u043D\u0430 5 \u0441\u0435\u043A\u0443\u043D\u0434"
-  mainElement: Fire
-  combo: '!Fire2'
-  effect: SpeedBoost
+  description: "\u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u043E\u0442
+    \u0430\u0442\u0430\u043A \u0432 \u0442\u0435\u0447\u0435\u043D\u0438\u0435 5
+    \u0441\u0435\u043A\u0443\u043D\u0434 \u0441 75% \u0432\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C\u044E"
+  mainElement: Air
+  combo: Air2+Air3
+  effect: AttackDodge
   effectAmount: 0
   effectDuration: 5
-  effectChance: 0
-  amount: 0.5
+  effectChance: 0.75

@@ -7,6 +7,8 @@ public class SpellEffect : MonoBehaviour
     public float knockbackForce = 200f;
 
     private float damageMultiplier = 1f;
+    private int dodgingAttacks = 0;
+    private float dodgingChance = 1f;
 
     System.Random rnd = new System.Random();
 
@@ -32,16 +34,35 @@ public class SpellEffect : MonoBehaviour
         }
         else if (type == "SpeedBoost")
         {
-            return StartCoroutine(SpeedBoost(self, duration, amount, onComplete));
+            if (rnd.Next(100) <= chance * 100)
+            {
+                return StartCoroutine(SpeedBoost(self, duration, amount, onComplete));
+            }
+        }
+        else if (type == "AttackDodge")
+        {
+            if (amount >= 1f)
+            {
+                DodgeAttacks((int)amount);
+            }
+            else if (duration > 0f)
+            {
+                return StartCoroutine(DodgeAttacks(duration, chance, onComplete));
+            }
         }
         else if (type == "NextSpellDamageBoost")
         {
-            DamageBoost(self, amount);
-            return null;
+            if (rnd.Next(100) <= chance * 100)
+            {
+                DamageBoost(self, amount);
+            }
         }
         else if (type == "Knockback")
         {
-            ApplyKnockback(self, target);
+            if (rnd.Next(100) <= chance * 100)
+            {
+                ApplyKnockback(self, target);
+            }
         }
         else if (type == "Slowness")
         {
@@ -50,10 +71,10 @@ public class SpellEffect : MonoBehaviour
                 return StartCoroutine(SpeedBoost(target, duration, -amount, onComplete));
             }
         }
-            else
-            {
-                Debug.Log("Неизвестный тип эффекта!");
-            }
+        else
+        {
+            Debug.Log("Неизвестный тип эффекта!");
+        }
 
         return null;
     }
@@ -178,11 +199,45 @@ public class SpellEffect : MonoBehaviour
         }
     }
 
+    private void DodgeAttacks(int amount)
+    {
+        dodgingAttacks = amount;
+    }
+
+    private IEnumerator DodgeAttacks(float duration, float chance, Action onComplete)
+    {
+        float timer = 0f;
+        dodgingAttacks = 1000;
+        dodgingChance = chance;
+
+        while (timer < duration)
+        {
+            timer += 1f;
+            yield return new WaitForSeconds(1f);
+        }
+
+        dodgingAttacks = 0;
+        dodgingChance = 1f;
+        onComplete?.Invoke();
+    }
     private void ReturnToOriginal(GameObject obj)
     {
         if (obj.CompareTag("Enemy"))
         {
             obj.GetComponent<Enemy>().ReturnToOrig();
+        }
+    }
+
+    public bool DodgeAttack()
+    {
+        if (dodgingAttacks > 0 && rnd.Next(100) <= dodgingChance * 100)
+        {
+            dodgingAttacks -= 1;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
