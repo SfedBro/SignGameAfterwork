@@ -125,31 +125,38 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage, Vector3 direction = default)
     {
-        if (hp <= 0 || iSecondsCount > 0) return;
-        hp = Mathf.Max(hp - damage, 0);
-        iSecondsCount = iSeconds;
-        Debug.Log($"HP {hp}");
-        if (hp <= 0) GameManager.I.PlayerDied();
-        if (impactFlash != null)
+        if (GetComponent<SpellEffect>().DodgeAttack() == false)
         {
-            impactFlash.Flash(spriteRenderer, flashDuration);
-        }
-        if (direction == Vector3.zero)
-        {
-            damageParticles.PlayMediumSparkEffect(transform.position);
+            if (hp <= 0 || iSecondsCount > 0) return;
+            hp = Mathf.Max(hp - damage, 0);
+            iSecondsCount = iSeconds;
+            Debug.Log($"HP {hp}");
+            if (hp <= 0) GameManager.I.PlayerDied();
+            if (impactFlash != null)
+            {
+                impactFlash.Flash(spriteRenderer, flashDuration);
+            }
+            if (direction == Vector3.zero)
+            {
+                damageParticles.PlayMediumSparkEffect(transform.position);
+            }
+            else
+            {
+                Vector2 fixedDirection = new Vector2(direction.x, direction.y);
+                damageParticles.PlayMediumSparkEffect(transform.position, fixedDirection);
+            }
+            if (hp <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                audioSourceOneShot.PlayOneShot(soundTakeDamage);
+            }
         }
         else
         {
-            Vector2 fixedDirection = new Vector2(direction.x, direction.y);
-            damageParticles.PlayMediumSparkEffect(transform.position, fixedDirection);
-        }
-        if (hp <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            audioSourceOneShot.PlayOneShot(soundTakeDamage);
+            Debug.Log($"Атака по {gameObject.name} отражена!");
         }
     }
 
