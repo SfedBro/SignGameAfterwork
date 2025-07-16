@@ -23,6 +23,12 @@ public class Player : MonoBehaviour
     private bool isDead = false;
     private bool isDeathScreenUsing = true;
     [SerializeField] private bool isCheckPointUsed = false;
+
+    [Header("Audio")]
+    public AudioSource audioSourceOneShot;
+    public AudioClip soundTakeDamage;
+    public AudioClip soundDeath;
+
     void Awake()
     {
         Instance = this;
@@ -63,8 +69,8 @@ public class Player : MonoBehaviour
 
         if (buttons.Length >= 2)
         {
-            buttons[0].onClick.RemoveAllListeners();
-            buttons[1].onClick.RemoveAllListeners();
+            // buttons[0].onClick.RemoveAllListeners();
+            // buttons[1].onClick.RemoveAllListeners();
 
             buttons[0].onClick.AddListener(() => GameManager.I.RestartGame());
             buttons[1].onClick.AddListener(() => GameManager.I.ToMainMenu());
@@ -132,11 +138,14 @@ public class Player : MonoBehaviour
         if (hp <= 0)
         {
             Die();
+        } else {
+            audioSourceOneShot.PlayOneShot(soundTakeDamage);
         }
     }
 
     private void Die()
     {
+        audioSourceOneShot.PlayOneShot(soundDeath);
         isDead = true;
         // GameManager.I.PlayerDied();
         Time.timeScale = 0;
