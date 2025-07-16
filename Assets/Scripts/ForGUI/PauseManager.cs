@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 
 public class PauseManager : MonoBehaviour
@@ -51,6 +52,21 @@ public class PauseManager : MonoBehaviour
         {
             OpenCloseSettings();
         }
+
+        if (isPaused && Input.GetMouseButtonDown(0))
+        {
+            if (!IsPointerOverUIObject())
+            {
+                OpenCloseSettings();
+            }
+        }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        if (EventSystem.current == null) return false;
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private void OpenLevelSettings()
