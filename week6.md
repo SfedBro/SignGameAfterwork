@@ -124,7 +124,7 @@ cd SignGame
 
 - Adding an indicator that shows the player's approach to the merchant
 
-- Implementing [scroll texture](https://github.com/IU-Capstone-Project-2025/SignGame/commit/3c35aee42a980420317c134f7f42a43c4b35dcd9) in the store and correcting animations
+- Implementing [scroll texture](https://github.com/IU-Capstone-Project-2025/SignGame/commit/18f402875605daf5ebfd9198f6621fab5a3da95d) in the store and correcting animations
 
 - Fixed and fully completed [settings](https://github.com/IU-Capstone-Project-2025/SignGame/commit/543b5baec97be6b557ff2a869fc46ed5f2238fb4)
 
