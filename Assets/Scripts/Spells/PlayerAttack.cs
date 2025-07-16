@@ -61,6 +61,36 @@ public class PlayerAttack : MonoBehaviour
         {
             HandleInput("Water3");
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            HandleInput("Air1");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            HandleInput("Air2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            HandleInput("Air3");
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            HandleInput("Earth1");
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            HandleInput("Earth2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            HandleInput("Earth3");
+        }
     }
 
     private void HandleInput(string symb)

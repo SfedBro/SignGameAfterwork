@@ -158,6 +158,10 @@ public class SpellCast : MonoBehaviour
         {
             ThroughShootSpelling((ThroughShootSpell)spellToCast);
         }
+        else if (spellToCast.Type == "DistanceWeakeningShoot")
+        {
+            DistanceWeakeningShootSpelling((DistanceWeakeningShootSpell)spellToCast);
+        }
         else if (spellToCast.Type == "AoE")
         {
             AreaSpell((AoeSpell)spellToCast);
@@ -253,6 +257,19 @@ public class SpellCast : MonoBehaviour
         obj.AddComponent<ThroughShootSpellActions>();
         obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
                                                                 someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
+
+        obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
+    }
+    
+    private void DistanceWeakeningShootSpelling(DistanceWeakeningShootSpell someSpell)
+    {
+        Vector3 direction = (targetPosition - wandTip.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle));
+        obj.AddComponent<DistanceWeakeningShootSpellActions>();
+        obj.GetComponent<DistanceWeakeningShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Distance,
+                                                                        someSpell.Effect, someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
