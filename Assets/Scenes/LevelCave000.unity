@@ -59123,6 +59123,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0794fe08ee8be4dbadd94a16bbe227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2069965243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3059513110413570464, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
+  m_PrefabInstance: {fileID: 2069965241}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2069965255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5777876314397871891, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
@@ -61972,10 +61983,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6262722541175953881, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
+      propertyPath: modelAsset
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6262722541175953881, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
+      propertyPath: playerAttack
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8592874354941162426, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
       propertyPath: modelAsset
       value: 
       objectReference: {fileID: 5022602860645237092, guid: 9771fab52029fa140bf3b8e1beb5ee3d, type: 3}
+    - target: {fileID: 8592874354941162426, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
+      propertyPath: playerAttack
+      value: 
+      objectReference: {fileID: 2069965243}
     - target: {fileID: 8592874354941162426, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
       propertyPath: confidenceThreshold
       value: 0.5
@@ -62002,6 +62025,5 @@ SceneRoots:
   - {fileID: 1352184574}
   - {fileID: 6211241640022093316}
   - {fileID: 571131820}
-  - {fileID: 819233118}
   - {fileID: 1786293128}
   - {fileID: 710303939}

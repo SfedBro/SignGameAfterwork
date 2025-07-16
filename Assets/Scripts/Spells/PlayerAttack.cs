@@ -63,7 +63,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void HandleInput(string symb)
+    public void HandleInput(string symb)
     {
         inputForTimer = true;
         if (timerIsOn == false)

@@ -85,7 +85,7 @@ public class LineDrawer : MonoBehaviour
             if (modelAsset != null)
             {
                 element = ClassifyDrawing(pngData, num++);
-                //playerAttack.HandleInput(element);
+                playerAttack.HandleInput(element);
                 Debug.Log("Predictred class" + element + " with confidence" );
             }
             else {
