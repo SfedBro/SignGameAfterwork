@@ -21,6 +21,14 @@ public class RoguelikeCamera : MonoBehaviour
     private bool isMoving = false;
     private float originalTimeScale;
 
+    void Awake() {
+        LevelManager levelManager = FindFirstObjectByType<LevelManager>();
+        if (levelManager) {
+            roomOffset.x = levelManager.roomOffsetX;
+            roomOffset.y = levelManager.roomOffsetY;
+        }
+    }
+
     private void Start()
     {
         initialCameraPosition = transform.position;
