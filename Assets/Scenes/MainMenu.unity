@@ -8594,6 +8594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
   menuMusic: {fileID: 8300000, guid: 5685d07b804d68d458bc043434908722, type: 3}
+  musicMixerGroup: {fileID: -5270831825129952507, guid: 0a2cc4a872e653145bcacd83cf751db6, type: 2}
   fadeDuration: 1
 --- !u!4 &1363954210
 Transform:
