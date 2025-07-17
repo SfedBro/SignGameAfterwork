@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SpellCast : MonoBehaviour
@@ -30,6 +31,7 @@ public class SpellCast : MonoBehaviour
     private Camera mainCamera;
     private float lastHorizontalInput;
     private Spell spellToCast;
+    private string lastSpellElement = null;
 
     public void SetSpell(Spell someSpell)
     {
@@ -156,6 +158,8 @@ public class SpellCast : MonoBehaviour
         redWandParticles.Pause();
         wandSpriteRenderer.color = Color.black;
 
+        lastSpellElement = spellToCast.MainElement;
+
         if (spellToCast.Type == "Shoot")
         {
             ShootingSpell((ShootSpell)spellToCast);
@@ -271,7 +275,7 @@ public class SpellCast : MonoBehaviour
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
-    
+
     private void DistanceWeakeningShootSpelling(DistanceWeakeningShootSpell someSpell)
     {
         Vector3 direction = (targetPosition - wandTip.position).normalized;
@@ -304,5 +308,10 @@ public class SpellCast : MonoBehaviour
         }
         GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect,
                                                     someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
+    }
+
+    public string LastSpellElement()
+    {
+        return lastSpellElement;
     }
 }
