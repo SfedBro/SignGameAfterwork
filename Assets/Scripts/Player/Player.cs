@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
         characterControl = GetComponent<CharacterController>();
         isDeathScreenUsing = true;
     }
+
     private void CreateDeathScreen()
     {
         if (deathScreenPrefab != null)
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
             Debug.LogError("DeathScreenPrefab не назначен в инспекторе!");
         }
     }
+
     private void SetupDeathScreenButtons()
     {
         if (deathScreenInstance == null) return;
@@ -82,6 +84,7 @@ public class Player : MonoBehaviour
             Debug.LogWarning($"Найдено {buttons.Length} кнопок, ожидалось минимум 2");
         }
     }
+
     // for test
     void Update()
     {
@@ -113,6 +116,11 @@ public class Player : MonoBehaviour
     public void IncreaseHPToFull()
     {
         hp = maxHP;
+    }
+
+    public bool IsMaxHP()
+    {
+        return hp == maxHP;
     }
 
     public void TakeDamage(int damage, Vector3 direction = default)
