@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
     public int roomsX = 4, roomsY = 4;
     public float roomOffsetX, roomOffsetY;
+    public bool usePath = true;
     // public int minPathSize = 6, maxPathSize = 15;
 
     RoomInfoInstance[,] rooms;
@@ -48,38 +47,26 @@ public class LevelManager : MonoBehaviour
         }
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
-                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y).ExtendAvailable(pathRooms[x, y]);
+                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
+                if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
                 List<RoomInfo> possibleRooms = roomInfos.Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
                 RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
                 // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
-                Transform t = new GameObject($"Root {x} {y} {ri.rd}").transform;
-                t.position = new(x * roomOffsetX, -y * roomOffsetY);
-                rooms[x, y] = new RoomInfoInstance{roomInfo = ri, root = t};
+                rooms[x, y] = new RoomInfoInstance{roomInfo = ri};
             }
         }
     }
 
-    async void LoadLevel() {
+    void LoadLevel() {
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
                 RoomInfoInstance rii = rooms[x, y];
                 if (rii == null) continue;
-                await LoadSceneObjects(rii.roomInfo.sceneName, rii.root);
+                rii.root = Instantiate(rii.roomInfo.roomPrefab).transform;
+                rii.root.transform.position = new(x * roomOffsetX, -y * roomOffsetY);
             }
         }
-    }
-
-    async Task LoadSceneObjects(string sceneName, Transform t) {
-        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-        // for (int i = 1; i < SceneManager.loadedSceneCount; ++i) {
-        //     scene = SceneManager.GetSceneAt(i);
-        //     if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
-        // }
-        scene.GetRootGameObjects().ToList().ForEach(go => go.transform.SetParent(t, false));
-        // t.gameObject.SetActive(false);
-        await SceneManager.UnloadSceneAsync(scene);
     }
 
     RoomDirections GetRoomDirectionsAvailable(int x, int y) {
