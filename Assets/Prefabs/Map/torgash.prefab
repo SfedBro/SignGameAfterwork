@@ -284,6 +284,7 @@ MonoBehaviour:
   maxpos: -4
   mask: {fileID: 1457952151560644314}
   fill: {fileID: 638167908003395023}
+  background: {fileID: 1616071406403020866}
 --- !u!1 &3028467654032654544
 GameObject:
   m_ObjectHideFlags: 0

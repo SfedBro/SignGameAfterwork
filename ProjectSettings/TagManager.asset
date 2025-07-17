@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Heart
   - UIManager
+  - Projectile
+  - Shop
   layers:
   - Default
   - TransparentFX
