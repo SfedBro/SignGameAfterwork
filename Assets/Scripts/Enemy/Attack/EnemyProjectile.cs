@@ -41,6 +41,11 @@ public class EnemyProjectile : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        gameObject.tag = "Projectile";
+    }
+
     void Update()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
