@@ -39,5 +39,11 @@ public class Indicator : MonoBehaviour
         {
             background.SetActive(false);
         }
+
+        if (active && background != null)
+        {
+            background.SetActive(true);
+            value = 0;
+        }
     }
 }
