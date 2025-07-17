@@ -186,14 +186,14 @@ public class SpellEffect : MonoBehaviour
             }
             else if (obj.CompareTag("Enemy"))
             {
-                // if (obj.GetComponent<FlyingEnemyMovement>())
-                // {
-                //     obj.GetComponent<FlyingEnemyMovement>().SpeedChange(change);
-                // }
-                // else if (obj.GetComponent<LandEnemyMovement>())
-                // {
-                //     obj.GetComponent<LandEnemyMovement>().SpeedChange(change);
-                // }
+                if (obj.GetComponent<FlyingEnemyMovement>())
+                {
+                    obj.GetComponent<FlyingEnemyMovement>().SpeedChange(change);
+                }
+                else if (obj.GetComponent<LandEnemyMovement>())
+                {
+                    obj.GetComponent<LandEnemyMovement>().SpeedChange(change);
+                }
             }
         }
 
@@ -212,14 +212,14 @@ public class SpellEffect : MonoBehaviour
         }
         else if (obj.CompareTag("Enemy"))
         {
-            // if (obj.GetComponent<FlyingEnemyMovement>())
-            // {
-            //     obj.GetComponent<FlyingEnemyMovement>().SpeedChange(0);
-            // }
-            // else if (obj.GetComponent<LandEnemyMovement>())
-            // {
-            //     obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
-            // }
+            if (obj.GetComponent<FlyingEnemyMovement>())
+            {
+                obj.GetComponent<FlyingEnemyMovement>().SpeedChange(0);
+            }
+            else if (obj.GetComponent<LandEnemyMovement>())
+            {
+                obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
+            }
         }
         onComplete?.Invoke();
     }

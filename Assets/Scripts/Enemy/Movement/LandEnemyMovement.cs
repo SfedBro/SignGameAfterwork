@@ -126,6 +126,7 @@ public class LandEnemyMovement : MonoBehaviour
         {
             attackScript = GetComponent<IAttack>();
         }
+
     }
     void Start()
     {
@@ -418,5 +419,10 @@ public class LandEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+    }
+
+    public void SpeedChange(float change)
+    {
+        agent.speed = speed + speed * change;
     }
 }
