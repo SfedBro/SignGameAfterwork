@@ -31,6 +31,16 @@ public class SpellCast : MonoBehaviour
     private float lastHorizontalInput;
     private Spell spellToCast;
 
+    public void SetSpell(Spell someSpell)
+    {
+        spellToCast = someSpell;
+    }
+
+    public void MoveWand(float amount)
+    {
+        wandOffset *= amount;
+        wandPlayerCenterOffset *= amount;
+    }
     private void Start()
     {
         mainCamera = Camera.main;
@@ -80,10 +90,6 @@ public class SpellCast : MonoBehaviour
         }
     }
 
-    public void SetSpell(Spell someSpell)
-    {
-        spellToCast = someSpell;
-    }
     private void StartCasting()
     {
         isCasting = true;
@@ -174,9 +180,13 @@ public class SpellCast : MonoBehaviour
         {
             NearestEnemySpell((NearestEnemySpell)spellToCast);
         }
-        else if (spellToCast.Type == "Cloud")
+        else if (spellToCast.Type == "AoEFromSelf")
         {
-            CloudSpell((CloudSpell)spellToCast);
+            SelfAreaSpell((AoeFromSelf)spellToCast);
+        }
+        else if (spellToCast.Type == "Illusion")
+        {
+            IllusionSpell((CreateIllusionSpell)spellToCast);
         }
         else
         {
@@ -211,8 +221,9 @@ public class SpellCast : MonoBehaviour
     {
         Vector3 direction = (targetPosition - wandTip.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Vector3 selfAngles = someSpell.Prefab.GetComponent<Transform>().eulerAngles;
 
-        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle - 90f));
+        GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(selfAngles.x, selfAngles.y, selfAngles.z + angle - 90f));
         obj.AddComponent<ShootSpellActions>();
         obj.GetComponent<ShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
                                                         someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
@@ -229,9 +240,9 @@ public class SpellCast : MonoBehaviour
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
     }
 
-    private void CloudSpell(CloudSpell someSpell)
+    private void SelfAreaSpell(AoeFromSelf someSpell)
     {
-        GameObject obj = Instantiate(someSpell.Prefab, targetPosition, Quaternion.identity);
+        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
         obj.AddComponent<AreaSpellActions>();
         obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
                                                         someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
@@ -256,7 +267,7 @@ public class SpellCast : MonoBehaviour
         GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle));
         obj.AddComponent<ThroughShootSpellActions>();
         obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
-                                                                someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
+                                                                someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }
@@ -272,6 +283,17 @@ public class SpellCast : MonoBehaviour
                                                                         someSpell.Effect, someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
+    }
+
+    private void IllusionSpell(CreateIllusionSpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
+        obj.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
+
+        obj.AddComponent<IllusionActions>();
+        obj.GetComponent<IllusionActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.Lifetime);
+
     }
 
     private void SelfSpell(BuffSpell someSpell)
