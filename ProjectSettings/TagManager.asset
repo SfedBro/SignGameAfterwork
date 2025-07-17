@@ -9,6 +9,7 @@ TagManager:
   - Heart
   - UIManager
   - Projectile
+  - Shop
   layers:
   - Default
   - TransparentFX
