@@ -2636,11 +2636,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Size.y
-      value: 2.8257227
+      value: 1.83109
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Offset.y
-      value: -1.378694
+      value: -0.8813777
       objectReference: {fileID: 0}
     - target: {fileID: 3434226276209127460, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_SortingLayer
@@ -3088,11 +3088,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Size.y
-      value: 2.8257227
+      value: 1.8310914
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Offset.y
-      value: -1.378694
+      value: -0.8813784
       objectReference: {fileID: 0}
     - target: {fileID: 3434226276209127460, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_SortingLayer
@@ -3195,7 +3195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Size.y
-      value: 2.90702
+      value: 1.7821641
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Offset.x
@@ -3203,7 +3203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 952802050174646325, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_Offset.y
-      value: -1.4193428
+      value: -0.85691476
       objectReference: {fileID: 0}
     - target: {fileID: 3434226276209127460, guid: 1e832904c20497941b72894c12897e16, type: 3}
       propertyPath: m_SortingLayer
