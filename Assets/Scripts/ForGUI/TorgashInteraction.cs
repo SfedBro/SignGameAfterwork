@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TorgashInteraction : MonoBehaviour
 {
-    [SerializeField] private GameObject shopCanvas;
+    // [SerializeField] private GameObject shopCanvas;
     [SerializeField] private Indicator indicator;
     [SerializeField] private float detectionRadius = 3f;
     [SerializeField] private float playerNearbyTimeMax = 2f;
 
     private GameObject player;
+    private GameObject shopCanvas;
     private PlayerController playerController;
     private bool isPlayerNearby = false;
     private bool isInteractive = false;
@@ -30,6 +31,7 @@ public class TorgashInteraction : MonoBehaviour
         {
             playerController = player.GetComponent<PlayerController>();
         }
+        shopCanvas = GameObject.FindGameObjectWithTag("Shop");
     }
 
     private void Update()
