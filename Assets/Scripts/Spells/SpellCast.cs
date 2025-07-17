@@ -257,7 +257,7 @@ public class SpellCast : MonoBehaviour
         GameObject obj = Instantiate(someSpell.Prefab, wandTip.position, Quaternion.Euler(0, 0, angle));
         obj.AddComponent<ThroughShootSpellActions>();
         obj.GetComponent<ThroughShootSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Damage, someSpell.Effect,
-                                                                someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
+                                                                someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
     }

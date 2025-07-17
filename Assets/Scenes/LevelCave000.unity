@@ -19213,6 +19213,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5554145003143223997, guid: 9f4797c5132894242976dadc2f57846b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5737458159390198508, guid: 9f4797c5132894242976dadc2f57846b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -955.44
@@ -46820,7 +46824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2008765590029641789, guid: ee33d68931cee724682a3732bd1ab36b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2008765590029641789, guid: ee33d68931cee724682a3732bd1ab36b, type: 3}
       propertyPath: m_TagString
@@ -50445,6 +50449,10 @@ PrefabInstance:
       value: bull
       objectReference: {fileID: 0}
     - target: {fileID: 8091370015252734922, guid: 12bff228aa8d7714b8328097d7473b0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091370015252734922, guid: 12bff228aa8d7714b8328097d7473b0e, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -51880,6 +51888,10 @@ PrefabInstance:
     - target: {fileID: 997470017142330632, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
       propertyPath: m_Name
       value: snail
+      objectReference: {fileID: 0}
+    - target: {fileID: 997470017142330632, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 997470017142330632, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
       propertyPath: m_TagString
@@ -58529,7 +58541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5012434815414950361, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5012434815414950361, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: m_TagString
