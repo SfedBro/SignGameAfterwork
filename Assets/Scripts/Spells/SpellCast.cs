@@ -31,6 +31,16 @@ public class SpellCast : MonoBehaviour
     private float lastHorizontalInput;
     private Spell spellToCast;
 
+    public void SetSpell(Spell someSpell)
+    {
+        spellToCast = someSpell;
+    }
+
+    public void MoveWand(float amount)
+    {
+        wandOffset *= amount;
+        wandPlayerCenterOffset *= amount;
+    }
     private void Start()
     {
         mainCamera = Camera.main;
@@ -80,10 +90,6 @@ public class SpellCast : MonoBehaviour
         }
     }
 
-    public void SetSpell(Spell someSpell)
-    {
-        spellToCast = someSpell;
-    }
     private void StartCasting()
     {
         isCasting = true;
@@ -177,6 +183,10 @@ public class SpellCast : MonoBehaviour
         else if (spellToCast.Type == "AoEFromSelf")
         {
             SelfAreaSpell((AoeFromSelf)spellToCast);
+        }
+        else if (spellToCast.Type == "Illusion")
+        {
+            IllusionSpell((CreateIllusionSpell)spellToCast);
         }
         else
         {
@@ -273,6 +283,17 @@ public class SpellCast : MonoBehaviour
                                                                         someSpell.Effect, someSpell.EffectAmount, someSpell.EffectChance, someSpell.EffectDuration);
 
         obj.GetComponent<Rigidbody2D>().linearVelocity = direction * spellSpeed;
+    }
+
+    private void IllusionSpell(CreateIllusionSpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, transform.position, Quaternion.identity);
+        obj.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
+
+        obj.AddComponent<IllusionActions>();
+        obj.GetComponent<IllusionActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.Lifetime);
+
     }
 
     private void SelfSpell(BuffSpell someSpell)

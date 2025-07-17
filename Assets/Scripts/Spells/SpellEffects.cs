@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using System.Threading;
-using System.Runtime.CompilerServices;
 using UnityEngine.AI;
 
 public class SpellEffect : MonoBehaviour
@@ -95,6 +93,10 @@ public class SpellEffect : MonoBehaviour
             {
                 return StartCoroutine(StunEffect(target, duration, onComplete));
             }
+        }
+        else if (type == "SizeDecrease")
+        {
+            return StartCoroutine(SizeChange(self, amount, duration, onComplete));
         }
         else
         {
@@ -299,6 +301,32 @@ public class SpellEffect : MonoBehaviour
         dodgingChance = 1f;
         onComplete?.Invoke();
     }
+
+    private IEnumerator SizeChange(GameObject obj, float amount, float duration, Action onComplete)
+    {
+        float timer = 0f;
+
+        if (obj.CompareTag("Player"))
+        {
+            obj.GetComponent<Transform>().localScale *= amount;
+            obj.GetComponent<SpellCast>().MoveWand(amount);
+        }
+
+        while (timer < duration)
+        {
+            timer += 0.5f;
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        if (obj.CompareTag("Player"))
+        {
+            obj.GetComponent<Transform>().localScale /= amount;
+            obj.GetComponent<SpellCast>().MoveWand(1/amount);
+        }
+
+        onComplete?.Invoke();
+    }
+    
     private void ReturnToOriginal(GameObject obj)
     {
         if (obj.CompareTag("Enemy"))
