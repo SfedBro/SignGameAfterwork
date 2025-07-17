@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RoomInfo", menuName = "Scriptable Objects/RoomInfo")]
 public class RoomInfo : ScriptableObject
 {
-    public string sceneName;
+    public GameObject roomPrefab;
     public RoomDirections rd;
 }
 
