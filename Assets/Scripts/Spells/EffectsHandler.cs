@@ -11,7 +11,8 @@ public class EffectsHandler : MonoBehaviour
     {
         counterElements = new Dictionary<string, string>
         {
-            {"Water", "Burn"}
+            {"Water", "Burn"},
+            {"Air", "Slowness"}
         };
     }
 

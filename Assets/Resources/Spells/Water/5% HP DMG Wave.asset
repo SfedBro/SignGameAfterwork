@@ -17,7 +17,7 @@ MonoBehaviour:
     \u0443\u0440\u043E\u043D, \u0440\u0430\u0432\u043D\u044B\u0439 5% \u043E\u0442
     \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E HP \u0432\u0440\u0430\u0433\u0430"
   mainElement: Water
-  combo: Water1+Water3
+  combo: Water2+Water3
   effect: PercentDamage
   effectAmount: 0.05
   effectDuration: 0

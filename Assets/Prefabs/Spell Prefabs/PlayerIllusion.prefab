@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 6631543888611023167}
   - component: {fileID: 43420784170986337}
   - component: {fileID: 307561283863307473}
-  - component: {fileID: 644934148596909802}
-  - component: {fileID: 4480075318580160480}
+  - component: {fileID: 4935320799174898690}
   m_Layer: 0
-  m_Name: AirWave
-  m_TagString: Untagged
+  m_Name: PlayerIllusion
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4762664593250855657}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -2.459, y: -1.3804, z: 0}
-  m_LocalScale: {x: 0.31124464, y: 0.31124464, z: 0.7781116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.74, y: 0.53, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &43420784170986337
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -55,7 +54,7 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 4294967295
+  m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -79,8 +78,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 483325286792400162, guid: 5cd80adc99a4dee4ca9d7dc4dc1541e6, type: 3}
-  m_Color: {r: 1, g: 0.7607843, b: 0.74509805, a: 0.5882353}
+  m_Sprite: {fileID: 4704975909501430797, guid: 5ae8a19254f6dc247b64a1d25ddbb373, type: 3}
+  m_Color: {r: 1, g: 0.24644172, b: 0, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,7 +116,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &644934148596909802
+--- !u!70 &4935320799174898690
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,17 +151,5 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.99999994, y: 0.99999994}
   m_Direction: 0
---- !u!114 &4480075318580160480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4762664593250855657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a7aaba4068a40e419d86da6abc982e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
