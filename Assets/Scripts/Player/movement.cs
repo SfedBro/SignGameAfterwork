@@ -79,6 +79,15 @@ public class PlayerController : MonoBehaviour
         dashesLeft = maxDashesInAir;
         baseGravity = rb.gravityScale;
         blurTimer = blurSpawnRate;
+        if (PlayerPrefs.HasKey("speed"))
+        {
+            moveSpeed = PlayerPrefs.GetFloat("speed", 8f);
+        }
+        else
+        {
+            moveSpeed = 8f;
+            PlayerPrefs.SetFloat("speed", 8f);
+        }
     }
 
     private void Update()
@@ -296,8 +305,9 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedChange(float amount)
     {
-        moveSpeed = baseMoveSpeed + baseMoveSpeed*amount;
+        moveSpeed = baseMoveSpeed + baseMoveSpeed * amount;
     }
+
     private IEnumerator DisablePlatformCollision()
     {
         Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);

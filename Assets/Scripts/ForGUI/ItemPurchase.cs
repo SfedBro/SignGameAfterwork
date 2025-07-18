@@ -20,7 +20,6 @@ public class ItemPurchase : MonoBehaviour
             switch (objectName)
             {
                 case "ХП":
-                    Debug.Log("хп");
                     int hp = player.GetComponent<Player>().GetHP();
                     if (hp < 10)
                     {
@@ -28,17 +27,17 @@ public class ItemPurchase : MonoBehaviour
                     }
                     break;
                 case "Осколок Жизни":
-                    Debug.Log("Осколок жизни");
                     player.GetComponent<Player>().ChangeDeathScreenBool();
                     break;
                 case "Сапоги-скороходы":
-                    Debug.Log("сапоги-скороходы");
+                    if (player != null && player.CompareTag("Player"))
                     {
-                        if (player != null && player.CompareTag("Player"))
-                        {
-                            Debug.Log($"Игрок получил ускорение на {changeSpeed} навсегда");
-                            player.GetComponent<PlayerController>().SpeedChange(changeSpeed);
-                        }
+                        Debug.Log($"Игрок получил ускорение на {changeSpeed} навсегда");
+                        player.GetComponent<PlayerController>().SpeedChange(changeSpeed);
+                        float speedCur = PlayerPrefs.GetFloat("speed", 0f);
+                        PlayerPrefs.SetFloat("speed", speedCur + changeSpeed);
+                        Debug.Log(speedCur + changeSpeed);
+                        PlayerPrefs.Save();
                     }
                     break;
             }
