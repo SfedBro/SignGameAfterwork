@@ -68,8 +68,7 @@ public class LevelManager : MonoBehaviour
             for (int y = 0; y < roomsY; ++y) {
                 RoomInfoInstance rii = rooms[x, y];
                 if (rii == null) continue;
-                rii.root = Instantiate(rii.roomInfo.roomPrefab).transform;
-                rii.root.transform.position = new(x * roomOffsetX, -y * roomOffsetY);
+                rii.root = Instantiate(rii.roomInfo.roomPrefab, new(x * roomOffsetX, -y * roomOffsetY), Quaternion.identity).transform;
             }
         }
     }
