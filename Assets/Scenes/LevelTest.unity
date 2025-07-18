@@ -153,6 +153,9 @@ MonoBehaviour:
   roomOffsetX: 23
   roomOffsetY: 15
   usePath: 0
+  maxRoomCount:
+  - roomInfo: {fileID: 11400000, guid: 77c87bf6d6828ac48a9c8a112686dd4b, type: 2}
+    count: 1
 --- !u!4 &41179595
 Transform:
   m_ObjectHideFlags: 0
@@ -1568,7 +1571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee386737a2d10641bfc210068caab4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackForce: 200
 --- !u!1001 &1529157879
 PrefabInstance:
   m_ObjectHideFlags: 0

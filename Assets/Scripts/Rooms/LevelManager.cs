@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public float roomOffsetX, roomOffsetY;
     public bool usePath = true;
     // public int minPathSize = 6, maxPathSize = 15;
+    public List<RoomCount> maxRoomCount;
 
     RoomInfoInstance[,] rooms;
 
@@ -45,13 +46,17 @@ public class LevelManager : MonoBehaviour
                 pathRooms[room2[0], room2[1]].up = DirAvailability.Available;
             }
         }
+        List<RoomCount> currentRoomCount = new(maxRoomCount);
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
                 RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
                 if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
-                List<RoomInfo> possibleRooms = roomInfos.Where(ri => possibleRD.CanFit(ri.rd)).ToList();
+                List<RoomInfo> possibleRooms = roomInfos
+                    .Where(ri => !currentRoomCount.Any(rc => rc.roomInfo == ri) || currentRoomCount.Find(rc => rc.roomInfo == ri).count > 0)
+                    .Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
                 RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
+                if (currentRoomCount.Any(r => r.roomInfo == ri)) --currentRoomCount.Find(rc => rc.roomInfo == ri).count;
                 // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
                 rooms[x, y] = new RoomInfoInstance{roomInfo = ri};
             }
@@ -63,8 +68,7 @@ public class LevelManager : MonoBehaviour
             for (int y = 0; y < roomsY; ++y) {
                 RoomInfoInstance rii = rooms[x, y];
                 if (rii == null) continue;
-                rii.root = Instantiate(rii.roomInfo.roomPrefab).transform;
-                rii.root.transform.position = new(x * roomOffsetX, -y * roomOffsetY);
+                rii.root = Instantiate(rii.roomInfo.roomPrefab, new(x * roomOffsetX, -y * roomOffsetY), Quaternion.identity).transform;
             }
         }
     }
@@ -147,4 +151,10 @@ class PathGenerator {
     bool IsPointInBounds(Vector2Int point) {
         return point[0] >= 0 && point[0] < roomsX && point[1] >= 0 && point[1] < roomsY;
     }
+}
+
+[Serializable]
+public class RoomCount {
+    public RoomInfo roomInfo;
+    public int count;
 }
