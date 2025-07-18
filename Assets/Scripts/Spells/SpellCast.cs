@@ -30,7 +30,7 @@ public class SpellCast : MonoBehaviour
     private Camera mainCamera;
     private float lastHorizontalInput;
     private Spell spellToCast;
-    private string lastSpellElement = null;
+    private Spell lastUsedSpell = null;
     private bool spellDuplicate = false;
 
     public void SetSpell(Spell someSpell)
@@ -44,9 +44,9 @@ public class SpellCast : MonoBehaviour
         wandPlayerCenterOffset *= amount;
     }
     
-    public string LastSpellElement()
+    public Spell LastSpellUsed()
     {
-        return lastSpellElement;
+        return lastUsedSpell;
     }
 
     public void DuplicateNextSpell()
@@ -170,7 +170,7 @@ public class SpellCast : MonoBehaviour
         redWandParticles.Pause();
         wandSpriteRenderer.color = Color.black;
 
-        lastSpellElement = spellToCast.MainElement;
+        lastUsedSpell = spellToCast;
 
         if (spellToCast.Type == "Shoot")
         {
