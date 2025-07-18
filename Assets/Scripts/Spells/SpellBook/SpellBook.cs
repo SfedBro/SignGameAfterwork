@@ -10,6 +10,7 @@ public class SpellBook : MonoBehaviour
     [SerializeField] private GameObject spellEntryPrefab;
     [SerializeField] private GameObject dividerPrefab;
     [SerializeField] private float animationSpeed = 8f;
+    [SerializeField] private UIManager ui_manager;
 
     [Header("Позиции")]
     [SerializeField] private Vector2 shownPosition = Vector2.zero;
@@ -22,6 +23,12 @@ public class SpellBook : MonoBehaviour
 
     private void Start()
     {
+        GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
+        if (manager != null)
+        {
+            ui_manager = manager.GetComponent<UIManager>();
+        }
+
         if (!GetComponent<SpellsManager>())
         {
             gameObject.AddComponent<SpellsManager>();
@@ -63,7 +70,14 @@ public class SpellBook : MonoBehaviour
                 // Скрываем UI после анимации закрытия
                 if (!isOpen)
                 {
-                    spellBookUI.SetActive(false);
+                    if (ui_manager != null)
+                    {
+                        ui_manager.ShowScreen(UIScreen.MainCanvas);
+                    }
+                    else
+                    {
+                        spellBookUI.SetActive(false);
+                    }
                 }
             }
         }
@@ -75,7 +89,15 @@ public class SpellBook : MonoBehaviour
 
         if (isOpen)
         {
-            spellBookUI.SetActive(true);
+            if (ui_manager != null)
+            {
+                ui_manager.ShowScreen(UIScreen.SpellBook);
+            }
+            else
+            {
+                spellBookUI.SetActive(true);
+            }
+            
             OpenSpellBook();
             Time.timeScale = 0f;
         }

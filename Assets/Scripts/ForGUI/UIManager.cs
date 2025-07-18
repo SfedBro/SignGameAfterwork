@@ -6,7 +6,8 @@ public enum UIScreen
     MainCanvas,
     Settings,
     Shop,
-    Map
+    Map,
+    SpellBook
 }
 
 public class UIManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject settingsCanvas;
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private GameObject mapCanvas;
+    [SerializeField] private GameObject spellBookCanvas;
 
     private UIScreen currentScreen = UIScreen.None;
 
@@ -34,13 +36,20 @@ public class UIManager : MonoBehaviour
                     mainCanvas.SetActive(true);
                 break;
             case UIScreen.Settings:
-                settingsCanvas.SetActive(true);
+                if (settingsCanvas != null)
+                    settingsCanvas.SetActive(true);
                 break;
             case UIScreen.Shop:
-                shopCanvas.SetActive(true);
+                if (shopCanvas != null)
+                    shopCanvas.SetActive(true);
                 break;
             case UIScreen.Map:
-                mapCanvas.SetActive(true);
+                if (mapCanvas != null)
+                    mapCanvas.SetActive(true);
+                break;
+            case UIScreen.SpellBook:
+                if (spellBookCanvas != null)
+                    spellBookCanvas.SetActive(true);
                 break;
         }
 
@@ -57,5 +66,7 @@ public class UIManager : MonoBehaviour
             shopCanvas.SetActive(false);
         if (mapCanvas != null)
             mapCanvas.SetActive(false);
+        if (spellBookCanvas != null)
+            spellBookCanvas.SetActive(false);
     }
 }
