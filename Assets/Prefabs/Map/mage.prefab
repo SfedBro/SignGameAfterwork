@@ -15186,6 +15186,7 @@ GameObject:
   - component: {fileID: 8140098238340407890}
   - component: {fileID: 6946282676061063420}
   - component: {fileID: 7928863086052366388}
+  - component: {fileID: 3740610610083445159}
   m_Layer: 9
   m_Name: mage
   m_TagString: Player
@@ -15366,7 +15367,6 @@ MonoBehaviour:
   spellDuration: 3
   aimRotationSpeed: 200
   timeSlowFactor: 1
-  illusionPrefab: {fileID: 4762664593250855657, guid: 652daf92056042f48bb14ddcb46bd1d3, type: 3}
 --- !u!95 &2690089605500233412
 Animator:
   serializedVersion: 7
@@ -15511,6 +15511,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeAvailableForCombo: 0.5
+--- !u!114 &3740610610083445159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074238555592012898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee386737a2d10641bfc210068caab4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7192116295743320878
 GameObject:
   m_ObjectHideFlags: 0
