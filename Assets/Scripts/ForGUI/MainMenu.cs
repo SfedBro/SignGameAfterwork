@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 
     void Awake()
     {
-        // if (!PlayerPrefs.HasKey("Initialized"))
-        // {
+        if (!PlayerPrefs.HasKey("Initialized"))
+        {
             PlayerPrefs.DeleteAll();
-        //     PlayerPrefs.SetInt("Initialized", 1);
-        //     PlayerPrefs.Save();
-        // }
+            PlayerPrefs.SetInt("Initialized", 1);
+            PlayerPrefs.Save();
+        }
     }
 
     public void StartGame()
