@@ -98,6 +98,14 @@ public class SpellEffect : MonoBehaviour
         {
             return StartCoroutine(SizeChange(self, amount, duration, onComplete));
         }
+        else if (type == "NextSpellDuplicate")
+        {
+            if (rnd.Next(100) <= chance * 100)
+            {
+                gameObject.GetComponent<SpellCast>().DuplicateNextSpell();
+                Debug.Log("Следующее заклинание можно будет использовать дважды");
+            }
+        }
         else
         {
             Debug.Log("Неизвестный тип эффекта!");
@@ -326,7 +334,7 @@ public class SpellEffect : MonoBehaviour
 
         onComplete?.Invoke();
     }
-    
+
     private void ReturnToOriginal(GameObject obj)
     {
         if (obj.CompareTag("Enemy"))

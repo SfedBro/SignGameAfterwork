@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SpellCast : MonoBehaviour
@@ -32,6 +31,7 @@ public class SpellCast : MonoBehaviour
     private float lastHorizontalInput;
     private Spell spellToCast;
     private string lastSpellElement = null;
+    private bool spellDuplicate = false;
 
     public void SetSpell(Spell someSpell)
     {
@@ -43,6 +43,17 @@ public class SpellCast : MonoBehaviour
         wandOffset *= amount;
         wandPlayerCenterOffset *= amount;
     }
+    
+    public string LastSpellElement()
+    {
+        return lastSpellElement;
+    }
+
+    public void DuplicateNextSpell()
+    {
+        spellDuplicate = true;
+    }
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -60,6 +71,7 @@ public class SpellCast : MonoBehaviour
         {
             StartCasting();
         }
+        
         if (Input.GetMouseButtonUp(1) && isCasting)
         {
             if (spellToCast)
@@ -200,7 +212,14 @@ public class SpellCast : MonoBehaviour
         Destroy(activeAim);
 
         wandSpriteRenderer.color = Color.black;
-        spellToCast = null;
+        if (!spellDuplicate || spellToCast.Effect == "NextSpellDuplicate")
+        {
+            spellToCast = null;
+        }
+        else
+        {
+            spellDuplicate = false;
+        }
     }
 
     private void CancelSpell()
@@ -308,10 +327,5 @@ public class SpellCast : MonoBehaviour
         }
         GetComponent<EffectsHandler>().HandleEffect(gameObject, someSpell.MainElement, someSpell.Effect,
                                                     someSpell.EffectAmount, someSpell.EffectDuration, someSpell.EffectChance);
-    }
-
-    public string LastSpellElement()
-    {
-        return lastSpellElement;
     }
 }

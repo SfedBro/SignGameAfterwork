@@ -171,7 +171,7 @@ MonoBehaviour:
   isMovingRight: 0
   consideredMasks:
     serializedVersion: 2
-    m_Bits: 1729
+    m_Bits: 3777
   reachRange: 1
   damage: 5
   target: {fileID: 0}

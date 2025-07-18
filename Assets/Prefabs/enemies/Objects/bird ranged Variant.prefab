@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: stoppingDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: consideredMasks.m_Bits
+      value: 577
+      objectReference: {fileID: 0}
     - target: {fileID: 5799560389489877936, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: m_Layer
       value: 10
