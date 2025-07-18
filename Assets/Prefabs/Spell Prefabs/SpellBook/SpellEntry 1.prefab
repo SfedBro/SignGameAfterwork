@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 5623303393399848640}
   - component: {fileID: 7519132107818243027}
   m_Layer: 5
-  m_Name: SpellEntry
+  m_Name: SpellEntry 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 538.6825, y: 143.5}
+  m_AnchoredPosition: {x: 42, y: 133}
   m_SizeDelta: {x: 1057.824, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8431773790137812136

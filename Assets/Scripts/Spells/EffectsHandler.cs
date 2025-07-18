@@ -3,18 +3,10 @@ using UnityEngine;
 
 public class EffectsHandler : MonoBehaviour
 {
-    private Dictionary<string, Coroutine> activeEffects = new Dictionary<string, Coroutine>();
+    private Dictionary<string, Coroutine> activeEffects = new();
+    private Dictionary<string, float> activeEffectsDamage = new();
     private Dictionary<string, string> counterElements;
     private SpellEffect spells;
-
-    private void Awake()
-    {
-        counterElements = new Dictionary<string, string>
-        {
-            {"Water", "Burn"},
-            {"Air", "Slowness"}
-        };
-    }
 
     public void TakeDamage(GameObject effectCaster, float damage)
     {
@@ -26,6 +18,7 @@ public class EffectsHandler : MonoBehaviour
 
         spells.ApplyEffect(effectCaster, gameObject, "No effect", damage);
     }
+
     public void HandleEffect(GameObject effectCaster, string element, string effectName = "No effect", float effectAmount = 0f, float effectDuration = 0f, float effectChance = 0f)
     {
         // Обращаемся всегда к спелл эффектам кастера, т.к. там хранятся данные об изменениях для следующих заклинаний
@@ -34,12 +27,6 @@ public class EffectsHandler : MonoBehaviour
             effectCaster.AddComponent<SpellEffect>();
         }
         spells = effectCaster.GetComponent<SpellEffect>();
-
-        // Если эффект уже висит, мы его обновим
-        if (activeEffects.ContainsKey(effectName))
-        {
-            RemoveEffect(effectName);
-        }
 
         // Если наложенный эффект должен снять существующий, это произойдёт
         if (counterElements.ContainsKey(element))
@@ -51,7 +38,28 @@ public class EffectsHandler : MonoBehaviour
             }
         }
 
-        ApplyEffect(effectCaster, effectName, effectAmount, effectDuration, effectChance);
+        // Если эффект уже висит, мы его обновим, если новый не слабее, если эффект не висит, повесим
+        if (activeEffects.ContainsKey(effectName))
+        {
+            if (effectAmount >= activeEffectsDamage[effectName])
+            {
+                RemoveEffect(effectName);
+                ApplyEffect(effectCaster, effectName, effectAmount, effectDuration, effectChance);
+            }
+        }
+        else
+        {
+            ApplyEffect(effectCaster, effectName, effectAmount, effectDuration, effectChance);
+        }
+    }
+
+    private void Awake()
+    {
+        counterElements = new Dictionary<string, string>
+        {
+            {"Water", "Burn"},
+            {"Air", "Slowness"}
+        };
     }
 
     private void ApplyEffect(GameObject effectCaster, string effectName, float effectAmount, float effectDuration, float effectChance)
@@ -60,10 +68,11 @@ public class EffectsHandler : MonoBehaviour
         if (newEffect != null)
         {
             activeEffects.Add(effectName, newEffect);
+            activeEffectsDamage.Add(effectName, effectAmount);
         }
     }
 
-    void RemoveEffect(string effectName)
+    private void RemoveEffect(string effectName)
     {
         StopCoroutine(activeEffects[effectName]);
 
@@ -71,8 +80,9 @@ public class EffectsHandler : MonoBehaviour
         {
             gameObject.GetComponent<Enemy>().ReturnToOrig();
         }
-        
+
         activeEffects.Remove(effectName);
+        activeEffectsDamage.Remove(effectName);
     }
 
     private void OnEffectComplete(string effectName)
@@ -80,6 +90,7 @@ public class EffectsHandler : MonoBehaviour
         if (activeEffects.ContainsKey(effectName))
         {
             activeEffects.Remove(effectName);
+            activeEffectsDamage.Remove(effectName);
             Debug.Log($"Эффект {effectName} завершен");
         }
     }
