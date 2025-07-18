@@ -912,7 +912,7 @@ MonoBehaviour:
   projSpeed: 0
   consideredMasks:
     serializedVersion: 2
-    m_Bits: 577
+    m_Bits: 2625
   speed: 15
   acceleration: 5
   stoppingDistance: 1

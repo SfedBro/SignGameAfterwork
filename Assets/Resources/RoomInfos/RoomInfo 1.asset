@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7d70a8cf96a644db310246228e772f, type: 3}
   m_Name: RoomInfo 1
   m_EditorClassIdentifier: 
-  sceneName: TestRoomDL
+  roomPrefab: {fileID: 8934652459995303132, guid: 499b12c394472f14aa7510bb5b8f846d, type: 3}
   rd:
     up: 1
-    down: 0
+    down: 1
     left: 0
-    right: 1
+    right: 0

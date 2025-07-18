@@ -6,7 +6,7 @@ public class DumbEnemyScript : MonoBehaviour
     [SerializeField]
     private float speed;
     [SerializeField]
-    private bool isMovingRight;
+    private bool isMovingLeft;
     [SerializeField]
     private LayerMask consideredMasks;
     [SerializeField]
@@ -34,20 +34,20 @@ public class DumbEnemyScript : MonoBehaviour
     }
     private void Start()
     {
-        isMovingRight = Random.Range(0, 2) == 0;
+        isMovingLeft = Random.Range(0, 2) == 0;
         enemyCollider = GetComponent<CapsuleCollider2D>();
     }
 
     private void Update()
     {
-        multiplier = isMovingRight ? -1 : 1;
+        multiplier = isMovingLeft ? -1 : 1;
         //if (noGroundForFrames < 5)
         //{
         if (ShouldRotate())
         {
-            isMovingRight = !isMovingRight;
+            isMovingLeft = !isMovingLeft;
         }
-        transform.rotation = Quaternion.Euler(0, (isMovingRight ? 0 : 180), 0);
+        transform.rotation = Quaternion.Euler(0, (isMovingLeft ? 0 : 180), 0);
         float currentSpeed = (!ShouldStop()) ? (speed / 60f) : 0f;
         animator.SetFloat("Speed", currentSpeed);
         if (!ShouldStop())
@@ -77,6 +77,10 @@ public class DumbEnemyScript : MonoBehaviour
         Debug.DrawRay(origin + Vector2.down * 0.1f, Vector2.down * 0.5f, Color.green);
         bool isObstacleAhead = hitObstacle.collider != null;
         bool isGroundAhead = hitGround.collider != null;
+        if (isObstacleAhead && hitObstacle.transform == target && isGroundAhead)
+        {
+            return false;
+        }
         //if (!isGroundAhead)
         //{
         //    noGroundForFrames++;
