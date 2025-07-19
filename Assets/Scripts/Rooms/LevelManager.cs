@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public float roomOffsetX, roomOffsetY;
     public bool usePath = true;
     // public int minPathSize = 6, maxPathSize = 15;
+    public RoomInfo bossRoomInfo;
     public List<RoomCount> maxRoomCount;
 
     RoomInfoInstance[,] rooms;
@@ -46,9 +47,11 @@ public class LevelManager : MonoBehaviour
                 pathRooms[room2[0], room2[1]].up = DirAvailability.Available;
             }
         }
+        rooms[roomsX - 1, roomsY - 1] = new RoomInfoInstance{roomInfo = bossRoomInfo};
         List<RoomCount> currentRoomCount = new(maxRoomCount);
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
+                if (rooms[x, y] != null) continue;
                 RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
                 if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
                 List<RoomInfo> possibleRooms = roomInfos
