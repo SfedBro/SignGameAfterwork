@@ -148,12 +148,11 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(deathEffectDuration - 0.1f);
 
 
-        //foreach (var sprite in spriteRenderers)
-        //{
-         //   if (sprite != null)
-//sprite.color = Color.clear;
-       // }
-        //BlowEffect();
+        foreach (var sprite in spriteRenderers)
+        {
+           if (sprite != null)
+                sprite.color = Color.clear;
+        }
 
         yield return new WaitForSeconds(0.2f);
         if (spawn != null)

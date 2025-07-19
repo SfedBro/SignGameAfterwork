@@ -317,8 +317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917f3271b88ceac49b369211f596f294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseAttractionForce: 4
-  detectionRadius: 7
+  baseAttractionForce: 5
+  detectionRadius: 8
   maxAttractionSpeed: 8
   attractionCurve: 4
   triggerDisableDelay: 0.3
