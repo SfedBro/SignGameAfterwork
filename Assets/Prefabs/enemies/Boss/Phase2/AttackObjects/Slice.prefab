@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2773893409840404630}
   - component: {fileID: 695116526831595081}
   - component: {fileID: 840035978979561614}
+  - component: {fileID: 1743182267418418655}
   m_Layer: 0
   m_Name: Slice
   m_TagString: Untagged
@@ -119,7 +120,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -196,6 +197,19 @@ PolygonCollider2D:
       - {x: 1.81, y: -0.37}
       - {x: 2.25, y: -0.35999998}
   m_UseDelaunayMesh: 0
+--- !u!114 &1743182267418418655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397136518750179433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a351eb89856eee41a0e6a21e3e616d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &7510249509608414391
 GameObject:
   m_ObjectHideFlags: 0
