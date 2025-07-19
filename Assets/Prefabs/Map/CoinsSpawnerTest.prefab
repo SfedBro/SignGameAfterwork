@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 4748465020767424171, guid: a3b390ab327f82c4e93e0514aff8568b, type: 3}
   coinCount: 13
-  explosionForce: 5
+  explosionForce: 10
   torqueForce: 2
   lifetime: 10
