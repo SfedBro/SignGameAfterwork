@@ -116,11 +116,11 @@ public class SpellEffect : MonoBehaviour
 
     private void MakeDamage(GameObject obj, float damage)
     {
-        if (obj.CompareTag("Enemy"))
+        if (obj != null && obj.CompareTag("Enemy"))
         {
             obj.GetComponent<Enemy>().TakeDamage(damage * damageMultiplier);
         }
-        else if (obj.CompareTag("Boss"))
+        else if (obj != null && obj.CompareTag("Boss"))
         {
 
         }
@@ -162,26 +162,29 @@ public class SpellEffect : MonoBehaviour
         float timer = 0f;
         damageMultiplier = 1f;
 
-        if (obj.CompareTag("Enemy"))
-        {
-            Debug.Log($"{obj.name} был подожжен");
-            obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
-            while (timer < duration && obj != null)
-            {
-                int damage = UnityEngine.Random.Range((avgDamage + 1) / 2, 2 * avgDamage - avgDamage / 2);
-
-                MakeDamage(obj, damage * dmgMultiplier);
-
-                timer += 1f;
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        // Возвращаем в исходное состояние
         if (obj != null)
         {
-            ReturnToOriginal(obj);
+            if (obj.CompareTag("Enemy"))
+            {
+                Debug.Log($"{obj.name} был подожжен");
+                while (timer < duration)
+                {
+                    int damage = UnityEngine.Random.Range((avgDamage + 1) / 2, 2 * avgDamage - avgDamage / 2);
+
+                    MakeDamage(obj, damage * dmgMultiplier);
+
+                    if (obj == null)
+                    {
+                        yield break;
+                    }
+
+                    timer += 1f;
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+            
         }
+
         onComplete?.Invoke();
     }
 
@@ -275,6 +278,7 @@ public class SpellEffect : MonoBehaviour
 
         onComplete?.Invoke();
     }
+
     private void DamageBoost(GameObject obj, float multiplier)
     {
         if (multiplier > 0)

@@ -65,7 +65,7 @@ public class EffectsHandler : MonoBehaviour
     private void ApplyEffect(GameObject effectCaster, string effectName, float effectAmount, float effectDuration, float effectChance)
     {
         Coroutine newEffect = spells.ApplyEffect(effectCaster, gameObject, effectName, effectAmount, effectDuration, effectChance, () => OnEffectComplete(effectName));
-        if (newEffect != null)
+        if (gameObject != null && newEffect != null)
         {
             activeEffects.Add(effectName, newEffect);
             activeEffectsDamage.Add(effectName, effectAmount);
@@ -74,12 +74,7 @@ public class EffectsHandler : MonoBehaviour
 
     private void RemoveEffect(string effectName)
     {
-        StopCoroutine(activeEffects[effectName]);
-
-        if (gameObject.CompareTag("Enemy"))
-        {
-            gameObject.GetComponent<Enemy>().ReturnToOrig();
-        }
+        spells.StopCoroutine(activeEffects[effectName]);
 
         activeEffects.Remove(effectName);
         activeEffectsDamage.Remove(effectName);
