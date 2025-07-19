@@ -22,14 +22,10 @@ public class Shop : MonoBehaviour
     private Vector3 dragStartPos;
     private bool isDragging = false;
     private int access;
-    private float alpha = 0.1f;
+    private float alpha = 0.7f;
 
     private void Awake()
     {
-        // for test
-        // PlayerPrefs.DeleteAll();
-        // PlayerPrefs.SetInt("coins", 200);
-        // for test
         sourceImage.SetActive(false);
         
         rectTransform = GetComponent<RectTransform>();
@@ -37,7 +33,7 @@ public class Shop : MonoBehaviour
 
         originalScale = rectTransform.localScale;
 
-        rectTransform.localRotation = Quaternion.identity;
+        rectTransform.localRotation = Quaternion.Euler(0f, 0f, 90f);
         canvasGroup.alpha = 1f;
         rectTransform.localScale = originalScale;
 
@@ -134,8 +130,9 @@ public class Shop : MonoBehaviour
         // поворот
         float t = 0f;
         float duration = 0.6f;
+
         Quaternion startRot = rectTransform.localRotation;
-        Quaternion endRot = Quaternion.Euler(0f, 0f, 90f);
+        Quaternion endRot = Quaternion.Euler(0f, 0f, 0f);
 
         while (t < duration)
         {
@@ -151,17 +148,19 @@ public class Shop : MonoBehaviour
         // увеличение по x
         t = 0f;
         duration = 0.4f;
-        Vector3 startScale = rectTransform.localScale;
-        Vector3 endScale = new Vector3(originalScale.x * 4.5f, originalScale.y, originalScale.z);
+
+        float startHeight = rectTransform.sizeDelta.y;
+        float targetHeight = 1000f;
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            rectTransform.localScale = Vector3.Lerp(startScale, endScale, t / duration);
+            float newHeight = Mathf.Lerp(startHeight, targetHeight, t / duration);
+            rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, newHeight);
             yield return null;
         }
 
-        rectTransform.localScale = endScale;
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, targetHeight);
         sourceImage.SetActive(true);
     }
 
@@ -183,38 +182,44 @@ public class Shop : MonoBehaviour
     {
         float t = 0f;
         float duration = 0.3f;
-        Vector3 start = rectTransform.localScale;
-        Vector3 end = new Vector3(originalScale.x / 4.5f, originalScale.y, originalScale.z);
+
+        RectTransform rt = rectTransform;
+        float startHeight = rt.sizeDelta.y;
+        float targetHeight = 300f;
 
         sourceImage.SetActive(false);
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            rectTransform.localScale = Vector3.Lerp(start, end, t / duration);
+            float newHeight = Mathf.Lerp(startHeight, targetHeight, t / duration);
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, newHeight);
             yield return null;
         }
 
-        rectTransform.localScale = end;
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, targetHeight);
     }
 
     private IEnumerator Expand()
     {
         float t = 0f;
         float duration = 0.3f;
-        Vector3 start = rectTransform.localScale;
-        Vector3 end = new Vector3(originalScale.x * 5f, originalScale.y, originalScale.z);
+
+        RectTransform rt = rectTransform;
+        float startHeight = rt.sizeDelta.y;
+        float targetHeight = 1000f;
 
         sourceImage.SetActive(true);
 
         while (t < duration)
         {
             t += Time.deltaTime;
-            rectTransform.localScale = Vector3.Lerp(start, end, t / duration);
+            float newHeight = Mathf.Lerp(startHeight, targetHeight, t / duration);
+            rt.sizeDelta = new Vector2(rt.sizeDelta.x, newHeight);
             yield return null;
         }
 
-        rectTransform.localScale = end;
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, targetHeight);
     }
 
     public void SetTransparency(float alpha)
