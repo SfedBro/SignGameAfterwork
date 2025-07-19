@@ -304,7 +304,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &8738507347201728507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,8 +317,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917f3271b88ceac49b369211f596f294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractionForce: 10
-  detectionRadius: 1.94
+  baseAttractionForce: 4
+  detectionRadius: 7
+  maxAttractionSpeed: 8
+  attractionCurve: 4
+  triggerDisableDelay: 0.3
+  attractionStartDelay: 0.8
+  upwardBoost: 2
 --- !u!114 &1020940649291342074
 MonoBehaviour:
   m_ObjectHideFlags: 0
