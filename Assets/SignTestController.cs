@@ -15,6 +15,10 @@ public class SignTestController : MonoBehaviour
         {
             TestSigns2();
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TestSigns3();
+        }
     }
 
     private void TestSigns()
@@ -35,16 +39,8 @@ public class SignTestController : MonoBehaviour
 
         List<string> testSigns2;
 
-        if (!isTestActive)
-        {
-            testSigns = new List<string> { "Fire1", "Stone1", "Water1" };
-            testSigns2 = new List<string> { "Fire1", "Stone1", "Water1", "Air1" };
-        }
-        else
-        {
-            testSigns = new List<string>();
-            Debug.Log("Clearing all signs");
-        }
+        testSigns = new List<string> { "Fire1", "Stone1", "Water1" };
+        testSigns2 = new List<string> { "Fire1", "Stone1", "Water1", "Air1" };
 
         SignCanvasController.Instance.SetSigns(testSigns);
     }
@@ -66,15 +62,28 @@ public class SignTestController : MonoBehaviour
         List<string> testSigns;
 
 
-        if (!isTestActive)
+        testSigns = new List<string> { "Fire1", "Stone1", "Water1", "Air1" };
+
+        SignCanvasController.Instance.SetSigns(testSigns);
+    }
+    private void TestSigns3()
+    {
+        if (SignCanvasController.Instance == null)
         {
-            testSigns = new List<string> { "Fire1", "Stone1", "Water1", "Air1" };
+            Debug.LogError("SignCanvasController instance not found!");
+            return;
         }
-        else
+
+        if (SignCanvasController.Instance.IsAnimating())
         {
-            testSigns = new List<string>();
-            Debug.Log("Clearing all signs");
+            Debug.Log("SignCanvasController is currently animating, skipping test.");
+            return;
         }
+
+        List<string> testSigns;
+
+
+        testSigns = new List<string> { };
 
         SignCanvasController.Instance.SetSigns(testSigns);
     }
