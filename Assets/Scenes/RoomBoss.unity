@@ -1202,6 +1202,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2700427033933454148, guid: 4cf7a722978b71c49b6d8dc4f16b7748, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -110.999756
+      objectReference: {fileID: 0}
+    - target: {fileID: 2798698877113049109, guid: 4cf7a722978b71c49b6d8dc4f16b7748, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -115.999756
+      objectReference: {fileID: 0}
     - target: {fileID: 2903753023987934966, guid: 4cf7a722978b71c49b6d8dc4f16b7748, type: 3}
       propertyPath: fadeSpeed
       value: 1.5
@@ -1563,10 +1571,6 @@ PrefabInstance:
     - target: {fileID: 3009318400371855398, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6153470502754972363, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

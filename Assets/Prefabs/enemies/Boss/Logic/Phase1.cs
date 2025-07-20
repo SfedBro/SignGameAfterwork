@@ -14,6 +14,10 @@ public class Phase1 : MonoBehaviour
     int lastAttackIndex = -1;
     public Coroutine curPhaseCoroutine;
 
+    void Start() {
+        // StartPhase();
+    }
+
     public void StartPhase() {
         curPhaseCoroutine = StartCoroutine(PhaseCoroutine());
     }
@@ -31,7 +35,9 @@ public class Phase1 : MonoBehaviour
         GameObject warn = Instantiate(attack.warnPrefab, transform, false);
         yield return new WaitForSeconds(attack.timeBeforeAttack);
         Destroy(warn);
-        Instantiate(attack.attackPrefab, transform, false);
+        GameObject curAttack = Instantiate(attack.attackPrefab, transform, false);
+        yield return new WaitForSeconds(attack.attackTime);
+        Destroy(curAttack);
     }
 }
 
@@ -40,4 +46,5 @@ public struct AttackInfo {
     public GameObject attackPrefab;
     public GameObject warnPrefab;
     public float timeBeforeAttack;
+    public float attackTime;
 }
