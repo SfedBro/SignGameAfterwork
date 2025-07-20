@@ -993,7 +993,7 @@ MonoBehaviour:
   speed: 5
   acceleration: 5
   stoppingDistance: 10
-  visionRange: 15
+  visionRange: 10
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0

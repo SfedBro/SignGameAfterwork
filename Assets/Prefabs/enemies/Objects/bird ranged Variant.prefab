@@ -194,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 5649252163690582418, guid: 5bf56d6448869c54fb7109fc4a2f36b1, type: 3}
     - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: visionRange
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: acceleration

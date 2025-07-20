@@ -252,7 +252,7 @@ MonoBehaviour:
   isRanged: 1
   projectile: {fileID: 5649252163690582418, guid: 5bf56d6448869c54fb7109fc4a2f36b1, type: 3}
   projSpeed: 25
-  visionRange: 25
+  visionRange: 20
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
@@ -277,6 +277,9 @@ MonoBehaviour:
   gravity: 10
   isJumping: 0
   corners: []
+  shouldRotate: 1
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &-2550626273566953102
 MonoBehaviour:
   m_ObjectHideFlags: 0
