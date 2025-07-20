@@ -35,8 +35,8 @@ public class LineDrawer : MonoBehaviour
         "Earth2",  
         "Earth3",  
         "Fire1",   
-        "Fire2",   
         "Fire3",   
+        "Fire2",   
         "Water1",  
         "Water2",  
         "Water3"   
@@ -86,7 +86,7 @@ public class LineDrawer : MonoBehaviour
             {
                 element = ClassifyDrawing(pngData, num++);
                 playerAttack.HandleInput(element);
-                Debug.Log("Predictred class" + element + " with confidence" );
+                Debug.Log("Predictred class" + element);
             }
             else {
                 Debug.Log("Model is not assigned");
