@@ -153,6 +153,8 @@ MonoBehaviour:
   roomOffsetX: 23
   roomOffsetY: 15
   usePath: 1
+  startRooms:
+  - {fileID: 11400000, guid: 598d71b533d25064e81c6dfddf612383, type: 2}
   bossRoomInfo: {fileID: 11400000, guid: 10ca11e1727684647aadd3afa0d6a312, type: 2}
   maxRoomCount:
   - roomInfo: {fileID: 11400000, guid: 77c87bf6d6828ac48a9c8a112686dd4b, type: 2}
