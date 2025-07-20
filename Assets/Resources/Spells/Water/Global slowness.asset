@@ -21,4 +21,4 @@ MonoBehaviour:
   effectDuration: 5
   effectChance: 1
   spellPrefab: {fileID: 4762664593250855657, guid: 6a23b581f10f35a4995138c16f616ffd, type: 3}
-  areaLifetime: 0.1
+  areaLifetime: 0.5

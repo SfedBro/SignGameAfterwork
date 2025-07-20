@@ -150,8 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomsX: 4
   roomsY: 4
-  roomOffsetX: 23
-  roomOffsetY: 15
+  roomOffsetX: 22.81
+  roomOffsetY: 14.21
   usePath: 1
   removeUselessClusters: 0
   startRooms:
@@ -1672,13 +1672,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 311071535696222709, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1625306241}
   m_SourcePrefab: {fileID: 100100000, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
 --- !u!224 &1625306239 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4182415612184738478, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
   m_PrefabInstance: {fileID: 1625306238}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1625306240 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 311071535696222709, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+  m_PrefabInstance: {fileID: 1625306238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1625306241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625306240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b418b098c24d9d47a225e3c62e8cb91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1714177658
 PrefabInstance:
   m_ObjectHideFlags: 0
