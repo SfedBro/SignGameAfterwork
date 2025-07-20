@@ -19317,7 +19317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5737458159390198508, guid: 9f4797c5132894242976dadc2f57846b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.840757
       objectReference: {fileID: 0}
     - target: {fileID: 5737458159390198508, guid: 9f4797c5132894242976dadc2f57846b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -51893,6 +51893,10 @@ PrefabInstance:
       propertyPath: maxHp
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 586740952487356201, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 997470017142330632, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
       propertyPath: m_Name
       value: snail
@@ -51904,6 +51908,14 @@ PrefabInstance:
     - target: {fileID: 997470017142330632, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362517229959473185, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698217585788592214, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5949002529184147749, guid: 5d407c722e6e16b418cba68b18102788, type: 3}
       propertyPath: m_LocalPosition.x
