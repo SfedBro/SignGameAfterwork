@@ -459,7 +459,7 @@ MonoBehaviour:
   isRanged: 0
   projectile: {fileID: 0}
   projSpeed: 0
-  visionRange: 40
+  visionRange: 20
   consideredMasks:
     serializedVersion: 2
     m_Bits: 0
@@ -473,7 +473,7 @@ MonoBehaviour:
   isWaitingForPlayer: 0
   speed: 1
   acceleration: 1
-  stoppingDistance: 15
+  stoppingDistance: 10
   groundDetectionOffset: 0
   jumpHeight: 2
   minJumpHeight: 0
@@ -484,6 +484,9 @@ MonoBehaviour:
   gravity: 10
   isJumping: 0
   corners: []
+  shouldRotate: 1
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &7265055968521215487
 MonoBehaviour:
   m_ObjectHideFlags: 0

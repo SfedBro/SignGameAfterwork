@@ -36461,6 +36461,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8592874354941162426, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
+      propertyPath: playerAttack
+      value: 
+      objectReference: {fileID: 1742054076}
+    - target: {fileID: 8592874354941162426, guid: 33a174d67d9774443b9fb97f4d01fbf3, type: 3}
       propertyPath: minDistanceForNewPoint
       value: 0.01
       objectReference: {fileID: 0}
@@ -36931,7 +36935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee386737a2d10641bfc210068caab4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackForce: 200
 --- !u!114 &1496138197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43308,6 +43311,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5777876314397871891, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
   m_PrefabInstance: {fileID: 1742054074}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1742054076 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7928863086052366388, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}
+  m_PrefabInstance: {fileID: 1742054074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a94809e5f802a54486e033862ad1e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1742054080 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6377138182487133699, guid: bb4327f9df90a284d9b258ee549f253b, type: 3}

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private Player player;
     [SerializeField] private float respawnDelay = 1f;
     [SerializeField] private string mainMenuSceneName = "MainMenu";
-    [SerializeField] private string levelCave000 = "LevelCave000";
+    [SerializeField] private string levelName = "LevelTest";
 
     public static GameManager I;
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void RespawnPlayerWithPosition()
     {
-        SceneManager.LoadScene("LevelCave000");
+        SceneManager.LoadScene(levelName);
         StartCoroutine(SetPlayerPositionAfterLoad());
     }
 
@@ -50,13 +50,13 @@ public class GameManager : MonoBehaviour
 
     private void RespawnPlayer()
     {
-        SceneManager.LoadScene("LevelCave000");
+        SceneManager.LoadScene(levelName);
     }
 
     public void RestartGame()
     {
         Debug.Log("Restart Clicked");
-        SceneManager.LoadScene(levelCave000);
+        SceneManager.LoadScene(levelName);
     }
 
     public void ToMainMenu()

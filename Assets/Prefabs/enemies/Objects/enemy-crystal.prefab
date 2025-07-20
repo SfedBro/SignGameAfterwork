@@ -422,7 +422,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 35215d32f5f288245ab45eb473f3d4ac, type: 2}
   target: {fileID: 0}
   damage: 1
-  attackPeriod: 0
+  attackPeriod: 1
   isRanged: 0
   projectile: {fileID: 0}
   projSpeed: 0
@@ -432,7 +432,7 @@ MonoBehaviour:
   speed: 15
   acceleration: 1
   stoppingDistance: 1.5
-  visionRange: 25
+  visionRange: 15
   untilPatrolTime: 5
   untilChangeTime: 2
   patrolRange: 5
@@ -440,7 +440,7 @@ MonoBehaviour:
   isWaitingForPlayer: 0
   shouldRotate: 0
   isRotatedRight: 0
-  initialRightRotation: 0
+  isInitialRight: 0
 --- !u!114 &4719359554338171692
 MonoBehaviour:
   m_ObjectHideFlags: 0
