@@ -15360,7 +15360,10 @@ MonoBehaviour:
   idleStaffPositionRight: {x: 0.34, y: 0.16, z: 0}
   idleWandRotationLeft: {x: 0, y: 0, z: 45}
   idleWandRotationRight: {x: 0, y: 0, z: -45}
-  aim: {fileID: 3722217823535746285, guid: 991277aec79cafb41bc1a075077b903b, type: 3}
+  aimRed: {fileID: 3722217823535746285, guid: 991277aec79cafb41bc1a075077b903b, type: 3}
+  aimBlue: {fileID: 3722217823535746285, guid: 2e5b05b3d466e314cb007adc8d3e4291, type: 3}
+  aimGreen: {fileID: 3722217823535746285, guid: 263cd38fdd96707409a73839ba54a08d, type: 3}
+  aimWhite: {fileID: 3722217823535746285, guid: 1a390e49f7ec2a848809e408c7ff5149, type: 3}
   spellSpeed: 15
   redWandParticles: {fileID: 3999551153525997901}
   castEffectParticles: {fileID: 7086726496284618607}

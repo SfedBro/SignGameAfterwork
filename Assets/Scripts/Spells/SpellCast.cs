@@ -15,7 +15,10 @@ public class SpellCast : MonoBehaviour
     [SerializeField] private Vector3 idleWandRotationRight = new Vector3(0f, 0f, -45f);
 
     [Header("Spell Settings")]
-    [SerializeField] private GameObject aim;
+    [SerializeField] private GameObject aimRed;
+    [SerializeField] private GameObject aimBlue;
+    [SerializeField] private GameObject aimGreen;
+    [SerializeField] private GameObject aimWhite;
     [SerializeField] private float spellSpeed = 15f;
     [SerializeField] private ParticleSystem redWandParticles;
     [SerializeField] private ParticleSystem castEffectParticles;
@@ -32,6 +35,7 @@ public class SpellCast : MonoBehaviour
     private Spell spellToCast;
     private Spell lastUsedSpell = null;
     private bool spellDuplicate = false;
+    private GameObject aim;
 
     public void SetSpell(Spell someSpell)
     {
@@ -113,6 +117,22 @@ public class SpellCast : MonoBehaviour
 
         // прицел
         targetPosition = GetMouseWorldPosition();
+        if (spellToCast.MainElement == "Water")
+        {
+            aim = aimBlue;
+        }
+        else if (spellToCast.MainElement == "Earth")
+        {
+            aim = aimGreen;
+        }
+        else if (spellToCast.MainElement == "Air")
+        {
+            aim = aimWhite;
+        }
+        else
+        {
+            aim = aimRed;
+        }
         activeAim = Instantiate(aim, targetPosition, Quaternion.identity);
         activeAim.SetActive(true);
         redWandParticles.Play();
