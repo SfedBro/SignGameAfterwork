@@ -82,7 +82,7 @@ public class SpellCast : MonoBehaviour
 
     private void Update()
     {
-        if (spellToCast && Input.GetMouseButtonDown(1) && !isCasting)
+        if (spellToCast && Input.GetMouseButtonDown(1) && !isCasting && Time.timeScale == 1f)
         {
             StartCasting();
         }

@@ -19,9 +19,12 @@ public class SpellBook : MonoBehaviour
 
     private bool isOpen = false;
     private bool isAnimating = false;
+    private Camera mainCamera;
 
     private void Start()
     {
+        mainCamera = Camera.main;
+
         GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
         scrollRect.scrollSensitivity = 10f;
         if (manager != null)
@@ -35,7 +38,7 @@ public class SpellBook : MonoBehaviour
             shownPosition.x,
             -Screen.height * 1.5f
         );
-        
+
         bookRect.anchoredPosition = hiddenPosition;
         spellBookUI.SetActive(false);
     }
@@ -96,10 +99,18 @@ public class SpellBook : MonoBehaviour
             }
 
             Time.timeScale = 0f;
+            foreach (Transform child in Camera.main.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
         else
         {
             Time.timeScale = 1f;
+            foreach (Transform child in Camera.main.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
         }
     }
 }
