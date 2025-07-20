@@ -783,7 +783,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 32582c97c3ad111408f0d167d539c856, type: 2}
   target: {fileID: 0}
   damage: 4
-  attackPeriod: 0
+  attackPeriod: 1
   isRanged: 0
   projectile: {fileID: 0}
   projSpeed: 0
@@ -801,7 +801,7 @@ MonoBehaviour:
   isWaitingForPlayer: 0
   speed: 10
   acceleration: 2
-  stoppingDistance: 0
+  stoppingDistance: 1
   groundDetectionOffset: 0.1
   jumpHeight: 7
   minJumpHeight: 1

@@ -17,7 +17,7 @@ MonoBehaviour:
   visionRange: 25
   speed: 7
   acceleration: 5
-  stoppingDistance: 0
+  stoppingDistance: 1
   isGround: 0
   minJumpHeight: 0
   maxJumpHeight: 0
