@@ -438,6 +438,9 @@ MonoBehaviour:
   patrolRange: 5
   isPatrolRunning: 0
   isWaitingForPlayer: 0
+  shouldRotate: 0
+  isRotatedRight: 0
+  initialRightRotation: 0
 --- !u!114 &4719359554338171692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,9 +454,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 10
+  coinReward: 3
+  deathEffectDuration: 0.3
+  explosionControllerPrefab: {fileID: 7307266941435632913, guid: b2b3ac9126bb55e41ba1ccd30b288a29, type: 3}
+  blowEffect: {fileID: 1851702391873127063, guid: 6e5ab4ca5b3ef694f8e8b02f697eec3c, type: 3}
   hp: 0
   spawn: {fileID: 0}
-  flashDuration: 1
+  flashDuration: 0.2
   spriteRenderers: []
 --- !u!114 &-5049619676460243188
 MonoBehaviour:

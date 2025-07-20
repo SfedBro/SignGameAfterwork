@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 1994441731298994373}
   m_Layer: 10
   m_Name: worm
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -837,9 +837,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 15
+  coinReward: 3
+  deathEffectDuration: 0.3
+  explosionControllerPrefab: {fileID: 7307266941435632913, guid: b2b3ac9126bb55e41ba1ccd30b288a29, type: 3}
+  blowEffect: {fileID: 1851702391873127063, guid: 6e5ab4ca5b3ef694f8e8b02f697eec3c, type: 3}
   hp: 0
   spawn: {fileID: 0}
-  flashDuration: 1
+  flashDuration: 0.2
   spriteRenderers: []
 --- !u!114 &-3533174726775677905
 MonoBehaviour:
