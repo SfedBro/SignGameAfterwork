@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpellCast : MonoBehaviour
 {
     [Header("Staff Settings")]
-    [SerializeField] private Transform wandTip; // точка на посохе для эффектов и каста заклинаний
+    private Transform wandTip; // точка на посохе для эффектов и каста заклинаний
     [SerializeField] private float wandOffset = 1f; // расстояние нижнего конца посоха от центра персонажа
     [SerializeField] private Vector3 wandPlayerCenterOffset = new Vector3(0, -0.36f, 0);
     [SerializeField] private Transform wandTransform;
@@ -21,6 +21,9 @@ public class SpellCast : MonoBehaviour
     [SerializeField] private GameObject aimWhite;
     [SerializeField] private float spellSpeed = 15f;
     [SerializeField] private ParticleSystem redWandParticles;
+    [SerializeField] private ParticleSystem blueWandParticles;
+    [SerializeField] private ParticleSystem greenWandParticles;
+    [SerializeField] private ParticleSystem whiteWandParticles;
     [SerializeField] private ParticleSystem castEffectParticles;
     [SerializeField] private float spellDuration = 3f;
     [SerializeField] private float aimRotationSpeed = 200f;
@@ -36,6 +39,7 @@ public class SpellCast : MonoBehaviour
     private Spell lastUsedSpell = null;
     private bool spellDuplicate = false;
     private GameObject aim;
+    private ParticleSystem wandGlowing;
 
     public void SetSpell(Spell someSpell)
     {
@@ -63,6 +67,13 @@ public class SpellCast : MonoBehaviour
         mainCamera = Camera.main;
         redWandParticles.Pause();
         redWandParticles.Clear();
+        blueWandParticles.Pause();
+        blueWandParticles.Clear();
+        greenWandParticles.Pause();
+        greenWandParticles.Clear();
+        whiteWandParticles.Pause();
+        whiteWandParticles.Clear();
+
 
         if (aim) aim.SetActive(false);
         lastHorizontalInput = 0f;
@@ -88,8 +99,8 @@ public class SpellCast : MonoBehaviour
             }
             isCasting = false;
             Destroy(activeAim);
-            redWandParticles.Pause();
-            redWandParticles.Clear();
+            wandGlowing.Pause();
+            wandGlowing.Clear();
         }
 
         if (isCasting)
@@ -120,22 +131,28 @@ public class SpellCast : MonoBehaviour
         if (spellToCast.MainElement == "Water")
         {
             aim = aimBlue;
+            wandGlowing = blueWandParticles;
+
         }
         else if (spellToCast.MainElement == "Earth")
         {
             aim = aimGreen;
+            wandGlowing = greenWandParticles;
         }
         else if (spellToCast.MainElement == "Air")
         {
             aim = aimWhite;
+            wandGlowing = whiteWandParticles;
         }
         else
         {
             aim = aimRed;
+            wandGlowing = redWandParticles;
         }
+        wandTip = wandGlowing.GetComponent<Transform>();
         activeAim = Instantiate(aim, targetPosition, Quaternion.identity);
         activeAim.SetActive(true);
-        redWandParticles.Play();
+        wandGlowing.Play();
     }
 
     private void UpdateCasting()
@@ -187,7 +204,7 @@ public class SpellCast : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        redWandParticles.Pause();
+        wandGlowing.Pause();
         wandSpriteRenderer.color = Color.black;
 
         lastUsedSpell = spellToCast;
@@ -253,8 +270,8 @@ public class SpellCast : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
-        redWandParticles.Pause();
-        redWandParticles.Clear();
+        wandGlowing.Pause();
+        wandGlowing.Clear();
         Destroy(activeAim);
         wandSpriteRenderer.color = Color.black;
     }
