@@ -254,7 +254,9 @@ public class LandEnemyMovement : MonoBehaviour
     {
         Vector2 agentPos = transform.position;
         Vector2 targetPos = target.position;
-        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, target))
+        NavMeshPath path = new NavMeshPath();
+        bool isOnPath = agent.CalculatePath(targetPos, path);
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, target) && isOnPath && path.status == NavMeshPathStatus.PathComplete)
         {
             if (waitForPlayerCoroutine != null)
             {

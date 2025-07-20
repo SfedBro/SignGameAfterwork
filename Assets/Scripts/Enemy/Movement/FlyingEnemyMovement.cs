@@ -1,4 +1,6 @@
 using System.Collections;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -134,7 +136,9 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, target))
+        NavMeshPath path = new NavMeshPath();
+        bool isOnPath = agent.CalculatePath(target.position, path);
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, target) && isOnPath && path.status == NavMeshPathStatus.PathComplete)
         {
             if (waitForPlayerCoroutine != null)
             {
