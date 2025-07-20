@@ -1,7 +1,8 @@
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 public class PauseManager : MonoBehaviour
 {
@@ -15,17 +16,30 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button mainSettingsIcon;
     [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private UIManager ui_manager;
     private bool isPaused = false;
+
+    [Header("Volume")]
+    public AudioSource audioSource;
+    public AudioMixer audioMixer;
+    public AudioClip hoverSound;
+    public AudioClip clickSound;
 
     void Start()
     {
+        GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
+        if (manager != null)
+        {
+            ui_manager = manager.GetComponent<UIManager>();
+        }
         exitButton.onClick.AddListener(ExitGame);
         pauseIcon.onClick.AddListener(OpenGameSettingsPanel);
         mainSettingsIcon.onClick.AddListener(OpenLevelSettings);
         continueButton.onClick.AddListener(OpenCloseSettings);
-        toMainMenuButton.onClick.AddListener(OpenMainMenu);
-        settingsButton.onClick.AddListener(OpenCloseSettings);
-
+        if (toMainMenuButton != null)
+            toMainMenuButton.onClick.AddListener(OpenMainMenu);
+        if (settingsButton != null)
+            settingsButton.onClick.AddListener(OpenCloseSettings);
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
@@ -37,8 +51,22 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenCloseSettings();
-            // TogglePause();
         }
+
+        if (isPaused && Input.GetMouseButtonDown(0))
+        {
+            if (!IsPointerOverUIObject())
+            {
+                OpenCloseSettings();
+            }
+        }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        if (EventSystem.current == null) return false;
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private void OpenLevelSettings()
@@ -76,14 +104,27 @@ public class PauseManager : MonoBehaviour
 
     private void OpenCloseSettings()
     {
-        Debug.Log(isPaused);
         if (!isPaused)
         {
-            settingsPanel.SetActive(true);
+            if (ui_manager != null)
+            {
+                ui_manager.ShowScreen(UIScreen.Settings);
+            }
+            else
+            {
+                settingsPanel.SetActive(true);
+            }
         }
         else
         {
-            settingsPanel.SetActive(false);
+            if (ui_manager != null)
+            {
+                ui_manager.ShowScreen(UIScreen.MainCanvas);
+            }
+            else
+            {
+                settingsPanel.SetActive(false);
+            }
         }
         TogglePause();
     }
@@ -99,5 +140,22 @@ public class PauseManager : MonoBehaviour
     private void CloseSettings()
     {
         settingsPanel.SetActive(false);
+    }
+
+    public void OnMasterVolumeChanged(float value) {
+        audioMixer.SetFloat("masterVolume", value);
+    }
+    public void OnMusicVolumeChanged(float value) {
+        audioMixer.SetFloat("musicVolume", value);
+    }
+    public void OnSoundsVolumeChanged(float value) {
+        audioMixer.SetFloat("soundsVolume", value);
+    }
+
+    public void PlayHoverSound() {
+        audioSource.PlayOneShot(hoverSound);
+    }
+    public void PlayClickSound() {
+        audioSource.PlayOneShot(clickSound);
     }
 }

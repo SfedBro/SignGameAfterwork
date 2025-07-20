@@ -12,7 +12,9 @@ public class Spell : ScriptableObject
     [Header("Специальные настройки")]
 
     [SerializeField] private string effect;
+    [SerializeField] private float effectAmount;
     [SerializeField] private float effectDuration;
+    [SerializeField] private float effectChance;
 
     public string Description
     {
@@ -46,11 +48,27 @@ public class Spell : ScriptableObject
         }
     }
 
+    public float EffectAmount
+    {
+        get
+        {
+            return effectAmount;
+        }
+    }
+
     public string Effect
     {
         get
         {
             return effect;
+        }
+    }
+
+    public float EffectChance
+    {
+        get
+        {
+            return effectChance;
         }
     }
 

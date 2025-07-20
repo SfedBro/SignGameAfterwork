@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float acceleration = 50f;
     [SerializeField] private float deceleration = 50f;
     [SerializeField] private float airControl = 0.8f;
@@ -42,6 +42,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float blurStartAlpha = 0.5f;
     [SerializeField] private float blurEndAlpha = 0f;
 
+    [Header("Audio")]
+    public AudioSource audioSourceOneShot;
+    public AudioSource audioSourceMoving;
+    public AudioClip audioJump;
+    public AudioClip audioDash;
+
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -61,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 lastVelocity;
     private float baseGravity;
     private float blurTimer;
+    private float baseMoveSpeed = 8f;
 
     private void Awake()
     {
@@ -72,6 +79,15 @@ public class PlayerController : MonoBehaviour
         dashesLeft = maxDashesInAir;
         baseGravity = rb.gravityScale;
         blurTimer = blurSpawnRate;
+        if (PlayerPrefs.HasKey("speed"))
+        {
+            moveSpeed = PlayerPrefs.GetFloat("speed", 8f);
+        }
+        else
+        {
+            moveSpeed = 8f;
+            PlayerPrefs.SetFloat("speed", 8f);
+        }
     }
 
     private void Update()
@@ -183,11 +199,18 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(movement * Vector2.right);
 
         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        bool moveSoundPlaying = false;
         if (moveInput != 0)
         {
             isFacingRight = moveInput > 0;
             spriteRenderer.flipX = isFacingRight;
+            moveSoundPlaying = isGrounded;
         }
+        if (moveSoundPlaying && !audioSourceMoving.isPlaying) {
+            audioSourceMoving.Play();
+            audioSourceMoving.loop = true;
+        }
+        else if (!moveSoundPlaying) audioSourceMoving.loop = false;
     }
 
     private void Jump()
@@ -196,6 +219,7 @@ public class PlayerController : MonoBehaviour
         jumpsLeft--;
         coyoteTimer = 0f;
         jumpBufferTimer = 0f;
+        audioSourceOneShot.PlayOneShot(audioJump);
     }
 
     private void StartDash()
@@ -208,6 +232,7 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2((isFacingRight ? 1 : -1) * dashSpeed, 0f);
         rb.gravityScale = 0f;
         isMotionBlurActive = true;
+        audioSourceOneShot.PlayOneShot(audioDash);
     }
 
     private void CreateBlurCopy()
@@ -280,8 +305,9 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedChange(float amount)
     {
-        moveSpeed += amount;
+        moveSpeed = baseMoveSpeed + baseMoveSpeed * amount;
     }
+
     private IEnumerator DisablePlatformCollision()
     {
         Collider2D[] overlappingPlatforms = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, platformLayer);

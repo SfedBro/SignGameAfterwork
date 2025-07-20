@@ -1,14 +1,29 @@
 using System.Collections;
+using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LayerMask), typeof(NavMeshAgent))]
+[RequireComponent(typeof(IAttack))]
 public class FlyingEnemyMovement : MonoBehaviour
 {
     [SerializeField]
     private EnemyInteractionCharacteristics stats;
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private IAttack attackScript;
+    [SerializeField]
+    private int damage;
+    [SerializeField]
+    private float attackPeriod;
+    [SerializeField]
+    private bool isRanged;
+    [SerializeField]
+    private GameObject projectile;
+    [SerializeField]
+    private float projSpeed;
     [SerializeField]
     private LayerMask consideredMasks;
     private string playerTag;
@@ -34,7 +49,15 @@ public class FlyingEnemyMovement : MonoBehaviour
     private bool isWaitingForPlayer;
     private Coroutine waitForPlayerCoroutine;
     private Coroutine patrolCoroutine;
+    //private Coroutine shootingCoroutine;
     private Vector2 initPatrolPosition;
+    [SerializeField]
+    private bool shouldRotate = true;
+    [SerializeField]
+    private bool isRotatedRight = false;
+    [SerializeField]
+    private bool isInitialRight = false;
+    private float initialYRotation;
     public Transform Target
     {
         set
@@ -61,9 +84,14 @@ public class FlyingEnemyMovement : MonoBehaviour
             speed = stats.speed;
             acceleration = stats.acceleration;
             stoppingDistance = stats.stoppingDistance;
+            damage = stats.damage;
             if (stats.isGround)
             {
                 Debug.Log("Wrong enemy type! :: FlyingEnemyMovement; OnValidate");
+            }
+            if (GetComponent<Enemy>())
+            {
+                GetComponent<Enemy>().maxHp = stats.health;
             }
         }
     }
@@ -75,13 +103,35 @@ public class FlyingEnemyMovement : MonoBehaviour
         }
         if (target == null)
         {
-            target = FindFirstObjectByType<Player>().transform;
+            target = transform;
+            if (FindFirstObjectByType<Player>()?.transform != null)
+            {
+                target = FindFirstObjectByType<Player>().transform;
+            }
         }
+        if (attackScript == null)
+        {
+            attackScript = GetComponent<IAttack>();
+        }
+        initialYRotation = transform.rotation.y;
     }
     void Start()
     {
         playerTag = target.gameObject.tag;
         SetAgentParameters();
+        isRanged = attackScript is RangedAttack;
+        if (isRanged)
+        {
+            if (projectile == null)
+            {
+                Debug.LogWarning("No projectile on ranged enemy: " + this.name.ToString());
+            }
+        }
+        if (damage < 0)
+        {
+            damage = 0;
+            Debug.LogWarning("Damage on enemy " + this.name.ToString() + " was nullified due to negative value");
+        }
     }
     private void SetAgentParameters()
     {
@@ -94,40 +144,74 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, playerTag))
+        NavMeshPath path = new NavMeshPath();
+        bool isOnPath = agent.CalculatePath(target.position, path);
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, target) && isOnPath && path.status == NavMeshPathStatus.PathComplete)
+        if (shouldRotate)
         {
-            if (isPatrolRunning)
+            RotateCorrectly(agent.velocity.x);
+        }
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, target))
+        {
+            if (waitForPlayerCoroutine != null)
             {
-                isPatrolRunning = false;
-                if (patrolCoroutine != null)
-                {
-                    StopCoroutine(patrolCoroutine);
-                }
-            }
-            if (isWaitingForPlayer)
-            {
+                StopCoroutine(waitForPlayerCoroutine);
+                waitForPlayerCoroutine = null;
                 isWaitingForPlayer = false;
-                if (waitForPlayerCoroutine != null)
-                {
-                    StopCoroutine(waitForPlayerCoroutine);
-                }
+            }
+            if (patrolCoroutine != null)
+            {
+                StopCoroutine(patrolCoroutine);
+                patrolCoroutine = null;
+                isPatrolRunning = false;
             }
             agent.stoppingDistance = stoppingDistance;
             agent.SetDestination(target.position);
+            if ((agent.transform.position - target.position).magnitude <= stoppingDistance)
+            {
+                if (attackScript != null)
+                {
+                    if (isRanged)
+                    {
+                        attackScript.Attack(target, damage, attackPeriod, projSpeed, projectile);
+                        if (shouldRotate)
+                        {
+                            RotateCorrectly(target.position.x - agent.transform.position.x);
+                        }
+                    }
+                    else
+                    {
+                        attackScript.Attack(target, damage, attackPeriod);
+                    }
+                }
+            }
         }
         else
         {
             agent.stoppingDistance = 0;
             if (!isPatrolRunning && !isWaitingForPlayer)
             {
-                waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol());
+                waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol(untilPatrolTime));
             }
         }
     }
-    private IEnumerator WaitBeforePatrol()
+    private void RotateCorrectly(float measure)
+    {
+        bool rotatedToRight = measure > 0 ? true : false;
+        if (isRotatedRight ^ rotatedToRight)
+        {
+            SetFacing(rotatedToRight);
+        }
+    }
+    private void SetFacing(bool initial)
+    {
+        transform.localRotation = Quaternion.Euler(0f, initialYRotation + (initial ? 180f : 0f), 0f);
+        isRotatedRight = initial;
+    }
+    private IEnumerator WaitBeforePatrol(float time)
     {
         isWaitingForPlayer = true;
-        yield return new WaitForSeconds(untilPatrolTime);
+        yield return new WaitForSeconds(time);
         initPatrolPosition = agent.transform.position;
         isWaitingForPlayer = false;
         isPatrolRunning = true;
@@ -136,18 +220,21 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     private IEnumerator Patrol()
     {
+        bool isAtPlace = false;
+        Vector2 newPos;
         while (isPatrolRunning)
         {
-            Vector2 newPos = initPatrolPosition + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * patrolRange;
-
-            agent.SetDestination(newPos);
-
-            while (!agent.pathPending && agent.remainingDistance > agent.stoppingDistance)
+            isAtPlace = agent.remainingDistance <= agent.stoppingDistance;
+            if (isAtPlace)
+            {
+                newPos = initPatrolPosition + new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * patrolRange;
+                agent.SetDestination(newPos);
+                yield return new WaitForSeconds(untilChangeTime);
+            }
+            else
             {
                 yield return null;
             }
-
-            yield return new WaitForSeconds(untilChangeTime);
         }
     }
     private void OnDrawGizmos()
@@ -183,5 +270,9 @@ public class FlyingEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+    }
+    public void SpeedChange(float change)
+    {
+        agent.speed = speed + speed * change;
     }
 }

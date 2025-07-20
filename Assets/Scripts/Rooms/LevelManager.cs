@@ -1,13 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
     public int roomsX = 4, roomsY = 4;
     public float roomOffsetX, roomOffsetY;
+    public bool usePath = true;
+    public bool removeUselessClusters = false;
+    // public int minPathSize = 6, maxPathSize = 15;
+    public List<RoomInfo> startRooms;
+    public RoomInfo bossRoomInfo;
+    public List<RoomCount> maxRoomCount;
 
     RoomInfoInstance[,] rooms;
 
@@ -22,39 +28,55 @@ public class LevelManager : MonoBehaviour
 
     void GenerateLevel() {
         List<RoomInfo> roomInfos = Resources.LoadAll<RoomInfo>("RoomInfos").ToList();
-        for (int x = 0; x < roomsX; ++x) {
-            for (int y = 0; y < roomsY; ++y) {
-                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
-                List<RoomInfo> possibleRooms = roomInfos.Where(ri => possibleRD.CanFit(ri.rd)).ToList();
-                if (possibleRooms.Count == 0) continue;
-                RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
-                // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
-                Transform t = new GameObject($"Root {x} {y} {ri.rd}").transform;
-                t.position = new(x * roomOffsetX, -y * roomOffsetY);
-                rooms[x, y] = new RoomInfoInstance{roomInfo = ri, root = t};
+        // List<Vector2Int> path = new PathGenerator(roomsX, roomsY, minPathSize, maxPathSize).GenerateRandomPath(0, 0, roomsX - 1, roomsY - 1);
+        List<Vector2Int> path = new PathGenerator(roomsX, roomsY).GenerateRandomPath(0, 0, roomsX - 1, roomsY - 1) ?? throw new Exception("Path cannot be generated");
+        Debug.Log("Path: " + string.Join(" ", path.Select(p => $"[{p[0]} {p[1]}]")));
+        RoomDirections[,] pathRooms = new RoomDirections[roomsX, roomsY];
+        for (int x = 0; x < roomsX; ++x) for (int y = 0; y < roomsY; ++y) pathRooms[x, y] = RoomDirections.Any();
+        for (int i = 0; i < path.Count - 1; ++i) {
+            Vector2Int room1 = path[i], room2 = path[i + 1];
+            if (room1[0] > room2[0]) {
+                pathRooms[room1[0], room1[1]].left = DirAvailability.Available;
+                pathRooms[room2[0], room2[1]].right = DirAvailability.Available;
+            } else if (room1[0] < room2[0]) {
+                pathRooms[room1[0], room1[1]].right = DirAvailability.Available;
+                pathRooms[room2[0], room2[1]].left = DirAvailability.Available;
+            } else if (room1[1] > room2[1]) {
+                pathRooms[room1[0], room1[1]].up = DirAvailability.Available;
+                pathRooms[room2[0], room2[1]].down = DirAvailability.Available;
+            } else if (room1[1] < room2[1]) {
+                pathRooms[room1[0], room1[1]].down = DirAvailability.Available;
+                pathRooms[room2[0], room2[1]].up = DirAvailability.Available;
             }
         }
+        rooms[roomsX - 1, roomsY - 1] = new RoomInfoInstance{roomInfo = bossRoomInfo};
+        List<RoomCount> currentRoomCount = new(maxRoomCount);
+        for (int x = 0; x < roomsX; ++x) {
+            for (int y = 0; y < roomsY; ++y) {
+                if (rooms[x, y] != null) continue;
+                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
+                if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
+                List<RoomInfo> possibleRooms = (x == 0 && y == 0 ? startRooms : roomInfos)
+                    .Where(ri => !currentRoomCount.Any(rc => rc.roomInfo == ri) || currentRoomCount.Find(rc => rc.roomInfo == ri).count > 0)
+                    .Where(ri => possibleRD.CanFit(ri.rd)).ToList();
+                if (possibleRooms.Count == 0) continue;
+                RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
+                if (currentRoomCount.Any(r => r.roomInfo == ri)) --currentRoomCount.Find(rc => rc.roomInfo == ri).count;
+                // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
+                rooms[x, y] = new RoomInfoInstance{roomInfo = ri};
+            }
+        }
+        if (removeUselessClusters) RemoveUselessClusters();
     }
 
-    async void LoadLevel() {
+    void LoadLevel() {
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
                 RoomInfoInstance rii = rooms[x, y];
-                await LoadSceneObjects(rii.roomInfo.sceneName, rii.root);
+                if (rii == null) continue;
+                rii.root = Instantiate(rii.roomInfo.roomPrefab, new(x * roomOffsetX, -y * roomOffsetY), Quaternion.identity).transform;
             }
         }
-    }
-
-    async Task LoadSceneObjects(string sceneName, Transform t) {
-        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-        // for (int i = 1; i < SceneManager.loadedSceneCount; ++i) {
-        //     scene = SceneManager.GetSceneAt(i);
-        //     if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
-        // }
-        scene.GetRootGameObjects().ToList().ForEach(go => go.transform.SetParent(t, false));
-        // t.gameObject.SetActive(false);
-        await SceneManager.UnloadSceneAsync(scene);
     }
 
     RoomDirections GetRoomDirectionsAvailable(int x, int y) {
@@ -80,4 +102,107 @@ public class LevelManager : MonoBehaviour
     public RoomInfoInstance GetRoom(int x, int y) {
         return rooms[x, y];
     }
+
+    void RemoveUselessClusters() {
+        List<HashSet<RoomInfoInstance>> clusters = new();
+        for (int x = 0; x < roomsX; ++x) {
+            for (int y = 0; y < roomsY; ++y) {
+                RoomInfoInstance rii = rooms[x, y];
+                if (rii == null) continue;
+                if (clusters.Any(cluster => cluster.Contains(rii))) continue;
+                HashSet<RoomInfoInstance> cluster = new() {rii};
+                bool updated = true;
+                while (updated) {
+                    updated = false;
+                    for (int x2 = 0; x2 < roomsX; ++x2) {
+                        for (int y2 = 0; y2 < roomsY; ++y2) {
+                            RoomInfoInstance rii2 = rooms[x2, y2];
+                            if (cluster.Contains(rii2) || rii2 == null) continue;
+                            bool add = false;
+                            print($"{x2} {y2} {rii2.roomInfo.rd}");
+                            if (rii2.roomInfo.rd.up == DirAvailability.Available && cluster.Contains(rooms[x, y - 1])) add = true;
+                            if (rii2.roomInfo.rd.down == DirAvailability.Available && cluster.Contains(rooms[x, y + 1])) add = true;
+                            if (rii2.roomInfo.rd.left == DirAvailability.Available && cluster.Contains(rooms[x - 1, y])) add = true;
+                            if (rii2.roomInfo.rd.right == DirAvailability.Available && cluster.Contains(rooms[x + 1, y])) add = true;
+                            if (add) {
+                                updated = true;
+                                cluster.Add(rii2);
+                            }
+                        }
+                    }
+                }
+                clusters.Add(cluster);
+            }
+        }
+        print(clusters.Count);
+        clusters = clusters.Where(cluster => !cluster.Contains(rooms[0, 0])).ToList();
+        if (clusters.Count > 0) {
+            for (int x = 0; x < roomsX; ++x) {
+                for (int y = 0; y < roomsY; ++y) {
+                    if (clusters.Any(cluster => cluster.Contains(rooms[x, y]))) rooms[x, y] = null;
+                }
+            }
+        }
+    }
+}
+
+class PathGenerator {
+    readonly int roomsX, roomsY;
+    readonly int minPathSize, maxPathSize;
+
+    static readonly List<Vector2Int> directions = new() {
+        new(1, 0),
+        new(-1, 0),
+        new(0, 1),
+        new(0, -1)
+    };
+    HashSet<Vector2Int> visited;
+
+    public PathGenerator(int roomsX, int roomsY, int? minPathSize = null, int? maxPathSize = null) {
+        this.roomsX = roomsX;
+        this.roomsY = roomsY;
+        this.minPathSize = minPathSize ?? 1;
+        this.maxPathSize = maxPathSize ?? roomsX * roomsY;
+    }
+
+    public List<Vector2Int> GenerateRandomPath(int xFrom, int yFrom, int xTo, int yTo) {
+        Vector2Int startPoint = new(xFrom, yFrom);
+        Vector2Int endPoint = new(xTo, yTo);
+        visited = new() {startPoint};
+        IEnumerable<Vector2Int> dirs = directions.OrderBy(_ => Random.value);
+        foreach (var dir in dirs) {
+            List<Vector2Int> path = Extend(startPoint, dir, endPoint, minPathSize, maxPathSize);
+            if (path == null) continue;
+            path.Insert(0, startPoint);
+            return path;
+        }
+        return null;
+    }
+
+    List<Vector2Int> Extend(Vector2Int startPoint, Vector2Int direction, Vector2Int endPoint, int minPathSize, int maxPathSize) {
+        Vector2Int newPoint = startPoint + direction;
+        if (!IsPointInBounds(newPoint) || visited.Contains(newPoint)) return null;
+        if (newPoint == endPoint && minPathSize <= 1 && maxPathSize >= 1) return new() {newPoint};
+        else if (maxPathSize < 1) return null;
+        visited.Add(newPoint);
+        IEnumerable<Vector2Int> dirs = directions.OrderBy(_ => Random.value);
+        foreach (var dir in dirs) {
+            List<Vector2Int> path = Extend(newPoint, dir, endPoint, minPathSize - 1, maxPathSize - 1);
+            if (path == null) continue;
+            path.Insert(0, newPoint);
+            return path;
+        }
+        visited.Remove(newPoint);
+        return null;
+    }
+
+    bool IsPointInBounds(Vector2Int point) {
+        return point[0] >= 0 && point[0] < roomsX && point[1] >= 0 && point[1] < roomsY;
+    }
+}
+
+[Serializable]
+public class RoomCount {
+    public RoomInfo roomInfo;
+    public int count;
 }

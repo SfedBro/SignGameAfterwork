@@ -2,9 +2,9 @@ name: Build project for all platforms
 
 on:
   push:
-    branches: [main]
+    branches: [Development]
   pull_request:
-    branches: [main]
+    branches: [Development]
 
 jobs:
   buildForAllSupportedPlatforms:

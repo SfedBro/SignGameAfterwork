@@ -15,7 +15,10 @@ public class ExplosionController : MonoBehaviour
             TriggerExplosion();
         }
     }
-
+    public void SetCoinCount(int coins)
+    {
+        coinCount = coins;
+    }
     public void TriggerExplosion()
     {
         if (coinPrefab == null)
@@ -43,7 +46,7 @@ public class ExplosionController : MonoBehaviour
                 Debug.LogWarning("Rigidbody2D not found on instantiated coin!", coin);
             }
 
-            Destroy(coin, lifetime);
+            Destroy(coin, lifetime + Random.Range(-0.3f, 0.3f));
         }
     }
 }

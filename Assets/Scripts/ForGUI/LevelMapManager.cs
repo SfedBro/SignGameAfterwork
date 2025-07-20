@@ -7,7 +7,7 @@ public class LevelMapManager : MonoBehaviour
     public float roomOffsetX, roomOffsetY;
     public GameObject passPrefab;
 
-    bool mapActive = false;
+    bool mapActive = true;
     GameObject[,] roomsMap;
     GameObject[,] passMapHorizontal; // проходы от комнат вниз
     GameObject[,] passMapVertical; // проходы от комнат вправо
@@ -17,13 +17,14 @@ public class LevelMapManager : MonoBehaviour
     }
 
     void GenerateMap() {
-        mapRoot.gameObject.SetActive(false);
+        mapRoot.gameObject.SetActive(mapActive);
         LevelManager lm = FindFirstObjectByType<LevelManager>();
         roomsMap = new GameObject[lm.roomsX, lm.roomsY];
         passMapHorizontal = new GameObject[lm.roomsX - 1, lm.roomsY];
         passMapVertical = new GameObject[lm.roomsX, lm.roomsY - 1];
         for (int x = 0; x < lm.roomsX; ++x) {
             for (int y = 0; y < lm.roomsY; ++y) {
+                if (lm.GetRoom(x, y) == null) continue;
                 roomsMap[x, y] = Instantiate(roomPrefab, mapRoot, false);
                 roomsMap[x, y].name = $"{roomPrefab.name} {x} {y}";
                 roomsMap[x, y].transform.localPosition = new(x * roomOffsetX, -y * roomOffsetY, 0);

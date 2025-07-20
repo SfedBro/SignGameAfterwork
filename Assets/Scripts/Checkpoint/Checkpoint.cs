@@ -4,9 +4,15 @@ using System.Collections.Generic;
 
 public class Checkpoint : MonoBehaviour
 {
-    private GameObject player;
-    private int maxHP;
+    [SerializeField] private int maxHill = 3;
+    private int hillAttempt = 0;
+    
     public int index;
+
+    void Start()
+    {
+        hillAttempt = 0;
+    }
 
     // void Awake()
     // {
@@ -22,12 +28,15 @@ public class Checkpoint : MonoBehaviour
         Debug.Log("Trigger entered by: " + other.name);
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().IncreaseHPToFull();
+            if (hillAttempt < maxHill && !other.GetComponent<Player>().IsMaxHP())
+            {
+                other.GetComponent<Player>().IncreaseHPToFull();
+                hillAttempt++;
+            }
             if (transform.position.x > DataContainer.checkpointIndex.x)
             {
                 DataContainer.checkpointIndex = transform.position;
             }
-            
         }
     }
 }

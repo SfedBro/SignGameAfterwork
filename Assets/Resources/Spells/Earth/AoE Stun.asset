@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419f8c208e0266d4f8b2caabe3903328, type: 3}
+  m_Name: AoE Stun
+  m_EditorClassIdentifier: 
+  description: "\u041E\u0433\u043B\u0443\u0448\u0435\u043D\u0438\u0435 \u0432\u0440\u0430\u0433\u043E\u0432
+    \u043D\u0430 \u043D\u0435\u043A\u043E\u0442\u043E\u0440\u043E\u0439 \u043E\u0431\u043B\u0430\u0441\u0442\u0438
+    \u043D\u0430 2 \u0441\u0435\u043A\u0443\u043D\u0434\u044B"
+  mainElement: Earth
+  combo: Earth1+Earth3
+  effect: Stun
+  effectAmount: 0
+  effectDuration: 2
+  effectChance: 1
+  spellPrefab: {fileID: 2571505409949303974, guid: 41606772055e17747a4b7a670a8eb86f, type: 3}
+  radius: 2.5
+  areaLifetime: 0.5

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 
 public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -6,7 +7,8 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public AudioSource sfxSource;
     public AudioClip hoverSound;
     public AudioClip clickSound;
-    [SerializeField] private float hoverDelay = 0.2f; // Задержка перед воспроизведением звука наведения (в секундах)
+    public AudioMixerGroup soundsMixerGroup;
+    [SerializeField] private float hoverDelay = 0.2f; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 
     private bool isPointerOver = false;
     private float pointerEnterTime;
@@ -16,6 +18,7 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         sfxSource = gameObject.AddComponent<AudioSource>();
         sfxSource.loop = false;
         sfxSource.volume = 0.8f;
+        sfxSource.outputAudioMixerGroup = soundsMixerGroup;
     }
 
     void Awake()

@@ -23,6 +23,11 @@ public class UIHPController : MonoBehaviour
     private int previousHP;
     private bool isAnimating = false;
 
+    void Awake()
+    {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); 
+    }
+
     void Start()
     {
         if (playerScript != null)
@@ -257,7 +262,7 @@ public class UIHPController : MonoBehaviour
     {
         isAnimating = true;
 
-        // Зеленое свечение для восстановленного сердца
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         int healedHeartIndex = Mathf.FloorToInt((currentHP - 1) / 2f);
         if (healedHeartIndex >= 0 && healedHeartIndex < heartSlots.Count)
         {
@@ -280,7 +285,7 @@ public class UIHPController : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
 
             Vector3 randomOffset = Random.insideUnitSphere * strength;
-            randomOffset.z = 0f; // Только в 2D
+            randomOffset.z = 0f; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ 2D
 
             heartTransform.localPosition = originalPos + randomOffset;
             yield return null;
@@ -296,7 +301,7 @@ public class UIHPController : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        // Увеличение
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         while (elapsedTime < duration * 0.5f)
         {
             elapsedTime += Time.unscaledDeltaTime;
@@ -306,7 +311,7 @@ public class UIHPController : MonoBehaviour
             yield return null;
         }
 
-        // Уменьшение
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         elapsedTime = 0f;
         while (elapsedTime < duration * 0.5f)
         {
@@ -322,11 +327,11 @@ public class UIHPController : MonoBehaviour
 
     private IEnumerator FlashHeart(GameObject heartSlot, Color flashColor, float duration)
     {
-        // Получаем все Image компоненты в слоте
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ Image пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
         UnityEngine.UI.Image[] images = heartSlot.GetComponentsInChildren<UnityEngine.UI.Image>();
         Color[] originalColors = new Color[images.Length];
 
-        // Сохраняем оригинальные цвета
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         for (int i = 0; i < images.Length; i++)
         {
             originalColors[i] = images[i].color;
@@ -338,7 +343,7 @@ public class UIHPController : MonoBehaviour
 
         for (int flash = 0; flash < flashCount; flash++)
         {
-            // Устанавливаем цвет вспышки
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             for (int i = 0; i < images.Length; i++)
             {
                 images[i].color = flashColor;
@@ -346,7 +351,7 @@ public class UIHPController : MonoBehaviour
 
             yield return new WaitForSeconds(flashInterval * 0.5f);
 
-            // Возвращаем оригинальный цвет
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
             for (int i = 0; i < images.Length; i++)
             {
                 images[i].color = originalColors[i];
@@ -355,7 +360,7 @@ public class UIHPController : MonoBehaviour
             yield return new WaitForSeconds(flashInterval * 0.5f);
         }
 
-        // Убеждаемся, что цвета восстановлены
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for (int i = 0; i < images.Length; i++)
         {
             images[i].color = originalColors[i];

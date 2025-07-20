@@ -22,22 +22,20 @@ public class Player : MonoBehaviour
     private Player Instance;
     private bool isDead = false;
     private bool isDeathScreenUsing = true;
+    [SerializeField] private bool isCheckPointUsed = false;
+
+    [Header("Audio")]
+    public AudioSource audioSourceOneShot;
+    public AudioClip soundTakeDamage;
+    public AudioClip soundDeath;
 
     void Awake()
     {
         Instance = this;
+        if (isCheckPointUsed)
+            transform.position = DataContainer.checkpointIndex;
 
-        transform.position = DataContainer.checkpointIndex;
-
-        if (deathScreenPrefab != null)
-        {
-            deathScreenInstance = Instantiate(deathScreenPrefab);
-            deathScreenInstance.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("DeathScreenPrefab не найден");
-        }
+        CreateDeathScreen();
     }
 
     void Start()
@@ -49,33 +47,52 @@ public class Player : MonoBehaviour
         damageParticles = GetComponent<DamageParticles>();
         characterControl = GetComponent<CharacterController>();
         isDeathScreenUsing = true;
-        AddDScreenButtonFunctions();
     }
-    private void AddDScreenButtonFunctions()
+
+    private void CreateDeathScreen()
     {
         if (deathScreenPrefab != null)
         {
-            var buttons = deathScreenInstance.GetComponentsInChildren<Button>();
-            if (buttons.Length >= 2)
-            {
-                buttons[0].onClick.RemoveAllListeners();
-                buttons[1].onClick.RemoveAllListeners();
-                buttons[0].onClick.AddListener(GameManager.I.RestartGame);
-                buttons[1].onClick.AddListener(GameManager.I.ToMainMenu);
-            }
+            deathScreenInstance = Instantiate(deathScreenPrefab);
+            SetupDeathScreenButtons();
+            deathScreenInstance.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("DeathScreenPrefab не назначен в инспекторе!");
         }
     }
 
-    // for test
+    private void SetupDeathScreenButtons()
+    {
+        if (deathScreenInstance == null) return;
+
+        Button[] buttons = deathScreenInstance.GetComponentsInChildren<Button>();
+
+        if (buttons.Length >= 2)
+        {
+            // buttons[0].onClick.RemoveAllListeners();
+            // buttons[1].onClick.RemoveAllListeners();
+
+            buttons[0].onClick.AddListener(() => GameManager.I.RestartGame());
+            buttons[1].onClick.AddListener(() => GameManager.I.ToMainMenu());
+
+            Debug.Log("Кнопки экрана смерти настроены успешно");
+        }
+        else
+        {
+            Debug.LogWarning($"Найдено {buttons.Length} кнопок, ожидалось минимум 2");
+        }
+    }
+
     void Update()
     {
         iSecondsCount = Mathf.Max(iSecondsCount - Time.deltaTime, 0);
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            hp--;
-            Debug.Log($"Player HP: {hp}");
-        }
-        // for test
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //     hp--;
+        //     Debug.Log($"Player HP: {hp}");
+        // }
         if (hp <= 0 && !isDead)
         {
             Die();
@@ -99,34 +116,51 @@ public class Player : MonoBehaviour
         hp = maxHP;
     }
 
+    public bool IsMaxHP()
+    {
+        return hp == maxHP;
+    }
+
     public void TakeDamage(int damage, Vector3 direction = default)
     {
-        if (hp <= 0 || iSecondsCount > 0) return;
-        hp = Mathf.Max(hp - damage, 0);
-        iSecondsCount = iSeconds;
-        Debug.Log($"HP {hp}");
-        if (hp <= 0) GameManager.I.PlayerDied();
-        if (impactFlash != null)
+        if (GetComponent<SpellEffect>().DodgeAttack() == false)
         {
-            impactFlash.Flash(spriteRenderer, flashDuration);
-        }
-        if (direction == default)
-        {
-            damageParticles.PlayMediumSparkEffect(transform.position);
+            if (hp <= 0 || iSecondsCount > 0) return;
+            hp = Mathf.Max(hp - damage, 0);
+            iSecondsCount = iSeconds;
+            Debug.Log($"HP {hp}");
+            // if (hp <= 0) GameManager.I.PlayerDied();
+            if (impactFlash != null)
+            {
+                impactFlash.Flash(spriteRenderer, flashDuration);
+            }
+            if (direction == Vector3.zero)
+            {
+                damageParticles.PlayMediumSparkEffect(transform.position);
+            }
+            else
+            {
+                Vector2 fixedDirection = new Vector2(direction.x, direction.y);
+                damageParticles.PlayMediumSparkEffect(transform.position, fixedDirection);
+            }
+            if (hp <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                audioSourceOneShot.PlayOneShot(soundTakeDamage);
+            }
         }
         else
         {
-            Vector2 fixedDirection = new Vector2(direction.x, direction.y);
-            damageParticles.PlayMediumSparkEffect(transform.position, fixedDirection);
-        }
-        if (hp <= 0)
-        {
-            Die();
+            Debug.Log($"Атака по {gameObject.name} отражена!");
         }
     }
 
     private void Die()
     {
+        audioSourceOneShot.PlayOneShot(soundDeath);
         isDead = true;
         // GameManager.I.PlayerDied();
         Time.timeScale = 0;

@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.UI.Image;
 
-[RequireComponent(typeof(CapsuleCollider2D), typeof(LayerMask), typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(IAttack))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class LandEnemyMovement : MonoBehaviour
 {
     //ScriptableObject
@@ -12,6 +13,18 @@ public class LandEnemyMovement : MonoBehaviour
     //Target detection
     [SerializeField]
     private Transform target;
+    [SerializeField]
+    private IAttack attackScript;
+    [SerializeField]
+    private int damage;
+    [SerializeField]
+    private float attackPeriod;
+    [SerializeField]
+    private bool isRanged;
+    [SerializeField]
+    private GameObject projectile;
+    [SerializeField]
+    private float projSpeed;
     [SerializeField]
     private float visionRange;
     [SerializeField]
@@ -60,9 +73,18 @@ public class LandEnemyMovement : MonoBehaviour
     private float gravity;
     //Other
     [SerializeField]
+    private Coroutine jumpingCoroutine;
+    [SerializeField]
     private bool isJumping;
     [SerializeField]
     private Vector3[] corners;
+    [SerializeField]
+    private bool shouldRotate = true;
+    [SerializeField]
+    private bool isRotatedRight = false;
+    [SerializeField]
+    private bool isInitialRight = false;
+    private float initialYRotation;
     private void OnValidate()
     {
         if (stats != null)
@@ -71,6 +93,7 @@ public class LandEnemyMovement : MonoBehaviour
             speed = stats.speed;
             acceleration = stats.acceleration;
             stoppingDistance = stats.stoppingDistance;
+            damage = stats.damage;
             if (stats.isGround)
             {
                 jumpHeight = stats.maxJumpHeight;
@@ -81,6 +104,10 @@ public class LandEnemyMovement : MonoBehaviour
             else
             {
                 Debug.Log("Wrong enemy type! :: LandEnemyMovement; OnValidate");
+            }
+            if (GetComponent<Enemy>())
+            {
+                GetComponent<Enemy>().maxHp = stats.health;
             }
         }
     }
@@ -96,13 +123,35 @@ public class LandEnemyMovement : MonoBehaviour
         }
         if (target == null)
         {
-            target = FindFirstObjectByType<Player>().transform;
+            target = transform;
+            if (FindFirstObjectByType<Player>()?.transform != null)
+            {
+                target = FindFirstObjectByType<Player>().transform;
+            }
         }
+        if (attackScript == null)
+        {
+            attackScript = GetComponent<IAttack>();
+        }
+        initialYRotation = transform.rotation.y;
     }
     void Start()
     {
         playerTag = target.gameObject.tag;
         SetAgentParameters();
+        isRanged = attackScript is RangedAttack;
+        if (isRanged)
+        {
+            if (projectile == null)
+            {
+                Debug.LogWarning("No projectile on ranged enemy: " + this.name.ToString());
+            }
+        }
+        if (damage < 0)
+        {
+            damage = 0;
+            Debug.LogWarning("Damage on enemy " + this.name.ToString() + " was nullified due to negative value");
+        }
     }
     private void SetAgentParameters()
     {
@@ -114,22 +163,68 @@ public class LandEnemyMovement : MonoBehaviour
     }
     void Update()
     {
+        if (shouldRotate)
+        {
+            RotateCorrectly(agent.velocity.x);
+        }
         if (ShouldJump())
         {
-            StartCoroutine(JumpBezier());
+            jumpingCoroutine = StartCoroutine(JumpBezier());
         }
-        if (!isJumping)
+        IsStanding();
+        HandleGravity();
+        FollowPlayer();
+    }
+    private void RotateCorrectly(float measure)
+    {
+        bool rotatedToRight = measure > 0 ? true : false;
+        if (isRotatedRight ^ rotatedToRight)
         {
-            IsStanding();
-            HandleGravity();
-            FollowPlayer();
+            SetFacing(rotatedToRight);
         }
+    }
+    private void SetFacing(bool initial)
+    {
+        transform.localRotation = Quaternion.Euler(0f, initialYRotation + (initial ? 180f : 0f), 0f);
+        isRotatedRight = initial;
+    }
+    private bool ShouldJump()
+    {
+        if (jumpHeight <= 0)
+        {
+            return false;
+        }
+        corners = agent.path.corners;
+        if (corners.Length >= 2 && onGround && !isJumping)
+        {
+            Vector3 pos1 = corners[0];
+            Vector3 pos2 = corners[1] + agent.radius * Vector3.up;
+            if (corners.Length == 2)
+            {
+                pos2 = corners[1];
+            }
+            float heightDifference = Mathf.Abs(pos1.y - pos2.y);
+            if (heightDifference <= jumpHeight && heightDifference >= minJumpHeight)
+            {
+                //Debug.Log("Wanna jump");
+                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime * Time.smoothDeltaTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, target)))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     private IEnumerator JumpBezier()
     {
         isJumping = true;
         Vector2 startPos = corners[0];
-        Vector2 endPos = corners[1];
+        int i = 1;
+        if (corners.Length > 2)
+        {
+            i = 2;
+        }
+        Vector2 endPos = corners[i] + agent.radius * transform.up;
 
         float peakY = Mathf.Max(startPos.y, endPos.y) * 1.1f;
         Vector2 controlPoint = (startPos + endPos) * 0.5f;
@@ -146,29 +241,12 @@ public class LandEnemyMovement : MonoBehaviour
         }
         agent.transform.position = endPos;
         isJumping = false;
+        jumpingCoroutine = null;
+        yield return null;
     }
     private void IsStanding()
     {
         onGround = (Physics2D.CapsuleCast(enemyCollider.bounds.center, enemyCollider.size, enemyCollider.direction, 0, Vector2.down, groundDetectionOffset, ~notGroundMasks));
-    }
-    private bool ShouldJump()
-    {
-        corners = agent.path.corners;
-        if (corners.Length >= 2 && onGround && !isJumping)
-        {
-            Vector3 pos1 = corners[0];
-            Vector3 pos2 = corners[1] + agent.radius * Vector3.up;
-            float heightDifference = Mathf.Abs(pos1.y - pos2.y);
-            if (heightDifference <= jumpHeight && heightDifference >= minJumpHeight)
-            {
-                //Debug.Log("Wanna jump");
-                if (Mathf.Abs(pos1.x - pos2.x) <= speed * jumpTime && (GeneralEnemyBehaviour.LookingDirectlyAtPosition(pos1, pos2, consideredMasks) || GeneralEnemyBehaviour.LookingDirectlyAtPlayer(pos1, pos2, visionRange, consideredMasks, playerTag)))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
     private void HandleGravity()
     {
@@ -179,12 +257,16 @@ public class LandEnemyMovement : MonoBehaviour
         else
         {
             verticalSpeed = 0f;
+            //verticalSpeed = -gravity * Time.deltaTime;
         }
-        Vector2 currentPos = agent.transform.position;
-        Vector2 nextPos = new Vector2(currentPos.x, currentPos.y + verticalSpeed * Time.deltaTime);
-        if (IsPointOnNavMesh(nextPos))
+        if (jumpingCoroutine == null)
         {
-            agent.transform.position = nextPos;
+            Vector2 currentPos = agent.transform.position;
+            Vector2 nextPos = currentPos + Vector2.up * verticalSpeed * Time.deltaTime;
+            if (IsPointOnNavMesh(nextPos))
+            {
+                agent.transform.position = nextPos;
+            }
         }
     }
     private bool IsPointOnNavMesh(Vector2 point, float maxDistance = 1.0f)
@@ -194,9 +276,11 @@ public class LandEnemyMovement : MonoBehaviour
     }
     private void FollowPlayer()
     {
-        Vector2 agentPos = agent.transform.position;
+        Vector2 agentPos = transform.position;
         Vector2 targetPos = target.position;
-        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, playerTag))
+        NavMeshPath path = new NavMeshPath();
+        bool isOnPath = agent.CalculatePath(targetPos, path);
+        if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agentPos, targetPos, visionRange, consideredMasks, target) && isOnPath && path.status == NavMeshPathStatus.PathComplete)
         {
             if (waitForPlayerCoroutine != null)
             {
@@ -212,45 +296,65 @@ public class LandEnemyMovement : MonoBehaviour
             }
 
             agent.stoppingDistance = stoppingDistance;
-            Vector2 goalPosition = (Mathf.Abs(targetPos.y - agentPos.y) >= minJumpHeight) ? targetPos : new Vector2(targetPos.x, agentPos.y);
-            if ((agentPos - targetPos).magnitude > stoppingDistance)
+            Vector2 goalPosition = (targetPos.y - agentPos.y >= Mathf.Max(agent.radius, groundDetectionOffset) && Mathf.Abs(targetPos.y - agentPos.y) <= agent.radius + groundDetectionOffset) ? targetPos : new Vector2(targetPos.x, agentPos.y);
+            //Vector2 goalPosition = new Vector2(targetPos.x, agentPos.y);
+            Vector2 direction = agentPos - targetPos;
+            if (direction.magnitude > stoppingDistance)
             {
                 agent.SetDestination(goalPosition);
             }
             else
             {
                 agent.SetDestination(agentPos);
+                if (attackScript != null)
+                {
+                    if (isRanged)
+                    {
+                        attackScript.Attack(target, damage, attackPeriod, projSpeed, projectile);
+                        if (shouldRotate)
+                        {
+                            RotateCorrectly(targetPos.x - agentPos.x);
+                        }
+                    }
+                    else
+                    {
+                        attackScript.Attack(target, damage, attackPeriod);
+                    }
+                }
             }
         }
         else
         {
-            if (((Vector2)agent.destination - agentPos).magnitude < stoppingDistance)
+            if (agent.remainingDistance <= stoppingDistance && untilPatrolTime > 0)
             {
                 if (!isPatrolRunning & !isWaitingForPlayer)
                 {
-                    waitForPlayerCoroutine = StartCoroutine(WaitForPlayer(untilPatrolTime));
+                    waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol(untilPatrolTime));
                     isWaitingForPlayer = true;
                 }
             }
         }
     }
-    private IEnumerator WaitForPlayer(float time)
+    private IEnumerator WaitBeforePatrol(float time)
     {
+        isWaitingForPlayer = true;
         yield return new WaitForSecondsRealtime(time);
         isWaitingForPlayer = false;
         waitForPlayerCoroutine = null;
         isPatrolRunning = true;
+        yield return null;
         patrolCoroutine = StartCoroutine(Patrol(untilChangeTime));
     }
     private IEnumerator Patrol(float changePosTime = 1f)
     {
-        Vector2 initPos = agent.transform.position;
-        initPatrolPosition = initPos;
+        Vector2 initPos = enemyCollider.bounds.center;
+        initPatrolPosition = agent.transform.position;
         while (isPatrolRunning)
         {
             yield return new WaitForSecondsRealtime(changePosTime);
-            if ((agent.transform.position - agent.destination).magnitude < stoppingDistance)
+            if (!agent.pathPending && agent.remainingDistance <= stoppingDistance)
             {
+                yield return new WaitForEndOfFrame();
                 changePosition(initPos, patrolRange);
             }
         }
@@ -258,16 +362,24 @@ public class LandEnemyMovement : MonoBehaviour
     }
     private void changePosition(Vector2 initialPosition, float patrolRange)
     {
-        Vector2 offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
-        while (!hit)
+        Vector2 offsetPosition = initialPosition + Random.Range(-jumpHeight, jumpHeight) * Vector2.up + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+        RaycastHit2D hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight * 2, ~notGroundMasks);
+        int maxAttempts = 10;
+        int attempts = 0;
+        while (!hit && attempts < maxAttempts)
         {
-            offsetPosition = initialPosition + Random.Range(-patrolRange, patrolRange) * Vector2.right;
-            hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight, ~notGroundMasks);
+            Debug.DrawRay(offsetPosition, Vector2.down * jumpHeight * 2, Color.red, 2f);
+            offsetPosition = initialPosition + Random.Range(-jumpHeight, jumpHeight) * Vector2.up + Random.Range(-patrolRange, patrolRange) * Vector2.right;
+            hit = Physics2D.Raycast(offsetPosition, Vector2.down, jumpHeight * 2, ~notGroundMasks);
+            attempts++;
+        }
+        if (!hit)
+        {
+            Debug.Log("Failed to find new destination to patrol");
         }
         if (hit.collider != null && isPatrolRunning)
         {
-            Vector2 newPosition = new(offsetPosition.x, hit.point.y + agent.radius);
+            Vector2 newPosition = new(offsetPosition.x, hit.point.y + agent.radius - groundDetectionOffset);
             agent.SetDestination(newPosition);
         }
     }
@@ -287,6 +399,9 @@ public class LandEnemyMovement : MonoBehaviour
         startAbove = transform.position;
         endAbove = startAbove + Vector2.up * minJumpHeight;
         Gizmos.DrawLine(startAbove, endAbove);
+        Gizmos.color = Color.red;
+        endBelow = startAbove - Vector2.up * groundDetectionOffset;
+        Gizmos.DrawLine(startAbove, endBelow);
 
         float circleSegments = 36;
         float radius = visionRange;
@@ -295,6 +410,7 @@ public class LandEnemyMovement : MonoBehaviour
 
         Vector2 prevPoint = center + new Vector2(Mathf.Cos(0), Mathf.Sin(0)) * radius;
 
+        Gizmos.color = Color.white;
         for (int i = 1; i <= circleSegments; i++)
         {
             float angle = i * angleStep * Mathf.Deg2Rad;
@@ -318,5 +434,25 @@ public class LandEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+        else
+        {
+            Gizmos.color = Color.cyan;
+            float radius2 = stoppingDistance;
+            Vector2 center2 = transform.position;
+            prevPoint = center2 + new Vector2(Mathf.Cos(0), Mathf.Sin(0)) * radius2;
+
+            for (int i = 1; i <= circleSegments; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector2 nextPoint = center2 + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius2;
+                Gizmos.DrawLine(prevPoint, nextPoint);
+                prevPoint = nextPoint;
+            }
+        }
+    }
+
+    public void SpeedChange(float change)
+    {
+        agent.speed = speed + speed * change;
     }
 }

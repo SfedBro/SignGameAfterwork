@@ -3,15 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string startSceneName = "LevelCave000";
+    [SerializeField] private string startSceneName = "LevelTest";
+
+    void Awake()
+    {
+        if (!PlayerPrefs.HasKey("Initialized"))
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("Initialized", 1);
+            PlayerPrefs.Save();
+        }
+    }
 
     public void StartGame()
     {
         DataContainer.checkpointIndex = new Vector3(-55, 25, 0);
-        PlayerPrefs.DeleteAll();
-        //for test
-        PlayerPrefs.SetInt("coins", 200);
-        // for test
         SceneManager.LoadScene(startSceneName);
     }
 
