@@ -45,12 +45,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private Color originalColor;
-
     void Start()
     {
         hp = maxHp;
-        originalColor = this.GetComponent<SpriteRenderer>().color;
         impactFlash = GetComponent<ImpactFlash>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true).ToList();
         damageParticles = GetComponent<DamageParticles>();
@@ -170,10 +167,5 @@ public class Enemy : MonoBehaviour
         if (!gameObject.scene.isLoaded) return;
         ParticleSystem effect = Instantiate(blowEffect, transform.position, Quaternion.identity);
         effect.Play();
-    }
-
-    public void ReturnToOrig()
-    {
-        GetComponent<SpriteRenderer>().color = originalColor;
     }
 }
