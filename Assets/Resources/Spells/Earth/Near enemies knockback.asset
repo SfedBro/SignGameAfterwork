@@ -21,6 +21,6 @@ MonoBehaviour:
   effectAmount: 1
   effectDuration: 0
   effectChance: 1
-  spellPrefab: {fileID: 4762664593250855657, guid: dd3325a020f4af24b9e635b4f873091e, type: 3}
+  spellPrefab: {fileID: 4762664593250855657, guid: f76040409092a124fbc41dbb8f4fb552, type: 3}
   radius: 5
   areaLifetime: 0.1
