@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 524c8dbedaf939f4782225a07a02527a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSceneName: LevelCave002
+  startSceneName: LevelTest
 --- !u!1 &258235504
 GameObject:
   m_ObjectHideFlags: 0
@@ -8548,6 +8548,7 @@ MonoBehaviour:
   settingsCanvas: {fileID: 1077717573}
   shopCanvas: {fileID: 0}
   mapCanvas: {fileID: 0}
+  spellBookCanvas: {fileID: 0}
 --- !u!4 &1363448126
 Transform:
   m_ObjectHideFlags: 0
