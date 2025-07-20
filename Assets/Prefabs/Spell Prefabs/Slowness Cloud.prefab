@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 43420784170986337}
   - component: {fileID: 307561283863307473}
   - component: {fileID: 4935320799174898690}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Slowness Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}

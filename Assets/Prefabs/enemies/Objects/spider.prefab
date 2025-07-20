@@ -381,13 +381,13 @@ MonoBehaviour:
   isRanged: 0
   projectile: {fileID: 0}
   projSpeed: 0
-  visionRange: 20
+  visionRange: 15
   consideredMasks:
     serializedVersion: 2
     m_Bits: 704
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1542
   untilPatrolTime: 5
   untilChangeTime: 1
   patrolRange: 10
@@ -406,6 +406,9 @@ MonoBehaviour:
   gravity: 10
   isJumping: 0
   corners: []
+  shouldRotate: 1
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &-54058297220531753
 MonoBehaviour:
   m_ObjectHideFlags: 0

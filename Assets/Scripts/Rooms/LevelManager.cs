@@ -9,7 +9,10 @@ public class LevelManager : MonoBehaviour
     public int roomsX = 4, roomsY = 4;
     public float roomOffsetX, roomOffsetY;
     public bool usePath = true;
+    public bool removeUselessClusters = false;
     // public int minPathSize = 6, maxPathSize = 15;
+    public List<RoomInfo> startRooms;
+    public RoomInfo bossRoomInfo;
     public List<RoomCount> maxRoomCount;
 
     RoomInfoInstance[,] rooms;
@@ -46,12 +49,14 @@ public class LevelManager : MonoBehaviour
                 pathRooms[room2[0], room2[1]].up = DirAvailability.Available;
             }
         }
+        rooms[roomsX - 1, roomsY - 1] = new RoomInfoInstance{roomInfo = bossRoomInfo};
         List<RoomCount> currentRoomCount = new(maxRoomCount);
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
+                if (rooms[x, y] != null) continue;
                 RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
                 if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
-                List<RoomInfo> possibleRooms = roomInfos
+                List<RoomInfo> possibleRooms = (x == 0 && y == 0 ? startRooms : roomInfos)
                     .Where(ri => !currentRoomCount.Any(rc => rc.roomInfo == ri) || currentRoomCount.Find(rc => rc.roomInfo == ri).count > 0)
                     .Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
@@ -61,6 +66,7 @@ public class LevelManager : MonoBehaviour
                 rooms[x, y] = new RoomInfoInstance{roomInfo = ri};
             }
         }
+        if (removeUselessClusters) RemoveUselessClusters();
     }
 
     void LoadLevel() {
@@ -95,6 +101,48 @@ public class LevelManager : MonoBehaviour
 
     public RoomInfoInstance GetRoom(int x, int y) {
         return rooms[x, y];
+    }
+
+    void RemoveUselessClusters() {
+        List<HashSet<RoomInfoInstance>> clusters = new();
+        for (int x = 0; x < roomsX; ++x) {
+            for (int y = 0; y < roomsY; ++y) {
+                RoomInfoInstance rii = rooms[x, y];
+                if (rii == null) continue;
+                if (clusters.Any(cluster => cluster.Contains(rii))) continue;
+                HashSet<RoomInfoInstance> cluster = new() {rii};
+                bool updated = true;
+                while (updated) {
+                    updated = false;
+                    for (int x2 = 0; x2 < roomsX; ++x2) {
+                        for (int y2 = 0; y2 < roomsY; ++y2) {
+                            RoomInfoInstance rii2 = rooms[x2, y2];
+                            if (cluster.Contains(rii2) || rii2 == null) continue;
+                            bool add = false;
+                            print($"{x2} {y2} {rii2.roomInfo.rd}");
+                            if (rii2.roomInfo.rd.up == DirAvailability.Available && cluster.Contains(rooms[x, y - 1])) add = true;
+                            if (rii2.roomInfo.rd.down == DirAvailability.Available && cluster.Contains(rooms[x, y + 1])) add = true;
+                            if (rii2.roomInfo.rd.left == DirAvailability.Available && cluster.Contains(rooms[x - 1, y])) add = true;
+                            if (rii2.roomInfo.rd.right == DirAvailability.Available && cluster.Contains(rooms[x + 1, y])) add = true;
+                            if (add) {
+                                updated = true;
+                                cluster.Add(rii2);
+                            }
+                        }
+                    }
+                }
+                clusters.Add(cluster);
+            }
+        }
+        print(clusters.Count);
+        clusters = clusters.Where(cluster => !cluster.Contains(rooms[0, 0])).ToList();
+        if (clusters.Count > 0) {
+            for (int x = 0; x < roomsX; ++x) {
+                for (int y = 0; y < roomsY; ++y) {
+                    if (clusters.Any(cluster => cluster.Contains(rooms[x, y]))) rooms[x, y] = null;
+                }
+            }
+        }
     }
 }
 

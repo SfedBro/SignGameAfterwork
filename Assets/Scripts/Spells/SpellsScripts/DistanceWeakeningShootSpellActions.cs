@@ -59,13 +59,14 @@ public class DistanceWeakeningShootSpellActions : MonoBehaviour
     {
         if ((int)Math.Abs((transform.position - origPos).magnitude) % (int)damageReduceDistance - alreadyReduced > 0)
         {
+            Debug.Log($"{transform.position} ------- {origPos}");
             damage -= 1;
             alreadyReduced += 1;
         }
 
         if (damage <= 0)
         {
-            Destroy(gameObject);
+            damage = 1;
         }
     }
 
