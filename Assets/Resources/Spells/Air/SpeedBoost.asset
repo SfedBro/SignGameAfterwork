@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
   description: "\u0423\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u043D\u0430
-    50% \u043D\u0430 5 \u0441\u0435\u043A\u0443\u043D\u0434"
+    30% \u043D\u0430 5 \u0441\u0435\u043A\u0443\u043D\u0434"
   mainElement: Air
   combo: Air2
   effect: SpeedBoost

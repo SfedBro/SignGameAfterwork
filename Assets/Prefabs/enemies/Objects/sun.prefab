@@ -999,6 +999,9 @@ MonoBehaviour:
   patrolRange: 0
   isPatrolRunning: 0
   isWaitingForPlayer: 0
+  shouldRotate: 0
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &1929087225022049873
 MonoBehaviour:
   m_ObjectHideFlags: 0

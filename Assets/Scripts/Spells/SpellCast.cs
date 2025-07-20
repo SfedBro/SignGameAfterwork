@@ -15,7 +15,10 @@ public class SpellCast : MonoBehaviour
     [SerializeField] private Vector3 idleWandRotationRight = new Vector3(0f, 0f, -45f);
 
     [Header("Spell Settings")]
-    [SerializeField] private GameObject aim;
+    [SerializeField] private GameObject aimRed;
+    [SerializeField] private GameObject aimBlue;
+    [SerializeField] private GameObject aimGreen;
+    [SerializeField] private GameObject aimWhite;
     [SerializeField] private float spellSpeed = 15f;
     [SerializeField] private ParticleSystem redWandParticles;
     [SerializeField] private ParticleSystem castEffectParticles;
@@ -32,6 +35,7 @@ public class SpellCast : MonoBehaviour
     private Spell spellToCast;
     private Spell lastUsedSpell = null;
     private bool spellDuplicate = false;
+    private GameObject aim;
 
     public void SetSpell(Spell someSpell)
     {
@@ -113,6 +117,22 @@ public class SpellCast : MonoBehaviour
 
         // прицел
         targetPosition = GetMouseWorldPosition();
+        if (spellToCast.MainElement == "Water")
+        {
+            aim = aimBlue;
+        }
+        else if (spellToCast.MainElement == "Earth")
+        {
+            aim = aimGreen;
+        }
+        else if (spellToCast.MainElement == "Air")
+        {
+            aim = aimWhite;
+        }
+        else
+        {
+            aim = aimRed;
+        }
         activeAim = Instantiate(aim, targetPosition, Quaternion.identity);
         activeAim.SetActive(true);
         redWandParticles.Play();
@@ -204,6 +224,10 @@ public class SpellCast : MonoBehaviour
         {
             IllusionSpell((CreateIllusionSpell)spellToCast);
         }
+        else if (spellToCast.Type == "Room")
+        {
+            RoomSpell((RoomSizeSpell)spellToCast);
+        }
         else
         {
             Debug.Log($"{spellToCast.Type} - неизвестный тип заклинания");
@@ -270,6 +294,18 @@ public class SpellCast : MonoBehaviour
         obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
                                                         someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
+    }
+
+    private void RoomSpell(RoomSizeSpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, mainCamera.transform.position + mainCamera.transform.forward * mainCamera.nearClipPlane, Quaternion.identity);
+        obj.AddComponent<AreaSpellActions>();
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
+
+        float height = 2f * mainCamera.orthographicSize;
+        float width = height * mainCamera.aspect;
+        obj.GetComponent<Transform>().localScale = new Vector3(width, height, 0);
     }
 
     private void NearestEnemySpell(NearestEnemySpell someSpell)
