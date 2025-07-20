@@ -207,6 +207,10 @@ public class SpellEffect : MonoBehaviour
                 {
                     obj.GetComponent<LandEnemyMovement>().SpeedChange(change);
                 }
+                else if (obj.GetComponent<DumbEnemyScript>())
+                {
+                    obj.GetComponent<DumbEnemyScript>().SpeedChange(change);
+                }
             }
         }
 
@@ -221,7 +225,7 @@ public class SpellEffect : MonoBehaviour
         // Возвращаем в исходное состояние
         if (obj != null)
         {
-           if (obj.CompareTag("Player"))
+            if (obj.CompareTag("Player"))
             {
                 obj.GetComponent<PlayerController>().SpeedChange(0);
             }
@@ -235,6 +239,10 @@ public class SpellEffect : MonoBehaviour
                 {
                     obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
                 }
+                else if (obj.GetComponent<DumbEnemyScript>())
+                {
+                    obj.GetComponent<DumbEnemyScript>().SpeedChange(0);
+                }
             } 
         }
         
@@ -243,20 +251,22 @@ public class SpellEffect : MonoBehaviour
 
     private IEnumerator StunEffect(GameObject obj, float duration, Action onComplete)
     {
-        bool flying = true;
-
         if (obj != null && obj.CompareTag("Enemy"))
         {
             if (obj.GetComponent<FlyingEnemyMovement>())
             {
                 obj.GetComponent<FlyingEnemyMovement>().enabled = false;
+                obj.GetComponent<NavMeshAgent>().enabled = false;
             }
             else if (obj.GetComponent<LandEnemyMovement>())
             {
                 obj.GetComponent<LandEnemyMovement>().enabled = false;
-                flying = false;
+                obj.GetComponent<NavMeshAgent>().enabled = false;
             }
-            obj.GetComponent<NavMeshAgent>().enabled = false;
+            else if (obj.GetComponent<DumbEnemyScript>())
+            {
+                obj.GetComponent<DumbEnemyScript>().enabled = false;
+            }
         }
 
         float timer = 0f;
@@ -269,15 +279,20 @@ public class SpellEffect : MonoBehaviour
 
         if (obj != null && obj.CompareTag("Enemy"))
         {
-            if (flying)
+            if (obj.GetComponent<FlyingEnemyMovement>())
             {
                 obj.GetComponent<FlyingEnemyMovement>().enabled = true;
+                obj.GetComponent<NavMeshAgent>().enabled = true;
             }
-            else
+            else if (obj.GetComponent<LandEnemyMovement>())
             {
                 obj.GetComponent<LandEnemyMovement>().enabled = true;
+                obj.GetComponent<NavMeshAgent>().enabled = true;
             }
-            obj.GetComponent<NavMeshAgent>().enabled = true;
+            else if (obj.GetComponent<DumbEnemyScript>())
+            {
+                obj.GetComponent<DumbEnemyScript>().enabled = true;
+            }
         }
 
         onComplete?.Invoke();

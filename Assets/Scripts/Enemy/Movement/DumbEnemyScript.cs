@@ -18,6 +18,7 @@ public class DumbEnemyScript : MonoBehaviour
     private CapsuleCollider2D enemyCollider;
     private int multiplier;
     private Animator animator;
+    private float baseSpeed;
     //private int noGroundForFrames;
     //private float fallSpeed;
     private void Awake()
@@ -31,7 +32,9 @@ public class DumbEnemyScript : MonoBehaviour
             animator = GetComponent<Animator>();
         }
         //noGroundForFrames = 0;
+        baseSpeed = speed;
     }
+
     private void Start()
     {
         isMovingLeft = Random.Range(0, 2) == 0;
@@ -104,9 +107,15 @@ public class DumbEnemyScript : MonoBehaviour
         }
         return false;
     }
+
     private void Attack()
     {
         target.gameObject.GetComponent<Player>().TakeDamage(damage);
         //Attack animation Here
+    }
+
+    public void SpeedChange(float change)
+    {
+        speed = baseSpeed + baseSpeed * change;
     }
 }

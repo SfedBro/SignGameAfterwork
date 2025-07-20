@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 [System.Serializable]
 public class SignData
@@ -79,7 +80,21 @@ public class SignCanvasController : MonoBehaviour
 
     public void SetSigns(List<string> newSigns)
     {
-        if (isAnimating) return;
+        if (isAnimating)
+        {
+            StartCoroutine(UpdateAfterAnimation(newSigns));
+            return;
+        }
+
+        StartCoroutine(UpdateSignsCoroutine(newSigns));
+    }
+
+    private IEnumerator UpdateAfterAnimation(List<string> newSigns)
+    {
+        while (isAnimating)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
 
         StartCoroutine(UpdateSignsCoroutine(newSigns));
     }
