@@ -387,7 +387,7 @@ MonoBehaviour:
     m_Bits: 704
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1542
   untilPatrolTime: 5
   untilChangeTime: 1
   patrolRange: 10

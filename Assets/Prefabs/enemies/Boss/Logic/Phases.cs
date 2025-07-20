@@ -11,6 +11,7 @@ public class Phases : MonoBehaviour
     public float attackTimeout;
     public List<GameObject> enemyPrefabs;
 
+    public float enemyTimeout;
     public List<AttackInfo> attackPrefAndWarn2;
     public float attackTimeout2;
     public List<GameObject> enemyPrefabs2;
@@ -36,7 +37,7 @@ public class Phases : MonoBehaviour
             AttackInfo attack = attackPrefAndWarn.Where((at, i) => i != lastAttackIndex).OrderBy(at => Random.value).First();
             lastAttackIndex = attackPrefAndWarn.IndexOf(attack);
             StartCoroutine(PerformAttack(attack));
-            yield return new WaitForSeconds(attackTimeout);
+            yield return new WaitForSeconds(attackTimeout + attack.attackTime + attack.timeBeforeAttack);
         }
         curPhaseCoroutine = null;
     }
@@ -65,6 +66,7 @@ public class Phases : MonoBehaviour
             AttackInfo attack = attackPrefAndWarn2.Where((at, i) => i != lastAttackIndex).OrderBy(at => Random.value).First();
             lastAttackIndex = attackPrefAndWarn2.IndexOf(attack);
             StartCoroutine(PerformAttack(attack));
+            yield return new WaitForSeconds(attack.attackTime + attack.timeBeforeAttack);
             yield return new WaitForSeconds(attackTimeout2);
         }
         curPhaseCoroutine = null;

@@ -156,4 +156,4 @@ MonoBehaviour:
   damage: 1
   ignoredMasks:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 1028

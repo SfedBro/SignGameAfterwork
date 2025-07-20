@@ -782,7 +782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 32582c97c3ad111408f0d167d539c856, type: 2}
   target: {fileID: 0}
-  damage: 4
+  damage: 2
   attackPeriod: 1
   isRanged: 0
   projectile: {fileID: 0}
@@ -793,7 +793,7 @@ MonoBehaviour:
     m_Bits: 577
   notGroundMasks:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1542
   untilPatrolTime: 5
   untilChangeTime: 2
   patrolRange: 5
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 15
+  maxHp: 5
   hp: 0
   spawn: {fileID: 0}
   flashDuration: 1
