@@ -19,9 +19,9 @@ public class Phases : MonoBehaviour
     public Coroutine curPhaseCoroutine;
     public bool isPhaseInProcess;
 
-    void Start() {
-        // StartPhase();
-    }
+    //void Start() {
+    //    StartPhaseOne();
+    //}
 
     public void StartPhaseOne() {
         curPhaseCoroutine = StartCoroutine(PhaseCoroutine());
