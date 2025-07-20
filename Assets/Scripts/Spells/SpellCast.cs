@@ -234,6 +234,7 @@ public class SpellCast : MonoBehaviour
         }
 
         Destroy(activeAim);
+        gameObject.GetComponent<PlayerAttack>().ClearCombo();
 
         wandSpriteRenderer.color = Color.black;
         if (!spellDuplicate || spellToCast.Effect == "NextSpellDuplicate")

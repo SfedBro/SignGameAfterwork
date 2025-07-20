@@ -1,19 +1,16 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
+using UnityEngine.Rendering.Universal.Internal;
+using System.Linq;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float timeAvailableForCombo = 0.5f;
-
     private SpellCast spellCaster; // Реализация заклинаний
     private Spell newSpell; // Объект заклинания
     private SpellsManager allSpells; // Все заклинания
-
     private List<string> actualCombo = new();
-    private float timer;
-    private bool inputForTimer = false;
-    private bool timerIsOn = false;
 
 
     private void Start()
@@ -31,6 +28,10 @@ public class PlayerAttack : MonoBehaviour
     }
 
     private void Update()
+    {
+        KeyInput();
+    }
+    private void KeyInput()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -95,35 +96,19 @@ public class PlayerAttack : MonoBehaviour
 
     public void HandleInput(string symb)
     {
-        inputForTimer = true;
-        if (timerIsOn == false)
+        List<string> newCombo = actualCombo.ToList();
+        newCombo.Add(symb);
+        if (allSpells.GetSpellByCombo(string.Join("+", newCombo)) == null)
         {
-            timerIsOn = true;
-            StartCoroutine(ComboTimer(timeAvailableForCombo));
-        }
-        actualCombo.Add(symb);   
-    }
 
-    private IEnumerator ComboTimer(float timeAvailableForCombo)
-    {
-        while (timer < timeAvailableForCombo)
+            Debug.Log("Вы пытаетесь задать несуществующую комбинацию!");
+        }
+        else
         {
-            if (inputForTimer)
-            {
-                timer = 0f;
-                inputForTimer = false;
-            }
-            else
-            {
-                timer += 0.1f;
-            }
-            yield return new WaitForSeconds(0.1f);
+            actualCombo.Add(symb);
+            ShowSigns(actualCombo);
+            MakeAttack(actualCombo);
         }
-
-        MakeAttack(actualCombo);
-        actualCombo.Clear();
-        timer = 0f;
-        timerIsOn = false;
     }
 
     private void MakeAttack(List<string> combo)
@@ -138,6 +123,38 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log($"Использована комбинация: {string.Join("+", combo)}. Заклинание: {newSpell.name}");
             spellCaster.SetSpell(newSpell);
         }
-        
+    }
+
+    public void ClearCombo()
+    {
+        actualCombo.Clear();
+        ShowSigns(actualCombo);
+    }
+
+    public void LeaveLast()
+    {
+        List<string> newCombo = new();
+        newCombo.Add(actualCombo[actualCombo.Count - 1]);
+        actualCombo.Clear();
+        actualCombo = newCombo;
+        ShowSigns(actualCombo);
+        MakeAttack(actualCombo);
+    }
+
+    private void ShowSigns(List<string> signs)
+    {
+        if (SignCanvasController.Instance == null)
+        {
+            Debug.LogError("SignCanvasController instance not found!");
+            return;
+        }
+
+        // if (SignCanvasController.Instance.IsAnimating())
+        // {
+        //     Debug.Log("SignCanvasController is currently animating, skipping test.");
+        //     return;
+        // }
+
+        SignCanvasController.Instance.SetSigns(signs);
     }
 }

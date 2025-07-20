@@ -17,23 +17,18 @@ public class SpellBook : MonoBehaviour
     private Vector2 hiddenPosition;
     private RectTransform bookRect;
 
-    private SpellsManager spellsManager;
     private bool isOpen = false;
     private bool isAnimating = false;
 
     private void Start()
     {
         GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
+        scrollRect.scrollSensitivity = 10f;
         if (manager != null)
         {
             ui_manager = manager.GetComponent<UIManager>();
         }
 
-        if (!GetComponent<SpellsManager>())
-        {
-            gameObject.AddComponent<SpellsManager>();
-        }
-        spellsManager = GetComponent<SpellsManager>();
         bookRect = spellBookUI.GetComponent<RectTransform>();
 
         hiddenPosition = new Vector2(
@@ -82,6 +77,7 @@ public class SpellBook : MonoBehaviour
             }
         }
     }
+    
     private void ToggleSpellBook()
     {
         isOpen = !isOpen;
@@ -91,48 +87,19 @@ public class SpellBook : MonoBehaviour
         {
             if (ui_manager != null)
             {
+                spellBookUI.SetActive(true);
                 ui_manager.ShowScreen(UIScreen.SpellBook);
             }
             else
             {
                 spellBookUI.SetActive(true);
             }
-            
-            OpenSpellBook();
+
             Time.timeScale = 0f;
         }
         else
         {
             Time.timeScale = 1f;
         }
-    }
-
-    private void OpenSpellBook()
-    {
-        // Очищаем старые записи
-        foreach (Transform child in scrollRect.content)
-        {
-            Destroy(child.gameObject);
-        }
-
-        // Добавляем все заклинания
-        foreach (Spell spell in spellsManager.GetAllSpells())
-        {
-            GameObject divider = Instantiate(dividerPrefab, scrollRect.content);
-            GameObject entry = Instantiate(spellEntryPrefab, scrollRect.content);
-            
-            TMP_Text nameText = entry.transform.Find("Name").GetComponent<TMP_Text>();
-            TMP_Text comboText = entry.transform.Find("Combo").GetComponent<TMP_Text>();
-            TMP_Text descText = entry.transform.Find("Description").GetComponent<TMP_Text>();
-
-            nameText.text = spell.name;
-            comboText.text = spell.Combo;
-            descText.text = spell.Description;
-        }
-    }
-
-    public void SetSpellsManager(SpellsManager someSM)
-    {
-        spellsManager = someSM;
     }
 }
