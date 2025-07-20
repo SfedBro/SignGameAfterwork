@@ -2491,6 +2491,42 @@ PrefabInstance:
       propertyPath: signDataList.Array.data[5].signName
       value: Earth3
       objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[3].signColor.b
+      value: 0.40392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[3].signColor.g
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[3].signColor.r
+      value: 0.41260138
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[4].signColor.b
+      value: 0.40392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[4].signColor.g
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[4].signColor.r
+      value: 0.41568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[5].signColor.b
+      value: 0.40392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[5].signColor.g
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589406722527503059, guid: 86895acae77c81d46b5810e5761f42ac, type: 3}
+      propertyPath: signDataList.Array.data[5].signColor.r
+      value: 0.41568628
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
