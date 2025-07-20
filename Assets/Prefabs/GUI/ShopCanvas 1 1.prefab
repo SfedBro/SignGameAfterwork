@@ -204,7 +204,7 @@ MonoBehaviour:
   coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 2297590949301685597}
   panel: {fileID: 7252566099388931718}
-  price: 64
+  price: 150
   objectName: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0416\u0438\u0437\u043D\u0438"
 --- !u!114 &5248670680377879312
 MonoBehaviour:
@@ -729,7 +729,7 @@ MonoBehaviour:
   coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 6786200456700110311}
   panel: {fileID: 7252566099388931718}
-  price: 98
+  price: 10
   objectName: "\u0425\u041F"
 --- !u!114 &944097122131958232
 MonoBehaviour:
@@ -930,7 +930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 37
+  m_text: 25
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
   m_sharedMaterial: {fileID: -7334558401020475825, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 98
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
   m_sharedMaterial: {fileID: -7334558401020475825, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
@@ -1681,7 +1681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 64
+  m_text: 150
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
   m_sharedMaterial: {fileID: -7334558401020475825, guid: 92f62a09fc8af6640a8cd9b29c2718e8, type: 2}
@@ -2854,7 +2854,7 @@ MonoBehaviour:
   coinCounter: {fileID: 4141182722895228902}
   sourceImage: {fileID: 8974327311818095123}
   panel: {fileID: 7252566099388931718}
-  price: 37
+  price: 25
   objectName: "\u0421\u0430\u043F\u043E\u0433\u0438-\u0441\u043A\u043E\u0440\u043E\u0445\u043E\u0434\u044B"
 --- !u!114 &1222815728604531807
 MonoBehaviour:
