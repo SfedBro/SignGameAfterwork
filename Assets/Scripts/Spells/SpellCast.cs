@@ -204,6 +204,10 @@ public class SpellCast : MonoBehaviour
         {
             IllusionSpell((CreateIllusionSpell)spellToCast);
         }
+        else if (spellToCast.Type == "Room")
+        {
+            RoomSpell((RoomSizeSpell)spellToCast);
+        }
         else
         {
             Debug.Log($"{spellToCast.Type} - неизвестный тип заклинания");
@@ -270,6 +274,18 @@ public class SpellCast : MonoBehaviour
         obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
                                                         someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
         obj.GetComponent<Transform>().localScale = new Vector3(someSpell.Radius * 2, someSpell.Radius * 2, 0);
+    }
+
+    private void RoomSpell(RoomSizeSpell someSpell)
+    {
+        GameObject obj = Instantiate(someSpell.Prefab, mainCamera.transform.position + mainCamera.transform.forward * mainCamera.nearClipPlane, Quaternion.identity);
+        obj.AddComponent<AreaSpellActions>();
+        obj.GetComponent<AreaSpellActions>().SetSettings(gameObject, someSpell.MainElement, someSpell.Effect, someSpell.EffectAmount,
+                                                        someSpell.EffectDuration, someSpell.EffectChance, someSpell.AreaLifetime);
+
+        float height = 2f * mainCamera.orthographicSize;
+        float width = height * mainCamera.aspect;
+        obj.GetComponent<Transform>().localScale = new Vector3(width, height, 0);
     }
 
     private void NearestEnemySpell(NearestEnemySpell someSpell)
