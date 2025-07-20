@@ -916,12 +916,15 @@ MonoBehaviour:
   speed: 15
   acceleration: 5
   stoppingDistance: 1
-  visionRange: 15
+  visionRange: 10
   untilPatrolTime: 10
   untilChangeTime: 3
   patrolRange: 7
   isPatrolRunning: 0
   isWaitingForPlayer: 0
+  shouldRotate: 1
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &6106228146414313247
 MonoBehaviour:
   m_ObjectHideFlags: 0
