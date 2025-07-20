@@ -356,7 +356,7 @@ MonoBehaviour:
   speed: 7
   acceleration: 5
   stoppingDistance: 0
-  visionRange: 25
+  visionRange: 15
   untilPatrolTime: 0
   untilChangeTime: 0
   patrolRange: 0

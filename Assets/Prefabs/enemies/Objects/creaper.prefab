@@ -710,7 +710,7 @@ MonoBehaviour:
   isRanged: 0
   projectile: {fileID: 0}
   projSpeed: 0
-  visionRange: 15
+  visionRange: 10
   consideredMasks:
     serializedVersion: 2
     m_Bits: 577
@@ -735,6 +735,9 @@ MonoBehaviour:
   gravity: 10
   isJumping: 0
   corners: []
+  shouldRotate: 1
+  isRotatedRight: 0
+  isInitialRight: 0
 --- !u!114 &319733081601150911
 MonoBehaviour:
   m_ObjectHideFlags: 0
