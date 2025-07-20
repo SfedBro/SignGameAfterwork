@@ -1241,7 +1241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e76665505dd9546b523847445b5791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 1222096137740231622}
+  doorL: {fileID: 0}
+  doorU: {fileID: 0}
 --- !u!1 &2134790917552406434
 GameObject:
   m_ObjectHideFlags: 0
@@ -2912,6 +2913,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6302585419762750204}
+  - component: {fileID: 4455099690876584909}
   m_Layer: 0
   m_Name: Phase1
   m_TagString: Untagged
@@ -2936,6 +2938,20 @@ Transform:
   - {fileID: 8183025277118170759}
   m_Father: {fileID: 2246073824241134813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4455099690876584909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898596534976997590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28d820d2e979a8b41bfdde56fcaab6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTimeout: 5
+  enemyPrefabs: []
 --- !u!1 &3958867722123781562
 GameObject:
   m_ObjectHideFlags: 0
@@ -3395,6 +3411,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2246073824241134813}
+  - component: {fileID: 6740655137390284856}
+  - component: {fileID: 2847697474920434230}
+  - component: {fileID: 172098422131381894}
   m_Layer: 0
   m_Name: BossObject
   m_TagString: Untagged
@@ -3419,6 +3438,57 @@ Transform:
   - {fileID: 6816244674259067569}
   m_Father: {fileID: 3009318400371855398}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6740655137390284856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595656247795091697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c0115c9f552e34fb9329740fd4a5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health1: 0
+  health2: 0
+  healthScript: {fileID: 2847697474920434230}
+  phase: 1
+  currentHealth: 0
+--- !u!114 &2847697474920434230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595656247795091697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 325e94732bcfbf64f8fd1f5527a14421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  hp: 0
+  spawn: {fileID: 0}
+  flashDuration: 0.06
+  spriteRenderers: []
+--- !u!114 &172098422131381894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595656247795091697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d30dcfc0f61bba41ab1190ca81d5380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phase1: {fileID: 0}
+  col1: {fileID: 0}
+  phase2: {fileID: 0}
+  col2: {fileID: 0}
+  ps: {fileID: 0}
 --- !u!1 &4823655909497014387
 GameObject:
   m_ObjectHideFlags: 0
@@ -4330,13 +4400,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6816244674259067569}
+  - component: {fileID: 4874566552258761555}
   m_Layer: 0
   m_Name: Phase2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6816244674259067569
 Transform:
   m_ObjectHideFlags: 0
@@ -4352,6 +4423,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2246073824241134813}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4874566552258761555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6242338225751569238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921dbe3bc65fb53499606927483a6e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTimeout: 0
+  enemyPrefabs: []
+  lastAttackIndex: 0
 --- !u!1 &6449210541455546432
 GameObject:
   m_ObjectHideFlags: 0

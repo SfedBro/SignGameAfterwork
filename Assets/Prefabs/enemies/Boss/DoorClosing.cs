@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DoorClosing : MonoBehaviour
 {
+    public PhaseTransition pt;
     [SerializeField]
     private GameObject doorL;
     [SerializeField]
@@ -14,6 +15,7 @@ public class DoorClosing : MonoBehaviour
             playerInside = true;
             doorL.SetActive(true);
             doorU.SetActive(true);
+            pt.StartBattle();
         }
     }
     private void OnTriggerExit2D(Collider2D other)

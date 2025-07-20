@@ -7,4 +7,8 @@ public class PhaseTransition : MonoBehaviour
     public Phase2 phase2;
     public Collider2D col2;
     public ParticleSystem ps;
+
+    public void StartBattle() {
+        phase1.StartPhase();
+    }
 }
