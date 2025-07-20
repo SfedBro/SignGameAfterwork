@@ -150,8 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomsX: 4
   roomsY: 4
-  roomOffsetX: 23
-  roomOffsetY: 15
+  roomOffsetX: 22.81
+  roomOffsetY: 14.21
   usePath: 0
   maxRoomCount:
   - roomInfo: {fileID: 11400000, guid: 77c87bf6d6828ac48a9c8a112686dd4b, type: 2}
