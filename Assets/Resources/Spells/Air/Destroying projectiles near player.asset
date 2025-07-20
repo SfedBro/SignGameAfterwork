@@ -23,4 +23,4 @@ MonoBehaviour:
   effectChance: 0
   spellPrefab: {fileID: 5662727801124089657, guid: 9642f3203e01a294db962af13c0fe516, type: 3}
   radius: 5
-  areaLifetime: 0.1
+  areaLifetime: 0.5
