@@ -1512,13 +1512,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 260387681519964620, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 586926643651877999, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_Name
       value: RoomBossPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222096137740231622, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065868632282522169, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3009318400371855398, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1558,26 +1562,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3009318400371855398, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3898596534976997590, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6153470502754972363, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6233410779839092950, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7413999606864043702, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_Name
-      value: LasersAttack
-      objectReference: {fileID: 0}
-    - target: {fileID: 7413999606864043702, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
