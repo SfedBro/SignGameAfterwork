@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public float roomOffsetX, roomOffsetY;
     public bool usePath = true;
     // public int minPathSize = 6, maxPathSize = 15;
+    public List<RoomInfo> startRooms;
     public RoomInfo bossRoomInfo;
     public List<RoomCount> maxRoomCount;
 
@@ -54,7 +55,7 @@ public class LevelManager : MonoBehaviour
                 if (rooms[x, y] != null) continue;
                 RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
                 if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
-                List<RoomInfo> possibleRooms = roomInfos
+                List<RoomInfo> possibleRooms = (x == 0 && y == 0 ? startRooms : roomInfos)
                     .Where(ri => !currentRoomCount.Any(rc => rc.roomInfo == ri) || currentRoomCount.Find(rc => rc.roomInfo == ri).count > 0)
                     .Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
