@@ -63,7 +63,7 @@ public class HealthAndPhases : MonoBehaviour
             {
                 phase1Object.SetActive(false);
             }
-            Debug.LogErrorFormat("You won!");
+            //Debug.LogErrorFormat("You won!");
             //phase2Object.SetActive(true);
         }
         //if (phase2Object == null || health2 == 0)
