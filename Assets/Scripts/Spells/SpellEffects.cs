@@ -116,11 +116,11 @@ public class SpellEffect : MonoBehaviour
 
     private void MakeDamage(GameObject obj, float damage)
     {
-        if (obj.CompareTag("Enemy"))
+        if (obj != null && obj.CompareTag("Enemy"))
         {
             obj.GetComponent<Enemy>().TakeDamage(damage * damageMultiplier);
         }
-        else if (obj.CompareTag("Boss"))
+        else if (obj != null && obj.CompareTag("Boss"))
         {
 
         }
@@ -162,26 +162,29 @@ public class SpellEffect : MonoBehaviour
         float timer = 0f;
         damageMultiplier = 1f;
 
-        if (obj.CompareTag("Enemy"))
-        {
-            Debug.Log($"{obj.name} был подожжен");
-            obj.GetComponent<SpriteRenderer>().color = new Color(0.75f, 0f, 0f);
-            while (timer < duration && obj != null)
-            {
-                int damage = UnityEngine.Random.Range((avgDamage + 1) / 2, 2 * avgDamage - avgDamage / 2);
-
-                MakeDamage(obj, damage * dmgMultiplier);
-
-                timer += 1f;
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        // Возвращаем в исходное состояние
         if (obj != null)
         {
-            ReturnToOriginal(obj);
+            if (obj.CompareTag("Enemy"))
+            {
+                Debug.Log($"{obj.name} был подожжен");
+                while (timer < duration)
+                {
+                    int damage = UnityEngine.Random.Range((avgDamage + 1) / 2, 2 * avgDamage - avgDamage / 2);
+
+                    MakeDamage(obj, damage * dmgMultiplier);
+
+                    if (obj == null)
+                    {
+                        yield break;
+                    }
+
+                    timer += 1f;
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+            
         }
+
         onComplete?.Invoke();
     }
 
@@ -216,21 +219,25 @@ public class SpellEffect : MonoBehaviour
         }
 
         // Возвращаем в исходное состояние
-        if (obj.CompareTag("Player"))
+        if (obj != null)
         {
-            obj.GetComponent<PlayerController>().SpeedChange(0);
-        }
-        else if (obj.CompareTag("Enemy"))
-        {
-            if (obj.GetComponent<FlyingEnemyMovement>())
+           if (obj.CompareTag("Player"))
             {
-                obj.GetComponent<FlyingEnemyMovement>().SpeedChange(0);
+                obj.GetComponent<PlayerController>().SpeedChange(0);
             }
-            else if (obj.GetComponent<LandEnemyMovement>())
+            else if (obj.CompareTag("Enemy"))
             {
-                obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
-            }
+                if (obj.GetComponent<FlyingEnemyMovement>())
+                {
+                    obj.GetComponent<FlyingEnemyMovement>().SpeedChange(0);
+                }
+                else if (obj.GetComponent<LandEnemyMovement>())
+                {
+                    obj.GetComponent<LandEnemyMovement>().SpeedChange(0);
+                }
+            } 
         }
+        
         onComplete?.Invoke();
     }
 
@@ -238,7 +245,7 @@ public class SpellEffect : MonoBehaviour
     {
         bool flying = true;
 
-        if (obj.CompareTag("Enemy"))
+        if (obj != null && obj.CompareTag("Enemy"))
         {
             if (obj.GetComponent<FlyingEnemyMovement>())
             {
@@ -260,7 +267,7 @@ public class SpellEffect : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        if (obj.CompareTag("Enemy"))
+        if (obj != null && obj.CompareTag("Enemy"))
         {
             if (flying)
             {
@@ -275,6 +282,7 @@ public class SpellEffect : MonoBehaviour
 
         onComplete?.Invoke();
     }
+
     private void DamageBoost(GameObject obj, float multiplier)
     {
         if (multiplier > 0)
@@ -314,7 +322,7 @@ public class SpellEffect : MonoBehaviour
     {
         float timer = 0f;
 
-        if (obj.CompareTag("Player"))
+        if (obj != null && obj.CompareTag("Player"))
         {
             obj.GetComponent<Transform>().localScale *= amount;
             obj.GetComponent<SpellCast>().MoveWand(amount);
@@ -326,21 +334,13 @@ public class SpellEffect : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
 
-        if (obj.CompareTag("Player"))
+        if (obj != null && obj.CompareTag("Player"))
         {
             obj.GetComponent<Transform>().localScale /= amount;
             obj.GetComponent<SpellCast>().MoveWand(1/amount);
         }
 
         onComplete?.Invoke();
-    }
-
-    private void ReturnToOriginal(GameObject obj)
-    {
-        if (obj.CompareTag("Enemy"))
-        {
-            obj.GetComponent<Enemy>().ReturnToOrig();
-        }
     }
 
     public bool DodgeAttack()

@@ -277,6 +277,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 495f274634c281c4eb5b89adadbf3fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
+  roomOffset: {x: 20, y: 15}
+  smoothSpeed: 2
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  useTimeScale: 0
+  timeScaleMultiplier: 0.3
+  timeScaleTransitionSpeed: 3
 --- !u!1 &3826588424710546158
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +355,9 @@ MonoBehaviour:
   cam: {fileID: 5407641305878120686}
   minDistanceForNewPoint: 0.1
   secondsForLineToLive: 3
+  modelAsset: {fileID: 0}
+  confidenceThreshold: 0.5
+  playerAttack: {fileID: 0}
 --- !u!1 &7995828583464354044
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,3 +406,6 @@ MonoBehaviour:
   cam: {fileID: 5407641305878120686}
   minDistanceForNewPoint: 0.1
   secondsForLineToLive: 3
+  modelAsset: {fileID: 5022602860645237092, guid: 9771fab52029fa140bf3b8e1beb5ee3d, type: 3}
+  confidenceThreshold: 0.5
+  playerAttack: {fileID: 0}
