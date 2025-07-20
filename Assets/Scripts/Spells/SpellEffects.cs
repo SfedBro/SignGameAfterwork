@@ -133,28 +133,32 @@ public class SpellEffect : MonoBehaviour
 
     private void ApplyKnockback(GameObject self, GameObject obj, float amount)
     {
-        // Определяем направление от объекта к цели, чтобы отталкивание было правильным
-        Vector3 direction = obj.transform.position - self.transform.position;
-        direction.Normalize();
-
-        // Настраиваем физику отталкиваемого объекта
-        if (!obj.GetComponent<Rigidbody2D>())
+        if (obj != null && (obj.CompareTag("Enemy") || obj.CompareTag("Boss")))
         {
-            obj.AddComponent<Rigidbody2D>();
+           // Определяем направление от объекта к цели, чтобы отталкивание было правильным
+            Vector3 direction = obj.transform.position - self.transform.position;
+            direction.Normalize();
+
+            // Настраиваем физику отталкиваемого объекта
+            if (!obj.GetComponent<Rigidbody2D>())
+            {
+                obj.AddComponent<Rigidbody2D>();
+            }
+            Rigidbody2D physic = obj.GetComponent<Rigidbody2D>();
+            physic.bodyType = RigidbodyType2D.Dynamic;
+            physic.mass = 10f;
+            physic.gravityScale = 0;
+            physic.freezeRotation = true;
+            physic.linearDamping = 5f;
+
+            direction.Normalize();
+
+            // Применяем отталкивание
+            physic.AddForce(direction * amount * knockbackForce);
+
+            Debug.Log($"Объект {obj.name} отброшен"); 
         }
-        Rigidbody2D physic = obj.GetComponent<Rigidbody2D>();
-        physic.bodyType = RigidbodyType2D.Dynamic;
-        physic.mass = 10f;
-        physic.gravityScale = 0;
-        physic.freezeRotation = true;
-        physic.linearDamping = 5f;
-
-        direction.Normalize();
-
-        // Применяем отталкивание
-        physic.AddForce(direction * amount * knockbackForce);
-
-        Debug.Log($"Объект {obj.name} отброшен");
+        
     }
 
     private IEnumerator Burn(GameObject obj, int avgDamage, float duration, float dmgMultiplier, Action onComplete)
