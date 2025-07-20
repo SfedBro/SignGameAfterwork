@@ -18,7 +18,7 @@ MonoBehaviour:
   mainElement: Earth
   combo: Earth1
   effect: Knockback
-  effectAmount: 1
+  effectAmount: 1.5
   effectDuration: 0
   effectChance: 1
   spellPrefab: {fileID: 4762664593250855657, guid: e7556e302d47de64aa2171a72d3c2a05, type: 3}
