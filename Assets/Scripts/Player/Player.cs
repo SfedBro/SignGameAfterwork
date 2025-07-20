@@ -85,16 +85,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    // for test
     void Update()
     {
         iSecondsCount = Mathf.Max(iSecondsCount - Time.deltaTime, 0);
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            hp--;
-            Debug.Log($"Player HP: {hp}");
-        }
-        // for test
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //     hp--;
+        //     Debug.Log($"Player HP: {hp}");
+        // }
         if (hp <= 0 && !isDead)
         {
             Die();
@@ -131,7 +129,7 @@ public class Player : MonoBehaviour
             hp = Mathf.Max(hp - damage, 0);
             iSecondsCount = iSeconds;
             Debug.Log($"HP {hp}");
-            if (hp <= 0) GameManager.I.PlayerDied();
+            // if (hp <= 0) GameManager.I.PlayerDied();
             if (impactFlash != null)
             {
                 impactFlash.Flash(spriteRenderer, flashDuration);

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string startSceneName = "LevelCave000";
+    [SerializeField] private string startSceneName = "LevelTest";
 
     void Awake()
     {
@@ -18,9 +18,6 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         DataContainer.checkpointIndex = new Vector3(-55, 25, 0);
-        //for test
-        PlayerPrefs.SetInt("coins", 200);
-        // for test
         SceneManager.LoadScene(startSceneName);
     }
 
