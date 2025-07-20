@@ -1535,6 +1535,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6980072730972416068}
     - target: {fileID: 260387681519964620, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 260387681519964620, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1549,6 +1553,10 @@ PrefabInstance:
     - target: {fileID: 2065868632282522169, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2119920419377232014, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2246073824241134813, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1594,9 +1602,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3467619958850590902, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472266280093875404, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701740993551064165, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3898596534976997590, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4482828965109739466, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850213205585383217, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897786638967997414, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470820354084085791, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9019576760167367823, guid: e0cd58b5771752407834ca6e54f542ea, type: 3}
       propertyPath: pt
@@ -1647,8 +1683,8 @@ MonoBehaviour:
   - attackPrefab: {fileID: 319229951370877753, guid: aabcfaea0005e414a8f3735e39b5c4a6, type: 3}
     warnPrefab: {fileID: 696408362858787843, guid: 4207e89681aea674eb97c3db85ee07e1, type: 3}
     timeBeforeAttack: 2
-    attackTime: 8
-  attackTimeout: 10
+    attackTime: 3
+  attackTimeout: 7
   enemyPrefabs: []
   attackPrefAndWarn2: []
   attackTimeout2: 0
