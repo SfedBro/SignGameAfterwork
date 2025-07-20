@@ -152,8 +152,7 @@ MonoBehaviour:
   roomsY: 4
   roomOffsetX: 23
   roomOffsetY: 15
-  usePath: 0
-  removeUselessClusters: 0
+  usePath: 1
   maxRoomCount:
   - roomInfo: {fileID: 11400000, guid: 77c87bf6d6828ac48a9c8a112686dd4b, type: 2}
     count: 1
