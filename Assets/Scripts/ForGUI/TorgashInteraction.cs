@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class TorgashInteraction : MonoBehaviour
 {
-    [SerializeField] private GameObject shopCanvas;
+    // [SerializeField] private GameObject shopCanvas;
     [SerializeField] private Indicator indicator;
     [SerializeField] private float detectionRadius = 3f;
     [SerializeField] private float playerNearbyTimeMax = 2f;
 
     private GameObject player;
+    private GameObject shopCanvas;
     private PlayerController playerController;
     private bool isPlayerNearby = false;
     private bool isInteractive = false;
@@ -30,6 +31,7 @@ public class TorgashInteraction : MonoBehaviour
         {
             playerController = player.GetComponent<PlayerController>();
         }
+        shopCanvas = GameObject.FindGameObjectWithTag("Shop");
     }
 
     private void Update()
@@ -75,14 +77,14 @@ public class TorgashInteraction : MonoBehaviour
         isInteractive = true;
         playerNearbyTimer = 0f;
 
-        if (indicator != null)
-            indicator.SetActive(false);
-
         GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
         if (playerController != null)
         {
             playerController.enabled = false;
         }
+
+        if (indicator != null)
+            indicator.SetActive(false);
 
         this.GetComponent<Animator>().SetBool("open", true);
         yield return new WaitForSeconds(0.4f);
@@ -115,30 +117,36 @@ public class TorgashInteraction : MonoBehaviour
             isInteractive = false;
         }
     }
-    
+
     private IEnumerator CloseShop()
     {
         GUIManager guiManager = shopCanvas.GetComponent<GUIManager>();
-
         guiManager.PanelActivate(false);
         yield return new WaitForSeconds(1f);
 
         Animator animator = this.GetComponent<Animator>();
         animator.SetBool("open", false);
-        Debug.Log("open=false");
         yield return new WaitForSeconds(1.3f);
-        transform.Find("Canvas").gameObject.SetActive(false);
-        animator.SetTrigger("disappear");
-        Debug.Log("disappear");
-        yield return new WaitForSeconds(1.4f);
-        PlayerPrefs.SetInt("Torgash" + transform, 1);
 
+        // transform.Find("Canvas").gameObject.SetActive(false);
+        // animator.SetTrigger("disappear");
+        // Debug.Log("disappear");
+        // yield return new WaitForSeconds(1.4f);
+        // PlayerPrefs.SetInt("Torgash" + transform, 1);
+        // Destroy(gameObject);
+        
         if (playerController != null)
         {
             playerController.enabled = true;
         }
-        Destroy(gameObject);
+
+        
         isInteractive = false;
+
+        if (indicator != null)
+            indicator.SetActive(true);
+
+        playerNearbyTimer = 0f;
     }
 
     private bool IsPointerOverUIObject()

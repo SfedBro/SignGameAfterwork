@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: maxHp
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -4543009065927017444, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: blowEffect
+      value: 
+      objectReference: {fileID: 1851702391873127063, guid: 6e5ab4ca5b3ef694f8e8b02f697eec3c, type: 3}
+    - target: {fileID: -4543009065927017444, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: flashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4543009065927017444, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: deathEffectDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4543009065927017444, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: explosionControllerPrefab
+      value: 
+      objectReference: {fileID: 7307266941435632913, guid: b2b3ac9126bb55e41ba1ccd30b288a29, type: 3}
     - target: {fileID: 397749481982497344, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -189,8 +205,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: shouldRotate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: stoppingDistance
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482380846589999046, guid: a8f825dd330e15b45a883aad66360099, type: 3}
+      propertyPath: consideredMasks.m_Bits
+      value: 577
       objectReference: {fileID: 0}
     - target: {fileID: 5799560389489877936, guid: a8f825dd330e15b45a883aad66360099, type: 3}
       propertyPath: m_Layer

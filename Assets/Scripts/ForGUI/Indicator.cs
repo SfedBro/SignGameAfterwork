@@ -8,6 +8,7 @@ public class Indicator : MonoBehaviour
     [SerializeField] float maxpos;
     [SerializeField] RectTransform mask;
     [SerializeField] RectTransform fill;
+    [SerializeField] GameObject background;
     private bool isActive = true;
 
     void Update()
@@ -23,10 +24,26 @@ public class Indicator : MonoBehaviour
         if (!isActive) return;
 
         value = Mathf.Clamp01(val);
+
+        if (background != null)
+        {
+            background.SetActive(value > 0f);
+        }
     }
 
     public void SetActive(bool active)
     {
         isActive = active;
+
+        if (!active && background != null)
+        {
+            background.SetActive(false);
+        }
+
+        if (active && background != null)
+        {
+            background.SetActive(true);
+            value = 0;
+        }
     }
 }

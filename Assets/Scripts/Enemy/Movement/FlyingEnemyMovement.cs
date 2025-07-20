@@ -49,6 +49,13 @@ public class FlyingEnemyMovement : MonoBehaviour
     private Coroutine patrolCoroutine;
     //private Coroutine shootingCoroutine;
     private Vector2 initPatrolPosition;
+    [SerializeField]
+    private bool shouldRotate = true;
+    [SerializeField]
+    private bool isRotatedRight = false;
+    [SerializeField]
+    private bool isInitialRight = false;
+    private float initialYRotation;
     public Transform Target
     {
         set
@@ -104,6 +111,7 @@ public class FlyingEnemyMovement : MonoBehaviour
         {
             attackScript = GetComponent<IAttack>();
         }
+        initialYRotation = transform.rotation.y;
     }
     void Start()
     {
@@ -134,6 +142,10 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     void Update()
     {
+        if (shouldRotate)
+        {
+            RotateCorrectly(agent.velocity.x);
+        }
         if (GeneralEnemyBehaviour.LookingDirectlyAtPlayer(agent.transform.position, target.position, visionRange, consideredMasks, target))
         {
             if (waitForPlayerCoroutine != null)
@@ -157,6 +169,10 @@ public class FlyingEnemyMovement : MonoBehaviour
                     if (isRanged)
                     {
                         attackScript.Attack(target, damage, attackPeriod, projSpeed, projectile);
+                        if (shouldRotate)
+                        {
+                            RotateCorrectly(target.position.x - agent.transform.position.x);
+                        }
                     }
                     else
                     {
@@ -173,6 +189,19 @@ public class FlyingEnemyMovement : MonoBehaviour
                 waitForPlayerCoroutine = StartCoroutine(WaitBeforePatrol(untilPatrolTime));
             }
         }
+    }
+    private void RotateCorrectly(float measure)
+    {
+        bool rotatedToRight = measure > 0 ? true : false;
+        if (isRotatedRight ^ rotatedToRight)
+        {
+            SetFacing(rotatedToRight);
+        }
+    }
+    private void SetFacing(bool initial)
+    {
+        transform.localRotation = Quaternion.Euler(0f, initialYRotation + (initial ? 180f : 0f), 0f);
+        isRotatedRight = initial;
     }
     private IEnumerator WaitBeforePatrol(float time)
     {
@@ -236,5 +265,9 @@ public class FlyingEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+    }
+    public void SpeedChange(float change)
+    {
+        agent.speed = speed + speed * change;
     }
 }

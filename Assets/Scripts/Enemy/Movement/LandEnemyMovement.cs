@@ -78,6 +78,13 @@ public class LandEnemyMovement : MonoBehaviour
     private bool isJumping;
     [SerializeField]
     private Vector3[] corners;
+    [SerializeField]
+    private bool shouldRotate = true;
+    [SerializeField]
+    private bool isRotatedRight = false;
+    [SerializeField]
+    private bool isInitialRight = false;
+    private float initialYRotation;
     private void OnValidate()
     {
         if (stats != null)
@@ -126,6 +133,7 @@ public class LandEnemyMovement : MonoBehaviour
         {
             attackScript = GetComponent<IAttack>();
         }
+        initialYRotation = transform.rotation.y;
     }
     void Start()
     {
@@ -155,6 +163,10 @@ public class LandEnemyMovement : MonoBehaviour
     }
     void Update()
     {
+        if (shouldRotate)
+        {
+            RotateCorrectly(agent.velocity.x);
+        }
         if (ShouldJump())
         {
             jumpingCoroutine = StartCoroutine(JumpBezier());
@@ -162,6 +174,19 @@ public class LandEnemyMovement : MonoBehaviour
         IsStanding();
         HandleGravity();
         FollowPlayer();
+    }
+    private void RotateCorrectly(float measure)
+    {
+        bool rotatedToRight = measure > 0 ? true : false;
+        if (isRotatedRight ^ rotatedToRight)
+        {
+            SetFacing(rotatedToRight);
+        }
+    }
+    private void SetFacing(bool initial)
+    {
+        transform.localRotation = Quaternion.Euler(0f, initialYRotation + (initial ? 180f : 0f), 0f);
+        isRotatedRight = initial;
     }
     private bool ShouldJump()
     {
@@ -284,6 +309,10 @@ public class LandEnemyMovement : MonoBehaviour
                     if (isRanged)
                     {
                         attackScript.Attack(target, damage, attackPeriod, projSpeed, projectile);
+                        if (shouldRotate)
+                        {
+                            RotateCorrectly(targetPos.x - agentPos.x);
+                        }
                     }
                     else
                     {
@@ -418,5 +447,10 @@ public class LandEnemyMovement : MonoBehaviour
                 prevPoint = nextPoint;
             }
         }
+    }
+
+    public void SpeedChange(float change)
+    {
+        agent.speed = speed + speed * change;
     }
 }

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 404941188821710453}
   m_Layer: 10
   m_Name: blob
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,10 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  isMovingRight: 0
+  isMovingLeft: 0
   consideredMasks:
     serializedVersion: 2
-    m_Bits: 1729
+    m_Bits: 3777
   reachRange: 1
   damage: 5
   target: {fileID: 0}
@@ -188,9 +188,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 4
+  coinReward: 3
+  deathEffectDuration: 0.3
+  explosionControllerPrefab: {fileID: 7307266941435632913, guid: b2b3ac9126bb55e41ba1ccd30b288a29, type: 3}
+  blowEffect: {fileID: 1851702391873127063, guid: 6e5ab4ca5b3ef694f8e8b02f697eec3c, type: 3}
   hp: 0
   spawn: {fileID: 0}
-  flashDuration: 1
+  flashDuration: 0.2
   spriteRenderers: []
 --- !u!114 &-5301345264636004808
 MonoBehaviour:

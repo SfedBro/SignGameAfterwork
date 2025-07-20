@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class LevelManager : MonoBehaviour
 {
     public int roomsX = 4, roomsY = 4;
     public float roomOffsetX, roomOffsetY;
+    public bool usePath = true;
     // public int minPathSize = 6, maxPathSize = 15;
+    public List<RoomCount> maxRoomCount;
 
     RoomInfoInstance[,] rooms;
 
@@ -46,40 +46,31 @@ public class LevelManager : MonoBehaviour
                 pathRooms[room2[0], room2[1]].up = DirAvailability.Available;
             }
         }
+        List<RoomCount> currentRoomCount = new(maxRoomCount);
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
-                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y).ExtendAvailable(pathRooms[x, y]);
-                List<RoomInfo> possibleRooms = roomInfos.Where(ri => possibleRD.CanFit(ri.rd)).ToList();
+                RoomDirections possibleRD = GetRoomDirectionsAvailable(x, y);
+                if (usePath) possibleRD = possibleRD.ExtendAvailable(pathRooms[x, y]);
+                List<RoomInfo> possibleRooms = roomInfos
+                    .Where(ri => !currentRoomCount.Any(rc => rc.roomInfo == ri) || currentRoomCount.Find(rc => rc.roomInfo == ri).count > 0)
+                    .Where(ri => possibleRD.CanFit(ri.rd)).ToList();
                 if (possibleRooms.Count == 0) continue;
                 RoomInfo ri = possibleRooms.OrderBy(_ => Random.value).First();
+                if (currentRoomCount.Any(r => r.roomInfo == ri)) --currentRoomCount.Find(rc => rc.roomInfo == ri).count;
                 // RoomInfo ri = roomInfos[Random.Range(0, roomInfos.Count - 1)];
-                Transform t = new GameObject($"Root {x} {y} {ri.rd}").transform;
-                t.position = new(x * roomOffsetX, -y * roomOffsetY);
-                rooms[x, y] = new RoomInfoInstance{roomInfo = ri, root = t};
+                rooms[x, y] = new RoomInfoInstance{roomInfo = ri};
             }
         }
     }
 
-    async void LoadLevel() {
+    void LoadLevel() {
         for (int x = 0; x < roomsX; ++x) {
             for (int y = 0; y < roomsY; ++y) {
                 RoomInfoInstance rii = rooms[x, y];
                 if (rii == null) continue;
-                await LoadSceneObjects(rii.roomInfo.sceneName, rii.root);
+                rii.root = Instantiate(rii.roomInfo.roomPrefab, new(x * roomOffsetX, -y * roomOffsetY), Quaternion.identity).transform;
             }
         }
-    }
-
-    async Task LoadSceneObjects(string sceneName, Transform t) {
-        await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-        // for (int i = 1; i < SceneManager.loadedSceneCount; ++i) {
-        //     scene = SceneManager.GetSceneAt(i);
-        //     if (scene.name == sceneName && scene.GetRootGameObjects().Length == 0) return;
-        // }
-        scene.GetRootGameObjects().ToList().ForEach(go => go.transform.SetParent(t, false));
-        // t.gameObject.SetActive(false);
-        await SceneManager.UnloadSceneAsync(scene);
     }
 
     RoomDirections GetRoomDirectionsAvailable(int x, int y) {
@@ -160,4 +151,10 @@ class PathGenerator {
     bool IsPointInBounds(Vector2Int point) {
         return point[0] >= 0 && point[0] < roomsX && point[1] >= 0 && point[1] < roomsY;
     }
+}
+
+[Serializable]
+public class RoomCount {
+    public RoomInfo roomInfo;
+    public int count;
 }
