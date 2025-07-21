@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 307561283863307473}
   - component: {fileID: 4935320799174898690}
   m_Layer: 1
-  m_Name: WaterShootPrefab 1
+  m_Name: WaterShootPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

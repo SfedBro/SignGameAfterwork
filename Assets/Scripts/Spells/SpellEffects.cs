@@ -120,10 +120,6 @@ public class SpellEffect : MonoBehaviour
         {
             obj.GetComponent<Enemy>().TakeDamage(damage * damageMultiplier);
         }
-        else if (obj != null && obj.CompareTag("Boss"))
-        {
-
-        }
     }
 
     private void MakePercentDamage(GameObject obj, float percent)
@@ -133,7 +129,7 @@ public class SpellEffect : MonoBehaviour
 
     private void ApplyKnockback(GameObject self, GameObject obj, float amount)
     {
-        if (obj != null && (obj.CompareTag("Enemy") || obj.CompareTag("Boss")))
+        if (obj != null && obj.CompareTag("Enemy"))
         {
            // Определяем направление от объекта к цели, чтобы отталкивание было правильным
             Vector3 direction = obj.transform.position - self.transform.position;
