@@ -119,29 +119,29 @@ MonoBehaviour:
   signContainer: {fileID: 643619972071171724}
   signDataList:
   - signName: Fire1
-    signSprite: {fileID: 7143536599680955399, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    lightSprite: {fileID: -520509936069157319, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    signSprite: {fileID: 1014312589259936113, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    lightSprite: {fileID: -6303612653606922692, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     signColor: {r: 1, g: 0.5529412, b: 0.5529412, a: 1}
   - signName: Fire2
     signSprite: {fileID: 7774597396905839976, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     lightSprite: {fileID: -3183823387430515487, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     signColor: {r: 1, g: 0.5529412, b: 0.5529412, a: 1}
   - signName: Fire3
-    signSprite: {fileID: 1014312589259936113, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    lightSprite: {fileID: -6303612653606922692, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    signSprite: {fileID: 7143536599680955399, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    lightSprite: {fileID: -520509936069157319, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     signColor: {r: 1, g: 0.54905653, b: 0.54905653, a: 1}
-  - signName: Stone1
-    signSprite: {fileID: -7118366140832251292, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    lightSprite: {fileID: -3541654970036748001, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    signColor: {r: 0.7283019, g: 0.561271, b: 0.40537554, a: 1}
-  - signName: Stone2
+  - signName: Earth1
     signSprite: {fileID: -6177745668595045113, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     lightSprite: {fileID: -2937953654953323102, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    signColor: {r: 0.7294118, g: 0.5647059, b: 0.40784314, a: 1}
-  - signName: Stone3
+    signColor: {r: 0.52156866, g: 0.9647059, b: 0.47058824, a: 1}
+  - signName: Earth2
+    signSprite: {fileID: -7118366140832251292, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    lightSprite: {fileID: -3541654970036748001, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
+    signColor: {r: 0.52156866, g: 0.9647059, b: 0.47058824, a: 1}
+  - signName: Earth3
     signSprite: {fileID: 570369605437288408, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     lightSprite: {fileID: -4015053110850514199, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
-    signColor: {r: 0.7294118, g: 0.5647059, b: 0.40784314, a: 1}
+    signColor: {r: 0.52156866, g: 0.9647059, b: 0.47058824, a: 1}
   - signName: Water1
     signSprite: {fileID: -7676459032210541816, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}
     lightSprite: {fileID: -3327347804532630309, guid: 02a526bcbff551848ab22fa97baf6dbe, type: 3}

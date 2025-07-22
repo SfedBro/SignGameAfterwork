@@ -29,7 +29,10 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        KeyInput();
+        if (Time.timeScale == 1f)
+        {
+            KeyInput();
+        }
     }
     private void KeyInput()
     {
