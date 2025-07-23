@@ -17,6 +17,11 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private Button mainSettingsIcon;
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private UIManager ui_manager;
+
+    [Header("Objects to disable")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject spellBook;
+
     private bool isPaused = false;
 
     [Header("Volume")]
@@ -24,6 +29,7 @@ public class PauseManager : MonoBehaviour
     public AudioMixer audioMixer;
     public AudioClip hoverSound;
     public AudioClip clickSound;
+    
 
     void Start()
     {
@@ -51,6 +57,7 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OpenCloseSettings();
+
         }
 
         if (isPaused && Input.GetMouseButtonDown(0))
@@ -106,6 +113,13 @@ public class PauseManager : MonoBehaviour
     {
         if (!isPaused)
         {
+            player.GetComponent<SpellCast>().enabled = false;
+            spellBook.SetActive(false);
+            foreach (Transform child in Camera.main.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
             if (ui_manager != null)
             {
                 ui_manager.ShowScreen(UIScreen.Settings);
@@ -117,6 +131,13 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
+            player.GetComponent<SpellCast>().enabled = true;
+            spellBook.SetActive(true);
+            foreach (Transform child in Camera.main.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+
             if (ui_manager != null)
             {
                 ui_manager.ShowScreen(UIScreen.MainCanvas);

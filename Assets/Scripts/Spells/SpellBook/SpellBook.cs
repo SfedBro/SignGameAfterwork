@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +15,18 @@ public class SpellBook : MonoBehaviour
 
     [Header("Позиции")]
     [SerializeField] private Vector2 shownPosition = Vector2.zero;
+
+    [Header("Сторонние объекты")]
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject settings;
     private Vector2 hiddenPosition;
     private RectTransform bookRect;
 
     private bool isOpen = false;
     private bool isAnimating = false;
-    private Camera mainCamera;
 
     private void Start()
     {
-        mainCamera = Camera.main;
-
         GameObject manager = GameObject.FindGameObjectWithTag("UIManager");
         scrollRect.scrollSensitivity = 10f;
         if (manager != null)
@@ -99,6 +101,8 @@ public class SpellBook : MonoBehaviour
             }
 
             Time.timeScale = 0f;
+            player.GetComponent<SpellCast>().enabled = false;
+            settings.SetActive(false);
             foreach (Transform child in Camera.main.transform)
             {
                 child.gameObject.SetActive(false);
@@ -107,6 +111,8 @@ public class SpellBook : MonoBehaviour
         else
         {
             Time.timeScale = 1f;
+            player.GetComponent<SpellCast>().enabled = true;
+            settings.SetActive(true);
             foreach (Transform child in Camera.main.transform)
             {
                 child.gameObject.SetActive(true);
